@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+    	android:id="@+id/kunden_suche_id"
+        android:title="Add to Tasklist"/>
+    
+    <item
+    	android:id="@+id/kunden_suche_nachname"
+        android:title="Share" />
+    
+    <item
+    	android:id="@+id/kunde_delete"
+        android:title="Delete" />    
+</menu>
