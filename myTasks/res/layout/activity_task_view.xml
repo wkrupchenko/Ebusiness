@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/addTaskButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/no_tasks_yet"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="52dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/tasklist_button_add_task_text_view" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="14dp"
+        android:layout_toLeftOf="@+id/addTaskButton"
+        android:text="@string/tasklist_buton_settings_text_view" />
+
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/settingsButton"
+        android:layout_alignBottom="@+id/settingsButton"
+        android:layout_centerHorizontal="true"
+        android:text="@string/tasklist_button_update_text_view" />
+
+    <TextView
+        android:id="@+id/no_tasks_yet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/updateButton"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="90dp"
+        android:text="@string/tasklist_no_tasks_text_view" />
+
+    <TextView
+        android:id="@+id/lastUpdateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/updateButton"
+        android:layout_toRightOf="@+id/addTaskButton"
+        android:text="@string/tasklist_last_update_text_view"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/lastUpdateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/updateButton"
+        android:layout_toRightOf="@+id/addTaskButton"
+        android:text="@string/tasklist_last_update_time_view"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/lastUpdateDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lastUpdateTime"
+        android:layout_alignLeft="@+id/lastUpdateTime"
+        android:text="@string/tasklist_last_update_date_view"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</RelativeLayout>

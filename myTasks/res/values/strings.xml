@@ -17,12 +17,19 @@
 	<string name="register_button_back_text_view">Back</string>
 	<string name="register_button_register_text_view">Register</string>
 	
+	
+	
 	<string name="action_settings">Settings</string>
 
 
 	
-	
-	
-	
+	<!-- Taskist -->
+	<string name="tasklist_no_tasks_text_view">no tasks yet</string>
+	<string name="tasklist_button_add_task_text_view">add new task</string>
+	<string name="tasklist_buton_settings_text_view">settings</string>
+	<string name="tasklist_button_update_text_view">update</string>	
+	<string name="tasklist_last_update_text_view">last update:</string>
+	<string name="tasklist_last_update_date_view">xx/xx/xxx</string>
+	<string name="tasklist_last_update_time_view">--:--</string>
 
 </resources>
