@@ -5,66 +5,69 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/backButton"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/passwordInput"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="112dp"
-        android:text="@string/login_button_login_text_view" />
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="57dp" >
 
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/backButton"
-        android:layout_alignBottom="@+id/backButton"
-        android:layout_marginLeft="60dp"
-        android:layout_toRightOf="@+id/backButton"
-        android:text="@string/login_button_register_text_view" />
+        <Button
+            android:id="@+id/loginViewLoginButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/login_button_login_text_view" />
+
+        <Button
+            android:id="@+id/loginViewRegisterButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/login_button_register_text_view"
+            android:onClick="activity_register"
+             />
+    </LinearLayout>
 
     <EditText
-        android:id="@+id/emailInput"
+        android:id="@+id/loginViewPasswordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/userTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="34dp"
+        android:layout_alignLeft="@+id/loginViewEmailInput"
+        android:layout_below="@+id/loginViewEmailText"
+        android:layout_marginTop="17dp"
         android:ems="10"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/passwordInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/emailInput"
-        android:layout_marginTop="36dp"
-        android:ems="10"
-        android:inputType="textPassword" >
-
-        <requestFocus />
-    </EditText>
+        android:inputType="textPassword" />
 
     <TextView
-        android:id="@+id/passwordTextView"
+        android:id="@+id/loginViewEmailText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passwordInput"
+        android:layout_below="@+id/loginViewEmailInput"
         android:layout_centerHorizontal="true"
-        android:text="@string/login_password_text_view"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginTop="14dp"
+        android:text="@string/login_user_text_view" />
 
     <TextView
-        android:id="@+id/userTextView"
+        android:id="@+id/loginViewPasswordText"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginViewPasswordInput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/login_password_text_view" />
+
+    <EditText
+        android:id="@+id/loginViewEmailInput"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/passwordTextView"
-        android:layout_marginTop="96dp"
-        android:text="@string/login_user_text_view"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:inputType="textEmailAddress" />
 
 </RelativeLayout>

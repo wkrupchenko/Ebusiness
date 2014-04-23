@@ -116,14 +116,14 @@
         	android:layout_height="wrap_content" >
 
             <Button
-            	android:id="@+id/backButton"
+            	android:id="@+id/loginViewLoginButton"
             	android:layout_width="110dp"
             	android:layout_height="wrap_content"
             	android:onClick="showListview"
             	android:text="Save" />
 
             <Button
-            	android:id="@+id/registerButton"
+            	android:id="@+id/registerViewRegisterButton"
             	android:layout_width="match_parent"
             	android:layout_height="wrap_content"
             	android:onClick="showTask"
@@ -149,6 +149,13 @@
        	android:layout_width="wrap_content"
        	android:layout_height="wrap_content"
        	android:src="@drawable/menu" />
+       <Button
+           android:id="@+id/backkkkk"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Button" 
+           android:onClick="activity_login"
+           />
 
         </LinearLayout>
 

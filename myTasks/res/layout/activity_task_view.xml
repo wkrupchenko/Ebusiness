@@ -15,7 +15,7 @@
         android:text="@string/tasklist_button_add_task_text_view" />
 
     <Button
-        android:id="@+id/settingsButton"
+        android:id="@+id/shareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -27,8 +27,8 @@
         android:id="@+id/updateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/settingsButton"
-        android:layout_alignBottom="@+id/settingsButton"
+        android:layout_alignBaseline="@+id/shareButton"
+        android:layout_alignBottom="@+id/shareButton"
         android:layout_centerHorizontal="true"
         android:text="@string/tasklist_button_update_text_view" />
 

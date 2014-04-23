@@ -12,7 +12,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/emailInput"
+        android:id="@+id/registerViewEmailInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -29,7 +29,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/passwordInput"
+        android:id="@+id/registerViewPasswordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -43,39 +43,42 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/repeatPasswordInput"
+        android:id="@+id/registerViewRepeatPasswordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword" />
 
     <TextView
-        android:id="@+id/userTextView"
+        android:id="@+id/userText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/register_user_name_text_view"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/userNameInput"
+        android:id="@+id/registerViewUserNameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" />
+        android:ems="10"
+        android:inputType="text" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <Button
-            android:id="@+id/backButton"
+            android:id="@+id/registerViewBackButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="@string/register_button_back_text_view" />
+            android:text="@string/register_button_back_text_view"
+            android:onClick="activity_login"
+             />
 
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/registerViewRegisterButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
