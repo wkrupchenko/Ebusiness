@@ -5,14 +5,14 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/TextView02"
+        android:id="@+id/mailText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/mail"
+        android:text="@string/register_mail_text_view"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/emailInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -22,42 +22,42 @@
     </EditText>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/passwordText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/password"
+        android:text="@string/register_password_text_view"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/passwordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword" />
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/passwordRepeatText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/password_repeat"
+        android:text="@string/register_password_repeat_text_view"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/repeatPasswordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/userTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/user"
+        android:text="@string/register_user_name_text_view"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/userNameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10" />
@@ -67,20 +67,20 @@
         android:layout_height="match_parent" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/backButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="@string/button_back" />
+            android:text="@string/register_button_back_text_view" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/registerButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="@string/button_register" />
+            android:text="@string/register_button_register_text_view" />
     </LinearLayout>
 
 </LinearLayout>
