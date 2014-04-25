@@ -38,11 +38,22 @@
 	<string name="create_tasklist_button_share_text_view">share</string>
 	<string name="create_tasklist_button_add_task_text_view">add task</string>
 	
+	<!-- Settings -->
+	<string name="settings_tasklist_name_text_view">tasklist name</string>
+	<string name="settings_button_share_text">share with others</string>
+	<string name="settings_button_participants_text">show participants</string>
+	
 	<!-- share activity -->
 	<string name="share_activity_tasklist_name_text_view">blocker für Tasklistnamen</string>
 	<string name="share_activity_button_share_text">share</string>
 	<string name="share_activity_email_text_view">Email of the person you want to share</string>
 	<string name="share_activity_button_back_text">back</string>
+	
+	<!-- share Liste -->
+	<string name="share_list_activity_tasklist_name_text_view">blocker für Tasklistnamen</string>
+	<string name ="share_list_button_edit_text">edit</string>
+	
+
 	
 
 </resources>
