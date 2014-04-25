@@ -33,12 +33,12 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	   protected void onCreate(Bundle savedInstanceState) {
 	      super.onCreate(savedInstanceState);
 	      setContentView(R.layout.activity_register);
-	      email = (EditText) findViewById(R.id.editText1);
-	      password = (EditText) findViewById(R.id.editText2);
-	      passwordrepeat = (EditText) findViewById(R.id.editText3);
-	      username = (EditText) findViewById(R.id.editText4);
-	      back = (Button)findViewById(R.id.button1);
-	      register = (Button)findViewById(R.id.button2);
+	      email = (EditText) findViewById(R.id.registerViewEmailInput);
+	      password = (EditText) findViewById(R.id.registerViewPasswordInput);
+	      passwordrepeat = (EditText) findViewById(R.id.registerViewRepeatPasswordInput);
+	      username = (EditText) findViewById(R.id.registerViewUserNameInput);
+	      back = (Button)findViewById(R.id.registerViewBackButton);
+	      register = (Button)findViewById(R.id.registerViewRegisterButton);
 	      back.setOnClickListener(myhandler1);
 	      register.setOnClickListener(myhandler2);
 	}
