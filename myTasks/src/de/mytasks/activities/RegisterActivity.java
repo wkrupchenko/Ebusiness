@@ -87,6 +87,8 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 		RuntimeExceptionDao<User, Integer> userDao = getHelper().getUserRuntimeExceptionDao();
 		userDao.create(newUser);
 		Toast.makeText(getApplicationContext(), "succesfully registered",Toast.LENGTH_SHORT).show();
+//		Intent intent = new Intent(RegisterActivity.this, TaskViewActivity.class);
+//		startActivity(intent);
 	}
 	
 	@Override
