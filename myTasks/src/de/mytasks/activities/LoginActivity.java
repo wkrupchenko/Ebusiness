@@ -37,10 +37,10 @@ public class LoginActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		username = (EditText) findViewById(R.id.editText1);
-		password = (EditText) findViewById(R.id.editText2);
-		login = (Button) findViewById(R.id.button1);
-		register = (Button) findViewById(R.id.button2);
+		username = (EditText) findViewById(R.id.loginViewEmailInput);
+		password = (EditText) findViewById(R.id.loginViewPasswordInput);
+		login = (Button) findViewById(R.id.loginViewLoginButton);
+		register = (Button) findViewById(R.id.loginViewRegisterButton);
 		saveTestData();
 	}
 
