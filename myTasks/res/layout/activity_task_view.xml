@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="14dp"
-        android:layout_toLeftOf="@+id/addTaskButton"
         android:text="@string/tasklist_buton_settings_text_view" />
 
     <Button
