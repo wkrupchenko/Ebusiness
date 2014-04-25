@@ -64,11 +64,6 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	      startActivity(intent);
 	   }
 	
-	public void register(View view){
-		  Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-	      startActivity(intent);
-	   }
-	
 	@Override
 	   public boolean onCreateOptionsMenu(Menu menu) {
 	      // Inflate the menu; this adds items to the action bar if it is present.
