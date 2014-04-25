@@ -12,7 +12,10 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="35dp"
         android:ems="10"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress" >
+        
+        <requestFocus />
+    </EditText>
 
     <EditText
         android:id="@+id/registerViewPasswordInput"
@@ -59,10 +62,8 @@
         android:layout_below="@+id/passwordText"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:inputType="textPassword" >
+        android:inputType="textPassword" />
 
-        <requestFocus />
-    </EditText>
 
     <EditText
         android:id="@+id/registerViewUserNameInput"
