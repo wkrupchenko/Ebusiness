@@ -77,12 +77,9 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	   }
 	
 	private void registerOnApp(String email, String password, String username){
-//		String newEmail = email.getText().toString();
-//		String newPassword = password.getText().toString();
-//		String newUsername = username.getText().toString();
 		
 		User newUser = new User(email, password, username);
-		
+	
 		// get our dao
 		RuntimeExceptionDao<User, Integer> userDao = getHelper().getUserRuntimeExceptionDao();
 		userDao.create(newUser);
