@@ -49,50 +49,27 @@ public class LoginActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		RuntimeExceptionDao<User, Integer> userDao = getHelper()
 				.getUserRuntimeExceptionDao();
 		userDao.create(new User("a@a.de", "admin", "Start123"));
-		
+
 		List<User> users = userDao.queryForAll();
 		Log.d("demo", users.toString());
 	}
 
 	public void login(View view) {
-//		databaseHelper = OpenHelperManager
-//				.getHelper(this, DatabaseHelper.class);
-//		RuntimeExceptionDao<User, Integer> userDao = databaseHelper
-//				.getUserRuntimeExceptionDao();
-//		List<User> alle = new ArrayList<User>();
-//		alle = userDao.queryForAll();
-		//
-		// User eingabe = new User();
-		// eingabe.setName(username.getText().toString());
-		// eingabe.setPasswordHash(password.getText().toString());
 
-//		for (User u : alle) {
-//			Log.i(LoginActivity.class.getName(), "weiterer User");
-//			if (username.getText().toString().equals(u.getName())
-//					&& password.getText().toString()
-//							.equals(u.getPasswordHash())) {
-//				Toast.makeText(getApplicationContext(), "Redirecting...",
-//						Toast.LENGTH_SHORT).show();
-//				Intent intent = new Intent(this, TaskActivity.class);
-//				startActivity(intent);
-//			} else {
-//				Toast.makeText(getApplicationContext(), "Wrong Credentials",
-//						Toast.LENGTH_SHORT).show();
-//			}
-//		}
-//		
-		if (username.getText().toString().equals("admin")
-				&& password.getText().toString()
-						.equals("admin")) {
-			Toast.makeText(getApplicationContext(), "Redirecting...",
-					Toast.LENGTH_SHORT).show();
-			Intent intent = new Intent(this, ListViewExampleActivity.class);
-			startActivity(intent);
-		} else {
-			Toast.makeText(getApplicationContext(), "Wrong Credentials",
-					Toast.LENGTH_SHORT).show();
+		RuntimeExceptionDao<User, Integer> userDao = getHelper()
+				.getUserRuntimeExceptionDao();
+		List<User> users = userDao.queryForAll();
+		for (User u : users) {
+			if (username.getText().toString().equals(u.getName())
+					&& password.getText().toString()
+							.equals(u.getPasswordHash())) {
+
+				Intent intent = new Intent(this, ListViewExampleActivity.class);
+				startActivity(intent);
+			} else {
+
+			}
 		}
-
 	}
 
 	public void register(View view) {
