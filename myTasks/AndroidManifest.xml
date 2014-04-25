@@ -16,7 +16,7 @@
 		android:label="@string/app_name"
 		android:theme="@style/AppTheme" >
 		<activity
-			android:name="de.mytasks.Task_Activity"
+			android:name="de.mytasks.activities.LoginActivity"
 			android:label="@string/app_name" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,15 @@
 			</intent-filter>
 		</activity>
 		<activity
-     	 android:name="de.mytasks.ListViewExampleActivity"
+     	 android:name="de.mytasks.activities.ListViewExampleActivity"
+     	 android:label="@string/app_name">          
+ 		</activity>
+ 		<activity
+     	 android:name="de.mytasks.activities.TaskActivity"
+     	 android:label="@string/app_name">          
+ 		</activity>
+ 		<activity
+     	 android:name="de.mytasks.activities.RegisterActivity"
      	 android:label="@string/app_name">          
  		</activity>
 	</application>

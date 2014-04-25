@@ -1,16 +1,25 @@
-package de.mytasks;
+package de.mytasks.activities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
+
+import de.mytasks.R;
+import de.mytasks.database.DatabaseHelper;
+import de.mytasks.domain.Tasklist;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.view.View;
+import java.util.List;
 
 public class ListViewExampleActivity extends Activity {
 
@@ -18,14 +27,19 @@ public class ListViewExampleActivity extends Activity {
 	  protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_listviewexampleactivity);
-
+	    
+	    DatabaseHelper databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
+	    RuntimeExceptionDao<Tasklist, Integer> tasklistDao = databaseHelper.getTasklistRuntimeExceptionDao();
+	    List<Tasklist> tasklists = new ArrayList<Tasklist>();
+	    tasklists = tasklistDao.queryForAll();
+	    
 	    final ListView listview = (ListView) findViewById(R.id.listview);
-	    String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-	            "Blackberry", "WebOS", "Ubuntu", "Windows7"};
-
+//	    String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+//	            "Blackberry", "WebOS", "Ubuntu", "Windows7"};
+//
 	    final ArrayList<String> list = new ArrayList<String>();
-	    for (int i = 0; i < values.length; ++i) {
-	      list.add(values[i]);
+	    for (int i = 0; i < tasklists.size(); ++i) {
+	      list.add(tasklists.toString());
 	    }
 	    final StableArrayAdapter adapter = new StableArrayAdapter(this,
 	        android.R.layout.simple_list_item_1, list);

@@ -3,7 +3,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="horizontal"
-	tools:context=".Task_Activity" >
+	tools:context=".TaskActivity" >
 	
 	<ImageView
 		android:id="@+id/nav_icon"

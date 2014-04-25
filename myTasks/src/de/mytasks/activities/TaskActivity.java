@@ -1,40 +1,33 @@
 
 
  
-package de.mytasks;
+package de.mytasks.activities;
 
  
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
-import de.mytasks.DBHandler;
-import de.mytasks.Task;
 import de.mytasks.R;
+import de.mytasks.database.DatabaseHelper;
+import de.mytasks.domain.Task;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.app.Fragment;
-import android.view.MenuItem;
-import android.view.View.OnClickListener;
-import android.widget.PopupMenu;
-import android.widget.Toast;
-import android.content.Context;
-import android.content.Intent;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
-public class Task_Activity extends Activity {
+public class TaskActivity extends Activity {
  EditText title;
  EditText description;
  EditText geotag; 
@@ -53,32 +46,12 @@ public class Task_Activity extends Activity {
   picture = (ImageView) findViewById(R.id.task_picture);
   ib =  (ImageButton) findViewById(R.id.imageButton1);
   
-  ib.setOnClickListener(viewClickListener);
-  
-          
+  ib.setOnClickListener(viewClickListener);    
  }
  
  public void showTask (View view) throws NullPointerException {
 	 try {
-		 
-		bmp = BitmapFactory.decodeResource(getResources(), R.drawable.tomaten);
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);		
-		byte[] byteArray = stream.toByteArray();		 
-		Task task = new Task();
-		task.setTitle("Aufgabe 1");
-		task.setDescription("Kaufe irgendwas");
-		task.setGeotag("Aufgabe 1");
-		task.setPicture(byteArray);
-		
-		DBHandler dbHandler = new DBHandler(this, null, null, 1);		
-		dbHandler.addTask(task);
-		  
-		final Task other = dbHandler.findTask(Integer.parseInt(title.getText().toString()));
-		title.setText(other.getTitle());
-		description.setText(other.getDescription());
-		Bitmap image = BitmapFactory.decodeByteArray(other.getPicture(), 0, other.getPicture().length);
-		picture.setImageBitmap(image);		 
+		 		 
 	 }
 	 
 	 catch (Exception e) {
@@ -109,14 +82,14 @@ public class Task_Activity extends Activity {
  };
 
  private void showPopupMenu(View v){
-	   PopupMenu popupMenu = new PopupMenu(Task_Activity.this, v);
+	   PopupMenu popupMenu = new PopupMenu(TaskActivity.this, v);
 	      popupMenu.getMenuInflater().inflate(R.menu.main_popup, popupMenu.getMenu());
 	    
 	      popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 	   
 	   @Override
 	   public boolean onMenuItemClick(MenuItem item) {
-	    Toast.makeText(Task_Activity.this,
+	    Toast.makeText(TaskActivity.this,
 	      item.toString(),
 	      Toast.LENGTH_LONG).show();
 	    return true;

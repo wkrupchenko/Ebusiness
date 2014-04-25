@@ -1,5 +1,5 @@
  
-package de.mytasks;
+package de.mytasks.service;
 
  
 import java.io.BufferedReader;
