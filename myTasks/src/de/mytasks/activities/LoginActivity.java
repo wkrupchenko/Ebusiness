@@ -27,7 +27,7 @@ import de.mytasks.domain.User;
 
 public class LoginActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 
-	private EditText username = null;
+	private EditText email = null;
 	private EditText password = null;
 	private Button login;
 	private Button register;
@@ -37,7 +37,7 @@ public class LoginActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		username = (EditText) findViewById(R.id.loginViewEmailInput);
+		email = (EditText) findViewById(R.id.loginViewEmailInput);
 		password = (EditText) findViewById(R.id.loginViewPasswordInput);
 		login = (Button) findViewById(R.id.loginViewLoginButton);
 		register = (Button) findViewById(R.id.loginViewRegisterButton);
@@ -48,7 +48,7 @@ public class LoginActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 
 		RuntimeExceptionDao<User, Integer> userDao = getHelper()
 				.getUserRuntimeExceptionDao();
-		userDao.create(new User("a@a.de", "admin", "Start123"));
+		userDao.create(new User("admin", "admin", "Start123"));
 
 		List<User> users = userDao.queryForAll();
 		Log.d("demo", users.toString());
@@ -60,7 +60,7 @@ public class LoginActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 				.getUserRuntimeExceptionDao();
 		List<User> users = userDao.queryForAll();
 		for (User u : users) {
-			if (username.getText().toString().equals(u.getName())
+			if (email.getText().toString().equals(u.getMail())
 					&& password.getText().toString()
 							.equals(u.getPasswordHash())) {
 
