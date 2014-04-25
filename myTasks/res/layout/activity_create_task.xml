@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp" >
+
+        <Button
+            android:id="@+id/createTaskListBackButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/create_tasklist_button_back_text_view" />
+
+        <Button
+            android:id="@+id/createTaskListShareButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/create_tasklist_button_share_text_view" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/taskListName"
+        android:layout_below="@+id/taskListName"
+        android:layout_marginLeft="31dp"
+        android:layout_marginTop="79dp"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/addNewTaskButton"
+            android:layout_width="274dp"
+            android:layout_height="wrap_content"
+            android:text="@string/create_tasklist_button_add_task_text_view" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/taskListName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="@string/create_tasklist_name_text_view" >
+
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>
