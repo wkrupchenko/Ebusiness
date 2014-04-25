@@ -37,7 +37,8 @@ public class TaskViewActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		creatNewTask = (Button) findViewById(R.id.addTaskButton);
-		
+		settings = (Button) findViewById(R.id.shareButton);
+		update = (Button) findViewById(R.id.updateButton);
 	}
 
 
