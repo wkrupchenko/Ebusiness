@@ -1,0 +1,57 @@
+#
+# generated on 2014/04/25 01:25:33
+#
+# --table-start--
+dataClass=de.mytasks.domain.User
+tableName=user
+# --table-fields-start--
+# --field-start--
+fieldName=user_id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=mail
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=passwordHash
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=de.mytasks.domain.Tasklist
+tableName=tasklist
+# --table-fields-start--
+# --field-start--
+fieldName=tasklist_id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=tasklist_title
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=de.mytasks.domain.Task
+tableName=task
+# --table-fields-start--
+# --field-start--
+fieldName=task_id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=description
+# --field-end--
+# --field-start--
+fieldName=value
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
