@@ -4,7 +4,7 @@
     <string name="app_name">myTasks</string>
     
     <!-- Loginfenster -->
-	<string name="login_user_text_view">EMail</string>
+	<string name="login_user_text_view">Username</string>
 	<string name="login_password_text_view">Password</string>
 	<string name="login_button_login_text_view">Login</string>
 	<string name="login_button_register_text_view">Register</string>

@@ -30,6 +30,7 @@ public class LoginActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	private EditText email = null;
 	private EditText password = null;
 	private Button login;
+	
 	private Button register;
 	private DatabaseHelper databaseHelper;
 
