@@ -1,6 +1,10 @@
 package de.mytasks.activities;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
@@ -9,6 +13,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import de.mytasks.R;
 import de.mytasks.database.DatabaseHelper;
 import de.mytasks.domain.User;
+import de.mytasks.service.SimpleHttpClient;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,7 +32,9 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	private EditText username = null;
 	private Button back;
 	private Button register;
-	private DatabaseHelper databaseHelper;
+	private String resp;
+	private String errorMsg;
+//	private DatabaseHelper databaseHelper;
 		
 	@Override
 	   protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +59,63 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	View.OnClickListener myhandler2 = new View.OnClickListener() {
 	    public void onClick(View v) {
 	      // it was the 2nd button
-	    	registerOnApp(email.getText().toString(), password.getText().toString(), username.getText().toString());
-	    	email.setText("");
-	    	password.setText("");
-	    	passwordrepeat.setText("");
-	    	username.setText("");
+	    	
+	    	new Thread(new Runnable(){
+	    		
+		    	@Override
+		    	public void run() {
+		    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+		    		postParameters.add(new BasicNameValuePair("username",username.getText().toString()));
+		    		postParameters.add(new BasicNameValuePair("email",email.getText().toString()));
+		    	    postParameters.add(new BasicNameValuePair("password",password.getText().toString()));
+		    	    
+		    	    String response = null;
+		    	      try {
+		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksRegister/show", postParameters);
+		    	       String res = response.toString();
+		    	       resp = res;
+		    	}
+		    	      catch (Exception e) {
+		    	          e.printStackTrace();
+		    	          errorMsg = e.getMessage();
+		    	         }
+		    	} 
+	    	}).start();
+	    	
+//	    	registerOnApp(email.getText().toString(), password.getText().toString(), username.getText().toString());
+//	    	email.setText("");
+//	    	password.setText("");
+//	    	passwordrepeat.setText("");
+//	    	username.setText("");
+	    	
+	    	try {
+
+	    	    /** wait a second to get response from server */
+	    	    Thread.sleep(1000);
+	    	    /** Inside the new thread we cannot update the main thread
+	    	    So updating the main thread outside the new thread */
+	    	    	if (null != resp && !resp.isEmpty()) {
+	    	    		 boolean check = resp.contains("1");
+	    	    	       if (check == true) {
+	    	    	    	   Toast.makeText(getApplicationContext(), "you've been successfully registered",Toast.LENGTH_SHORT).show();
+	    	    	    	   Thread.sleep(1000);
+	    	    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
+	    	    	     	 	startActivity(it);
+	    	    	       } 
+	    	    		//error.setText(resp);
+	    	    	}
+	    	    	
+	    	    	else {
+//	    	    		if (null != errorMsg && !errorMsg.isEmpty()) {
+//	    	    	   	       error.setText(errorMsg);
+	    	    			Toast.makeText(getApplicationContext(), "something went wrong, please try again",Toast.LENGTH_SHORT).show();
+//	    	    	    	  }
+	    	    	} 
+	    	            
+	    	   
+	    	    } catch (Exception e) {
+//	    	     error.setText(e.getMessage());
+	    	    }
 	    }
 	  };
 	public void back(View view){
@@ -71,26 +130,26 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	      return true;
 	   }
 	
-	private void registerOnApp(String email, String password, String username){
-		
-		User newUser = new User(email, password, username);
+//	private void registerOnApp(String email, String password, String username){
+//		
+//		User newUser = new User(email, password, username);
+//	
+//		// get our dao
+//		RuntimeExceptionDao<User, Integer> userDao = getHelper().getUserRuntimeExceptionDao();
+//		userDao.create(newUser);
+//		Toast.makeText(getApplicationContext(), "succesfully registered",Toast.LENGTH_SHORT).show();
+//	}
 	
-		// get our dao
-		RuntimeExceptionDao<User, Integer> userDao = getHelper().getUserRuntimeExceptionDao();
-		userDao.create(newUser);
-		Toast.makeText(getApplicationContext(), "succesfully registered",Toast.LENGTH_SHORT).show();
-	}
-	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-
-		/*
-		 * You'll need this in your class to release the helper when done.
-		 */
-		if (databaseHelper != null) {
-			databaseHelper.close();
-			databaseHelper = null;
-		}
-	}
+//	@Override
+//	protected void onDestroy() {
+//		super.onDestroy();
+//
+//		/*
+//		 * You'll need this in your class to release the helper when done.
+//		 */
+//		if (databaseHelper != null) {
+//			databaseHelper.close();
+//			databaseHelper = null;
+//		}
+//	}
 }
