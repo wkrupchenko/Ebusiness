@@ -46,8 +46,9 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	      username = (EditText) findViewById(R.id.registerViewUserNameInput);
 	      back = (Button)findViewById(R.id.registerViewBackButton);
 	      register = (Button)findViewById(R.id.registerViewRegisterButton);
-	      back.setOnClickListener(myhandler1);
-	      register.setOnClickListener(myhandler2);
+	      //back.setOnClickListener(myhandler1);
+	      back.setOnClickListener( myhandler1);
+	      register.setOnClickListener(test);
 	}
 	
 	View.OnClickListener myhandler1 = new View.OnClickListener() {
@@ -56,6 +57,13 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	    }
 	  };
 	  
+	  View.OnClickListener test = new View.OnClickListener() {
+		    public void onClick(View v) {
+		    	Intent it = new Intent(getApplicationContext(),ListViewActivity.class);
+			 	startActivity(it);
+		    }
+		  };
+	  	  	  
 	View.OnClickListener myhandler2 = new View.OnClickListener() {
 	    public void onClick(View v) {
 	      // it was the 2nd button
@@ -95,7 +103,7 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	    	    /** Inside the new thread we cannot update the main thread
 	    	    So updating the main thread outside the new thread */
 	    	    	if (null != resp && !resp.isEmpty()) {
-	    	    		 boolean check = resp.contains("1");
+	    	    		 boolean check = resp.contains("1");	    	    		  
 	    	    	       if (check == true) {
 	    	    	    	   Toast.makeText(getApplicationContext(), "you've been successfully registered",Toast.LENGTH_SHORT).show();
 	    	    	    	   Thread.sleep(1000);

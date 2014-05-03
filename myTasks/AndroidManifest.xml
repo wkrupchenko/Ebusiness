@@ -16,7 +16,7 @@
 		android:label="@string/app_name"
 		android:theme="@style/AppTheme" >
 		<activity
-			android:name="de.mytasks.activities.ListViewActivity"
+			android:name="de.mytasks.activities.LoginActivity"
 			android:label="@string/app_name" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -26,6 +26,10 @@
 		</activity>		 
  		<activity
      	 android:name="de.mytasks.activities.TaskActivity"
+     	 android:label="@string/app_name">          
+ 		</activity>
+ 		<activity
+     	 android:name="de.mytasks.activities.ListViewActivity"
      	 android:label="@string/app_name">          
  		</activity>
  		<activity

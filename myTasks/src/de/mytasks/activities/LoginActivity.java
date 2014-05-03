@@ -57,20 +57,20 @@ public class LoginActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 
 	public void login(View view) {
 
-		RuntimeExceptionDao<User, Integer> userDao = getHelper()
+		/*RuntimeExceptionDao<User, Integer> userDao = getHelper()
 				.getUserRuntimeExceptionDao();
 		List<User> users = userDao.queryForAll();
 		for (User u : users) {
 			if (email.getText().toString().equals(u.getMail())
 					&& password.getText().toString()
-							.equals(u.getPasswordHash())) {
+							.equals(u.getPasswordHash())) {*/
 
 				Intent intent = new Intent(this, ListViewActivity.class);
 				startActivity(intent);
-			} else {
+			/*} else {
 
 			}
-		}
+		}*/
 	}
 
 	public void register(View view) {
