@@ -61,8 +61,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, User.class);
 			
 			// here we try inserting data in the on-create as a test
-//			RuntimeExceptionDao<User, Integer> userDao = databaseHelper.getUserRuntimeExceptionDao();
-//			userDao.create(new User("admin", "admin", "admin"));
+			RuntimeExceptionDao<User, Integer> userDao = databaseHelper.getUserRuntimeExceptionDao();
+			userDao.create(new User("admin", "admin", "admin"));
 		} 
 		
 		catch (SQLException e) {

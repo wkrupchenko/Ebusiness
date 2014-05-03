@@ -77,19 +77,19 @@ TextView error;
     Thread.sleep(1000);
     /** Inside the new thread we cannot update the main thread
     So updating the main thread outside the new thread */
-    	if (null != resp && !resp.isEmpty()) {
-    		 boolean check = resp.contains("authentificated");
-    	       if (check == true) {
+    boolean check = resp.contains("authentificated");
+    	if (check == true) {
+    		   		
     	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
     	     	 	startActivity(it);
-    	       } 
+    	     
     		//error.setText(resp);
     	}
     	
     	else {
-    		if (null != errorMsg && !errorMsg.isEmpty()) {
-    	   	       error.setText(errorMsg);
-    	    	  }
+    		//if (null != errorMsg && !errorMsg.isEmpty()) {
+    	   	       error.setText("Wrong credential! Please try again!");
+    	    	 // }
     	} 
             
    

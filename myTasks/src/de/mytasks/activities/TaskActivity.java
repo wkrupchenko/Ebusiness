@@ -63,7 +63,7 @@ public class TaskActivity extends Activity {
  
  public void showListview(View view) 
  {
-	 Intent i = new Intent(getApplicationContext(),ListViewExampleActivity.class);
+	 Intent i = new Intent(getApplicationContext(),ListViewActivity.class);
 	 startActivity(i);
  }
    

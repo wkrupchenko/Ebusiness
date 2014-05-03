@@ -69,6 +69,12 @@ public class Task extends Activity{
 	public void setValue(Boolean value) {
 		this.value = value;
 	}
+
+	@Override
+	public String toString() {
+		return "Task [task_id=" + task_id + ", name=" + name + ", description="
+				+ description + ", value=" + value + "]";
+	}
 	
 	
 

@@ -44,6 +44,12 @@ public class Tasklist extends Activity{
 	public void setTasklist_title(String tasklist_title) {
 		this.tasklist_title = tasklist_title;
 	}
+
+	@Override
+	public String toString() {
+		return "Tasklist [tasklist_id=" + tasklist_id + ", tasklist_title="
+				+ tasklist_title + "]";
+	}
 	
 
 
