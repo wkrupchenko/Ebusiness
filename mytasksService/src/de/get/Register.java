@@ -35,7 +35,7 @@ public class Register extends HttpServlet
              Class.forName("oracle.jdbc.driver.OracleDriver");
              Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","SYSTEM","0000");          
                
-             Statement st=con.createStatement();             
+             Statement st = con.createStatement();             
              st.executeUpdate("Insert into system.users(name, email,encrypted_password) values(" + un + "," + ue + "," + up + ")");
              ResultSet rs = st.executeQuery("SELECT email FROM system.users where email =" + ue);             
              int i = 0;
