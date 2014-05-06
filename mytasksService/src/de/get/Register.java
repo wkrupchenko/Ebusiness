@@ -21,9 +21,9 @@ public class Register extends HttpServlet
 
 	protected void doPost(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException
     {
-		PrintWriter pw=res.getWriter();
+		PrintWriter pw = res.getWriter();
         res.setContentType("text/html;charset=UTF-8");        
-        String tb=req.getParameter("table"); 
+        String tb = req.getParameter("table"); 
         
         String un,ue,up;
         un="'" + req.getParameter("username") + "'";
