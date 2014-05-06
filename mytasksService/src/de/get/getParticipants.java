@@ -17,7 +17,7 @@ public final class getParticipants extends HttpServlet
    
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException
+	protected void doPost(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException
     {
 		PrintWriter pw = res.getWriter();
         res.setContentType("text/html;charset=UTF-8");        
