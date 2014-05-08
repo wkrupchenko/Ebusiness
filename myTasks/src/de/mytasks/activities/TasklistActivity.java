@@ -23,7 +23,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.activity_tasklists);
 		creatNewTask = (Button) findViewById(R.id.addTaskButton);
 		settings = (Button) findViewById(R.id.shareButton);
 		update = (Button) findViewById(R.id.updateButton);
