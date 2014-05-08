@@ -49,7 +49,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/newTasklistNameTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -65,14 +65,14 @@
         android:id="@+id/addTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editText1"
-        android:layout_alignBottom="@+id/editText1"
+        android:layout_alignBaseline="@+id/newTasklistNameTitle"
+        android:layout_alignBottom="@+id/newTasklistNameTitle"
         android:layout_alignParentRight="true"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/tasklist_button_add_task_text_view" />
 
     <ExpandableListView
-        android:id="@+id/listView"
+        android:id="@+id/tasklistOverwiewWindow"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_above="@+id/shareButton"

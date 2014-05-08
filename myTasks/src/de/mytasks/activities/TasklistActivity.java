@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 
@@ -17,6 +18,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	private Button settings;
 	private Button update;
 	private DatabaseHelper databaseHelper;
+	private ListView tasklistOverwiewWindow;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		settings = (Button) findViewById(R.id.shareButton);
 		update = (Button) findViewById(R.id.updateButton);
 		taskListName = (EditText) findViewById(R.id.newTasklistNameTitle);
+		tasklistOverwiewWindow = (ListView) findViewById(R.id.tasklistOverwiewWindow);
 	}
 
 

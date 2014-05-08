@@ -36,7 +36,7 @@ public class ListViewActivity extends Activity {
      
     fillData();
     
-    ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
+    ExpandableListView listView = (ExpandableListView) findViewById(R.id.tasklistOverwiewWindow);
     MyExpandableListAdapter adapter = new MyExpandableListAdapter(this,
         groups);
     listView.setAdapter(adapter);

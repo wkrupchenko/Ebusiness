@@ -11,7 +11,7 @@
     tools:context=".MainActivity" >
 
     <ExpandableListView
-        android:id="@+id/listView"
+        android:id="@+id/qqq"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ExpandableListView>

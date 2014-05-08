@@ -33,6 +33,7 @@ public class ParticipantsActivity extends Activity {
 	 private TextView taskListName;
 	 private Button edit;
 	 private Button back;
+	 private ListView participantsList;
 	 
 	 
 	 @Override
@@ -42,6 +43,7 @@ public class ParticipantsActivity extends Activity {
 			taskListName = (TextView) findViewById(R.id.shareViewTasklistName);
 			back = (Button) findViewById(R.id.partisipantsBackButton);
 			edit = (Button) findViewById(R.id.partisipantsEditButton);
+			participantsList = (ListView) findViewById(R.id.participantsList);
 			
 		}
 	 

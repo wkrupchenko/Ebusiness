@@ -33,4 +33,13 @@
         android:layout_marginRight="34dp"
         android:text="@string/share_list_button_edit_text" />
 
+    <ExpandableListView
+        android:id="@+id/participantsList"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/shredListTaskListName"
+        android:layout_marginTop="46dp" >
+    </ExpandableListView>
+
 </RelativeLayout>
