@@ -83,7 +83,7 @@ TextView error;
     boolean check = resp.contains("authentificated");
     	if (check == true) {
     		   		
-    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
+    	    	   Intent it = new Intent(getApplicationContext(),TasklistActivity.class);
     	     	 	startActivity(it);
     	     
     		//error.setText(resp);
