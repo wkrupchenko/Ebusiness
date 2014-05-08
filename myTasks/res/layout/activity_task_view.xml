@@ -5,16 +5,6 @@
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/addTaskButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/no_tasks_yet"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="52dp"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="@string/tasklist_button_add_task_text_view" />
-
-    <Button
         android:id="@+id/shareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,15 +20,6 @@
         android:layout_alignBottom="@+id/shareButton"
         android:layout_centerHorizontal="true"
         android:text="@string/tasklist_button_update_text_view" />
-
-    <TextView
-        android:id="@+id/no_tasks_yet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/updateButton"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="90dp"
-        android:text="@string/tasklist_no_tasks_text_view" />
 
     <TextView
         android:id="@+id/lastUpdateText"
@@ -66,5 +47,37 @@
         android:layout_alignLeft="@+id/lastUpdateTime"
         android:text="@string/tasklist_last_update_date_view"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@+id/addTaskButton"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/addTaskButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editText1"
+        android:layout_alignBottom="@+id/editText1"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/tasklist_button_add_task_text_view" />
+
+    <ExpandableListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_above="@+id/shareButton"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="15dp" >
+    </ExpandableListView>
 
 </RelativeLayout>
