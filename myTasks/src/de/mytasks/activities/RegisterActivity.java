@@ -46,9 +46,8 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	      username = (EditText) findViewById(R.id.registerViewUserNameInput);
 	      back = (Button)findViewById(R.id.registerViewBackButton);
 	      register = (Button)findViewById(R.id.registerViewRegisterButton);
-	      //back.setOnClickListener(myhandler1);
-	      back.setOnClickListener( myhandler1);
-	      register.setOnClickListener(test);
+	      back.setOnClickListener(myhandler1);
+	      register.setOnClickListener(myhandler2);
 	}
 	
 	View.OnClickListener myhandler1 = new View.OnClickListener() {
@@ -79,7 +78,9 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 		    	    
 		    	    String response = null;
 		    	      try {
-		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksRegister/show", postParameters);
+//		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksRegister/show", postParameters);
+//		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksService/register", postParameters);
+		    	       response = SimpleHttpClient.executeHttpPost("http://iwi-w-eb03:8080/mytasksService/register", postParameters);
 		    	       String res = response.toString();
 		    	       resp = res;
 		    	}
@@ -106,7 +107,7 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	    	    		 boolean check = resp.contains("1");	    	    		  
 	    	    	       if (check == true) {
 	    	    	    	   Toast.makeText(getApplicationContext(), "you've been successfully registered",Toast.LENGTH_SHORT).show();
-	    	    	    	   Thread.sleep(1000);
+	    	    	    	   Thread.sleep(10000);
 	    	    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
 	    	    	     	 	startActivity(it);
 	    	    	       } 
@@ -127,7 +128,7 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	    }
 	  };
 	public void back(View view){
-		  Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+		  Intent intent = new Intent(RegisterActivity.this, LogonActivity.class);
 	      startActivity(intent);
 	   }
 	
