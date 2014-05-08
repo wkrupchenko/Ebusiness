@@ -22,6 +22,7 @@ public class LogonActivity extends Activity {
 private EditText username = null;
 private EditText password = null;
 private Button login;
+private Button register;
 private String resp;
 private String errorMsg;
 TextView error;
@@ -34,6 +35,7 @@ TextView error;
   username = (EditText) findViewById(R.id.loginViewUsernameInput);
   password = (EditText) findViewById(R.id.loginViewPasswordInput);
   login = (Button) findViewById(R.id.loginViewLoginButton);
+  register = (Button) findViewById(R.id.loginViewRegisterButton);
   error = (TextView) findViewById(R.id.error);
      
 
@@ -53,7 +55,8 @@ TextView error;
 
       String response = null;
       try {
-       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksLogin/show", postParameters);
+//       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksLogin/show", postParameters);
+    	  response = SimpleHttpClient.executeHttpPost("http://iwi-w-eb03:8080/mytasksService/login", postParameters); 
        String res = response.toString();
        resp = res;
        /*
@@ -99,5 +102,9 @@ TextView error;
    }
   });
  }
+ public void register(View view) {
+		Intent intent = new Intent(this, RegisterActivity.class);
+		startActivity(intent);
+	}
 }
 

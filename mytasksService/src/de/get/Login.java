@@ -32,8 +32,12 @@ public class Login extends HttpServlet
         try
         {
              Class.forName("oracle.jdbc.driver.OracleDriver");
+//             String url = "jdbc:oracle:thin:@//iwi-w-vm-dbo.hs-karlsruhe.de:1521/oracledbwi.hs-karlsruhe.de"; 
+//             String user = "eBS14Db01"; 
+//             String passwd = "eBs14Db";
+//             Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","SYSTEM","0000");          
              Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","SYSTEM","0000");          
-               
+ 
              Statement st=con.createStatement();                                      
              ResultSet rs = st.executeQuery("SELECT * FROM system.users where name="+ un  + " and encrypted_password=" + up);
                  
