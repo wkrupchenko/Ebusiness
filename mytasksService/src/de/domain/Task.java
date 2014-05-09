@@ -4,18 +4,39 @@ import java.util.Date;
 
 public class Task {
 
-	public Task(String name, boolean checked) {
+	public Task(String name, int checked) {
 		super();
 		this.name = name;
 		this.checked = checked;
 	}
 	
+	public Task() {
+		// TODO Auto-generated constructor stub
+	}
+
 	private Long id;			// TASK_ID
 	private String name;		// T_NAME
-	private boolean checked;	// CHECKED
+	private int checked;	// CHECKED
+	private Long tasklist;
 	private Date creation;		// CREATED_ON
 	private Date updated;		// UPDATED_ON
 	private String updatedBy;	// UPDATED_BY
+	
+	public int getChecked() {
+		return checked;
+	}
+
+	public void setChecked(int checked) {
+		this.checked = checked;
+	}
+
+	public Long getTasklist() {
+		return tasklist;
+	}
+
+	public void setTasklist(Long tasklist) {
+		this.tasklist = tasklist;
+	}
 	
 	public Long getTask_id() {
 		return id;
@@ -47,21 +68,18 @@ public class Task {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
-	public boolean isChecked() {
-		return checked;
-	}
-	public void setChecked(boolean checked) {
-		this.checked = checked;
-	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (checked ? 1231 : 1237);
+		result = prime * result + checked;
 		result = prime * result
 				+ ((creation == null) ? 0 : creation.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((tasklist == null) ? 0 : tasklist.hashCode());
 		result = prime * result + ((updated == null) ? 0 : updated.hashCode());
 		result = prime * result
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
@@ -92,6 +110,11 @@ public class Task {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
+			return false;
+		if (tasklist == null) {
+			if (other.tasklist != null)
+				return false;
+		} else if (!tasklist.equals(other.tasklist))
 			return false;
 		if (updated == null) {
 			if (other.updated != null)

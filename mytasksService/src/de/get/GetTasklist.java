@@ -8,8 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,11 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import de.domain.Task;
 import de.domain.TaskList;
-import de.domain.User;
 
 /**
- *  Input: userEmail + username + password
+ *  Input: userId + username + password
  *  Output: Json Liste mit Tasklist -> mit Tasks
  */
 public final class GetTasklist extends HttpServlet {
@@ -32,13 +30,13 @@ public final class GetTasklist extends HttpServlet {
 			throws ServletException, IOException {
 
 		String sqlGetTasklists = "Select fk_tasklist from user_tasklist where fk_user=?";
-		String sqlGetTasks = "Select * from tasks where fk_tasklist=?";
+		String sqlGetTasks = "Select * from task where fk_tasklist=?";
 		String sqlAuth = "SELECT name, encrypted_password FROM system.users where us.name=? and us.encrypted_password=?";
 
 		PrintWriter pw = res.getWriter();
 		res.setContentType("text/html;charset=UTF-8");
-		String userEmail, user, password;
-		userEmail = "'" + req.getParameter("userEmail") + "'";
+		String userId, user, password;
+		userId = "'" + req.getParameter("userId") + "'";
 		user = "'" + req.getParameter("username") + "'";
 		password = "'" + req.getParameter("password") + "'";
 
@@ -57,16 +55,31 @@ public final class GetTasklist extends HttpServlet {
 			if (user_name != null && user_name != "" && user_pwd != null && user_pwd != "") {
 
 				PreparedStatement stat = con.prepareStatement(sqlGetTasklists);
-				stat.setString(1, userEmail);
+				stat.setString(1, userId);
 				ResultSet rst = stat.executeQuery();
-
+				
+				PreparedStatement pstmt = con.prepareStatement(sqlGetTasks);
+				
 				ArrayList<TaskList> tasklists = new ArrayList<TaskList>();
+				
 				while (rst.next()) {
+					ArrayList<Task> tasks = new ArrayList<Task>();
 					TaskList tl = new TaskList();
 					tl.setId(rst.getLong("TL_ID"));
 					tl.setName(rst.getString("TASKLISTNAME"));
-					tl.setOwnerId(rst.getLong("EMAIL"));
-
+					tl.setOwnerId(rst.getLong("FK_OWNER"));
+					
+					pstmt.setString(1, tl.getId().toString());
+					ResultSet resTasks = pstmt.executeQuery();
+					
+					while (resTasks.next()) {
+						Task t = new Task();
+						t.setTask_id(resTasks.getLong("T_ID"));
+						t.setName(resTasks.getString("NAME"));
+						t.setChecked(resTasks.getInt("CHECKED"));
+						t.setTasklist(resTasks.getLong("FK_TASKLIST"));
+						tasks.add(t);
+					}					
 					tasklists.add(tl);
 				}
 
@@ -74,8 +87,8 @@ public final class GetTasklist extends HttpServlet {
 				pw.close();
 				rs.close();
 				rst.close();
-
-			}// else { throw new Exception("Unauthorized!");}
+				con.close();
+			} else { throw new Exception("Unauthorized!");}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
