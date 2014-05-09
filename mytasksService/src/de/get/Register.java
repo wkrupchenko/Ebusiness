@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Input: username, password, email
+ * Output: Message: Error or OK
+ */
 public class Register extends HttpServlet  
 {
 	/**
@@ -24,12 +28,12 @@ public class Register extends HttpServlet
 
 		PrintWriter pw = res.getWriter();
 		res.setContentType("text/html;charset=UTF-8");        
-		//String tb = req.getParameter("table"); 
+
 
 		String un,ue,up;
 		un="'" + req.getParameter("username") + "'";
-		up="'" + req.getParameter("password") + "'";
 		ue="'" + req.getParameter("email") + "'";         
+		up="'" + req.getParameter("password") + "'";
 
 		try
 		{
@@ -42,8 +46,8 @@ public class Register extends HttpServlet
 			stmt.setString(3, up);
 
 			if(stmt.executeUpdate()<1){
-				pw.print("Error - Task not Update ");
-			}else{ pw.print("Task updated");}
+				pw.print("Error");			//  Task not Update 
+			}else{ pw.print("OK");}			
 			pw.close();
 			stmt.close();
 			con.close();

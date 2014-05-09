@@ -13,24 +13,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Input: taskname, checked  + (Auth: username , password
- * Output: Message: Error or Created
+ * Input: tasklistName, ownerEmail (Auth: username + password)
+ * Output: Message: created or error
  */
-public final class CreateTask extends HttpServlet  
+public final class CreateTasklist extends HttpServlet  
 {
 
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException
 	{
-		String sqlCreateTask = "Insert into system.task(name, checked) values(?,?)";
-		String sqlAuth = "SELECT name, password FROM system.users where name=? and encrypted_password=?";
+		String sqlCreateTasklist = "Insert into system.tasklists(name,owner_email) values(?,?)";
+		String sqlAuth = "SELECT name, encrypted_password FROM system.users where name=? and encrypted_password=?";
 
 		PrintWriter pw=res.getWriter();
 		res.setContentType("text/html;charset=UTF-8");        
-		String name, checked, user, password;
-		name="'" + req.getParameter("taskname") + "'";
-		checked ="'" + req.getParameter("checked") + "'";
+		String tlName, userEmail, user, password;
+		tlName="'" + req.getParameter("tasklistName") + "'";
+		userEmail ="'" + req.getParameter("ownerEmail") + "'";
 		user="'" + req.getParameter("username") + "'";
 		password="'" + req.getParameter("password") + "'";
 
@@ -45,16 +45,16 @@ public final class CreateTask extends HttpServlet
 
 			rs.next();
 			String user_name = rs.getString("NAME");
-			String user_pwd = rs.getString("PASSWORD");
+			String user_pwd = rs.getString("ENCRYPTED_PASSWORD");
 
 			if (user_name != null && user_name != "" && user_pwd != null && user_pwd != "") {
 
-				PreparedStatement stat = con.prepareStatement(sqlCreateTask);
-				stat.setString(1, name);
-				stat.setString(2, checked);
+				PreparedStatement stat = con.prepareStatement(sqlCreateTasklist);
+				stat.setString(1, tlName);
+				stat.setString(2, userEmail);
 
 				if(stat.executeUpdate()<1){
-					pw.print("Error");			// - No task added
+					pw.print("Error"); 			// - No tasklist created
 				}else{ pw.print("Created");}
 				pw.close();
 				rs.close();
@@ -62,7 +62,7 @@ public final class CreateTask extends HttpServlet
 				stat.close();
 				con.close();
 			}else {
-				System.out.println("Error");                  	 
+				System.out.println("Authentication error - No tasked added");                  	 
 			}
 		}         
 

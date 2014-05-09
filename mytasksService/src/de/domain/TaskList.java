@@ -6,16 +6,20 @@ import java.util.List;
 
 public class TaskList {
 
-	public TaskList(String name, String email, boolean archived) {
+	public TaskList(String name, Long id, boolean archived) {
 		super();
 		this.name = name;
-		this.ownerEmail = email;
+		this.ownerId = id;
 		this.archived = archived;
 	}
 	
+	public TaskList() {
+		// TODO Auto-generated constructor stub
+	}
+
 	private Long id; 			// TL_ID
 	private String name;		// TL_NAME
-	private String ownerEmail;	// OWNER_EMAIL
+	private Long ownerId;	// OWNER_EMAIL
 	private List<Task> tasks;	
 	private boolean archived;	// ARCHIVED
 	private Date creation;		// CREATED_ON
@@ -34,12 +38,7 @@ public class TaskList {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getEmail() {
-		return ownerEmail;
-	}
-	public void setEmail(String email) {
-		this.ownerEmail = email;
-	}
+
 	public boolean isArchived() {
 		return archived;
 	}
@@ -88,8 +87,7 @@ public class TaskList {
 				+ ((creation == null) ? 0 : creation.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((ownerEmail == null) ? 0 : ownerEmail.hashCode());
+		result = prime * result + ((ownerId == null) ? 0 : ownerId.hashCode());
 		result = prime * result + ((tasks == null) ? 0 : tasks.hashCode());
 		result = prime * result + ((updated == null) ? 0 : updated.hashCode());
 		result = prime * result
@@ -122,10 +120,10 @@ public class TaskList {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (ownerEmail == null) {
-			if (other.ownerEmail != null)
+		if (ownerId == null) {
+			if (other.ownerId != null)
 				return false;
-		} else if (!ownerEmail.equals(other.ownerEmail))
+		} else if (!ownerId.equals(other.ownerId))
 			return false;
 		if (tasks == null) {
 			if (other.tasks != null)
@@ -148,9 +146,18 @@ public class TaskList {
 	
 	@Override
 	public String toString() {
-		return "TaskList [id=" + id + ", name=" + name + ", email=" + ownerEmail
-				+ ", archived=" + archived + ", creation=" + creation
-				+ ", updated=" + updated + ", updatedBy=" + updatedBy + "]";
+		return "TaskList [id=" + id + ", name=" + name + ", ownerId=" + ownerId
+				+ ", tasks=" + tasks + ", archived=" + archived + ", creation="
+				+ creation + ", updated=" + updated + ", updatedBy="
+				+ updatedBy + "]";
+	}
+
+	public Long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
 	}
 	
 	
