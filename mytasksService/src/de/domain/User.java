@@ -13,6 +13,10 @@ public class User {
 		this.password = password;
 	}
 	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
 	private Long id;			// U_ID
 	private String name;		// NAME
 	private String email;		// EMAIL

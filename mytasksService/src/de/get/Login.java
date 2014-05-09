@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
- 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,41 +23,33 @@ public class Login extends HttpServlet
 
 	protected void doPost(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException
     {
+		
+		String sqlAuth = "SELECT name, encrypted_password FROM system.users where name=? and encrypted_password=?";
 		PrintWriter pw=res.getWriter();
         res.setContentType("text/html;charset=UTF-8");        
-        String un,up;
-        un="'" + req.getParameter("username") + "'";
-        up="'" + req.getParameter("password") + "'";
+        String user, password;
+        user="'" + req.getParameter("username") + "'";
+        password="'" + req.getParameter("password") + "'";
          
-        try
-        {
-             Class.forName("oracle.jdbc.driver.OracleDriver");
-//             String url = "jdbc:oracle:thin:@//iwi-w-vm-dbo.hs-karlsruhe.de:1521/oracledbwi.hs-karlsruhe.de"; 
-//             String user = "eBS14Db01"; 
-//             String passwd = "eBs14Db";
-//             Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","SYSTEM","0000");          
-             Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","SYSTEM","0000");          
- 
-             Statement st=con.createStatement();                                      
-             ResultSet rs = st.executeQuery("SELECT * FROM system.users where name="+ un  + " and encrypted_password=" + up);
-                 
-             int i = 0; 
-             while(rs.next())
-             {  
-            	 i++;              
-             }
-             
-           if(i!=1)
-            	 pw.print("wrong credentials! try again");
-                 
-             else {
-            	 
-            	 pw.print("authentificated");
-             }
-                          
-             pw.close();
-           
-        }         
+        try {
+//          String url = "jdbc:oracle:thin:@//iwi-w-vm-dbo.hs-karlsruhe.de:1521/oracledbwi.hs-karlsruhe.de"; 
+//          String user = "eBS14Db01"; 
+//          String passwd = "eBs14Db";
+//          Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","SYSTEM","0000");  
+        	Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection con = DriverManager.getConnection( "jdbc:oracle:thin:@localhost:1521:XE", "SYSTEM", "0000"); // darf // alles!
+
+			PreparedStatement stmt = con.prepareStatement(sqlAuth);
+			stmt.setString(1, user);
+			stmt.setString(2, password);
+			ResultSet rs = stmt.executeQuery();
+        	
+			pw.print(!rs.first() ? "wrong credentials! try again" : "authentificated");
+			
+			pw.close();
+			rs.close();
+			stmt.close();
+			con.close();        }         
         
         catch (Exception e){
             e.printStackTrace();
