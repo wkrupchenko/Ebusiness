@@ -56,7 +56,8 @@ TextView error;
       String response = null;
       try {
 //       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksLogin/show", postParameters);
-    	  response = SimpleHttpClient.executeHttpPost("http://iwi-w-eb03:8080/mytasksService/login", postParameters); 
+//    	  response = SimpleHttpClient.executeHttpPost("http://iwi-w-eb03:8080/mytasksService/login", postParameters);
+    	  response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/login", postParameters);
        String res = response.toString();
        resp = res;
        /*

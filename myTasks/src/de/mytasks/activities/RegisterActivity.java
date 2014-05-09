@@ -80,7 +80,8 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 		    	      try {
 //		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksRegister/show", postParameters);
 //		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksService/register", postParameters);
-		    	       response = SimpleHttpClient.executeHttpPost("http://iwi-w-eb03:8080/mytasksService/register", postParameters);
+//		    	       response = SimpleHttpClient.executeHttpPost("http://iwi-w-eb03:8080/mytasksService/register", postParameters);
+		    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/register", postParameters);
 		    	       String res = response.toString();
 		    	       resp = res;
 		    	}
