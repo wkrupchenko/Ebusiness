@@ -25,7 +25,7 @@ public final class ShareTasklist extends HttpServlet
 
 	protected void doPost(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException
 	{
-		String sqlCreateTask = "Insert into user_tasklist(user_fk, tasklist_fk) values(?,?)";
+		String sqlShareTasklist = "Insert into user_tasklist(user_fk, tasklist_fk) values(?,?)";
 		String sqlFindUserID = "Select u_id from users where email=?";
 		String userid=null;
 		
@@ -54,17 +54,18 @@ public final class ShareTasklist extends HttpServlet
 
 				PreparedStatement stat = con.prepareStatement(sqlFindUserID);
 				stat.setString(1, email);
+				
 				ResultSet user = stat.executeQuery();
 				while(user.next()){
 					userid = user.getString("U_ID");
 				}
 				if(userid != null){
-					PreparedStatement pstat = con.prepareStatement(sqlCreateTask);
-					stat.setString(1, userid);
-					stat.setString(2, tasklistid);
+					PreparedStatement pstat = con.prepareStatement(sqlShareTasklist);
+					pstat.setString(1, userid);
+					pstat.setString(2, tasklistid);
 					if(pstat.executeUpdate()<1){
 						pw.print("Error");			// - No task added
-					}else{ pw.print("Created");}
+					}else{ pw.print("Shared");}
 				}
 				pw.close();
 				rs.close();
