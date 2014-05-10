@@ -9,16 +9,22 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.google.gson.Gson;
-import de.domain.User;
 
-/**
- * Schickt JSON liste mit USERN zurueck
- *
+import com.google.gson.Gson;
+
+import de.domain.User;
+import de.util.Util;
+
+/** 
+ * Request Parameter: tasklistid + username + password
+ * RESPONS: Schickt JSON liste mit USERN zurueck: Klasse User Member: Id , name , email
+ * 
+ *Zeigt alle Benutzer einer Tasklist an bzw mit wem sie geshared ist
  */
 public final class GetParticipants extends HttpServlet {
 
@@ -27,28 +33,27 @@ public final class GetParticipants extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		String sqlGetParticipants = "Select * from USERS u where U.EMAIL in (select UT.USER_EMAIL_FK from USER_TASKLIST UT where UT.TASKLIST_FK = ?)";
-		String sqlAuth = "SELECT name, encrypted_password FROM system.users where us.name=? and us.encrypted_password=?";
-
+		String sqlGetParticipants = "Select * from USERS where U_ID in (select USER_FK from USER_TASKLIST where TASKLIST_FK = ?)";
+		
 		PrintWriter pw = res.getWriter();
 		res.setContentType("text/html;charset=UTF-8");
 		String taskListId, user, password;
-		taskListId = "'" + req.getParameter("task_id") + "'";
+		taskListId =req.getParameter("tasklistid");
 
-		user = "'" + req.getParameter("username") + "'";
-		password = "'" + req.getParameter("password") + "'";
+		user = req.getParameter("username");
+		password = req.getParameter("password");
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con = DriverManager.getConnection( "jdbc:oracle:thin:@localhost:1521:XE", "SYSTEM", "0000"); // darf // alles!
-			PreparedStatement stmt = con.prepareStatement(sqlAuth);
+			Connection con = DriverManager.getConnection( Util.CON, Util.USER, Util.PW); // darf // alles!
+			PreparedStatement stmt = con.prepareStatement(Util.SQLAUTH);
 			stmt.setString(1, user);
 			stmt.setString(2, password);
 			ResultSet rs = stmt.executeQuery();
 
 			rs.next();
 			String user_name = rs.getString("NAME");
-			String user_pwd = rs.getString("ENCRYPTED_PASSWORD");
+			String user_pwd = rs.getString("PASSWORD");
 
 			if (user_name != null && user_name != "" && user_pwd != null && user_pwd != "") {
 
@@ -57,19 +62,24 @@ public final class GetParticipants extends HttpServlet {
 				ResultSet rst = stat.executeQuery();
 
 				ArrayList<Object> list = new ArrayList<Object>();
-				while (rst.next()) {
+				if (rst.next()) {
+					while(rst.next()){
 					User u = new User();
 					u.setId(rst.getLong("U_ID"));
 					u.setName(rst.getString("NAME"));
 					u.setEmail(rst.getString("EMAIL"));
 
 					list.add(u);
+					}
+					pw.println(new Gson().toJson(list));
+				}else{
+					pw.print("SQL-error, check input tasklistid correct?");
 				}
-
-				pw.println(new Gson().toJson(list));
+			
 				pw.close();
 				rs.close();
 				rst.close();
+				con.close();
 
 			}// else { throw new Exception("Unauthorized!");}
 		} catch (Exception e) {

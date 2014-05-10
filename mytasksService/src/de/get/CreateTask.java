@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import de.util.Util;
+
 /**
  * Input: taskname, checked  + (Auth: username , password
  * Output: Message: Error or Created
@@ -24,8 +26,7 @@ public final class CreateTask extends HttpServlet
 	protected void doPost(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException
 	{
 		String sqlCreateTask = "Insert into system.task(name, checked) values(?,?)";
-		String sqlAuth = "SELECT name, password FROM system.users where name=? and encrypted_password=?";
-
+		
 		PrintWriter pw=res.getWriter();
 		res.setContentType("text/html;charset=UTF-8");        
 		String name, checked, user, password;
@@ -38,7 +39,7 @@ public final class CreateTask extends HttpServlet
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection con = DriverManager.getConnection( "jdbc:oracle:thin:@localhost:1521:XE", "SYSTEM", "0000"); // darf // alles!
 
-			PreparedStatement stmt = con.prepareStatement(sqlAuth);
+			PreparedStatement stmt = con.prepareStatement(Util.SQLAUTH);
 			stmt.setString(1, user);
 			stmt.setString(2, password);
 			ResultSet rs = stmt.executeQuery();

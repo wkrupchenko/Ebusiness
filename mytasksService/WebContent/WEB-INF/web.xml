@@ -8,12 +8,40 @@
     <servlet-class>de.get.Login</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>Register</servlet-name>
+    <servlet-class>de.get.Register</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>CreateTask</servlet-name>
     <servlet-class>de.get.CreateTask</servlet-class>
   </servlet>
+   <servlet>
+    <servlet-name>UpdateTask</servlet-name>
+    <servlet-class>de.get.UpdateTask</servlet-class>
+  </servlet>
   <servlet>
-    <servlet-name>Register</servlet-name>
-    <servlet-class>de.get.Register</servlet-class>
+    <servlet-name>DeleteTask</servlet-name>
+    <servlet-class>de.get.DeleteTask</servlet-class>
+  </servlet>
+   <servlet>
+    <servlet-name>CreateTasklist</servlet-name>
+    <servlet-class>de.get.CreateTasklist</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DeleteTasklist</servlet-name>
+    <servlet-class>de.get.DeleteTasklist</servlet-class>
+  </servlet>
+    <servlet>
+    <servlet-name>UpdateTasklist</servlet-name>
+    <servlet-class>de.get.UpdateTasklist</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>GetParticipants</servlet-name>
+    <servlet-class>de.get.GetParticipants</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>GetTasklist</servlet-name>
+    <servlet-class>de.get.GetTasklist</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
@@ -21,10 +49,39 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>CreateTask</servlet-name>
-    <url-pattern>/create</url-pattern>
+    <url-pattern>/createTask</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Register</servlet-name>
     <url-pattern>/register</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DeleteTask</servlet-name>
+    <url-pattern>/deleteTask</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdateTask</servlet-name>
+    <url-pattern>/updateTask</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>CreateTasklist</servlet-name>
+    <url-pattern>/createTasklist</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>DeleteTasklist</servlet-name>
+    <url-pattern>/deleteTasklist</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetParticipants</servlet-name>
+    <url-pattern>/getParticipants</url-pattern>
+  </servlet-mapping>getTasklist
+   <servlet-mapping>
+    <servlet-name>GetTasklist</servlet-name>
+    <url-pattern>/getTasklist</url-pattern>
+  </servlet-mapping>updateTasklist
+  <servlet-mapping>
+    <servlet-name>UpdateTasklist</servlet-name>
+    <url-pattern>/updateTasklist</url-pattern>
+  </servlet-mapping>
+   
 </web-app>

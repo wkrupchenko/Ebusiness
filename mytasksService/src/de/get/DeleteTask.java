@@ -12,7 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import de.util.Util;
 
+
+/**
+ * Input: taskid + username + password
+ * Output Message: "OK" or "sql Error  no Task deleted"
+ *
+ */
 public final class DeleteTask extends HttpServlet  
 {
 
@@ -20,20 +27,20 @@ public final class DeleteTask extends HttpServlet
 
 	protected void doPost(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException
 	{
-		String sqlDeleteTask = "Delete from system.task where T_ID =?";
-		String sqlAuth = "SELECT name, encrypted_password FROM system.users where name=? and encrypted_password=?";
+		String sqlDeleteTask = "Delete from task where TASK_ID =?";
+		String sqlAuth = "SELECT name, password FROM users where name=? and password=?";
 
 		PrintWriter pw=res.getWriter();
 		res.setContentType("text/html;charset=UTF-8");        
 		String taskId, user, password;
-		taskId = "'" + req.getParameter("task_id")+"'";        
-		user="'" + req.getParameter("username") + "'";
-		password="'" + req.getParameter("password") + "'";
+		taskId = req.getParameter("taskid");        
+		user=req.getParameter("username");
+		password=req.getParameter("password");
 
 		try
 		{
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","SYSTEM","0000");    //darf alles!      
+			Connection con=DriverManager.getConnection(Util.CON, Util.USER, Util.PW);    //darf alles!      
 
 			PreparedStatement stmt = con.prepareStatement(sqlAuth);
 			stmt.setString(1, user);
@@ -41,16 +48,16 @@ public final class DeleteTask extends HttpServlet
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
 			String user_name = rs.getString("NAME");
-			String user_pwd = rs.getString("ENCRYPTED_PASSWORD");
+			String user_pwd = rs.getString("PASSWORD");
 
 			if (user_name != null && user_name != "" && user_pwd != null && user_pwd != "") {
 
 				PreparedStatement stat = con.prepareStatement(sqlDeleteTask);
 				stat.setString(1, taskId);
 
-				if(stat.executeUpdate()<1){
-					pw.print("Error - No task added");
-				}else{ pw.print("Task added");}
+				if(stat.executeUpdate()>0){pw.print("OK");}else {
+					pw.print("input error-no task deleted");
+				}
 				pw.close();
 				rs.close();
 				stmt.close();
@@ -63,6 +70,7 @@ public final class DeleteTask extends HttpServlet
 			}
 		}
 		catch (Exception e){
+			pw.print("sql Error  no Task deleted");
 			e.printStackTrace();           
 		}
 

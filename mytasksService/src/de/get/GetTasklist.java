@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,12 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import de.domain.Task;
 import de.domain.TaskList;
+import de.util.Util;
 
 /**
- *  Input: userId + username + password
+ *  Request Parameter: userid + username + password
  *  Output: Json Liste mit Tasklist -> mit Tasks
  */
 public final class GetTasklist extends HttpServlet {
@@ -29,28 +32,27 @@ public final class GetTasklist extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		String sqlGetTasklists = "Select fk_tasklist from user_tasklist where fk_user=?";
-		String sqlGetTasks = "Select * from task where fk_tasklist=?";
-		String sqlAuth = "SELECT name, encrypted_password FROM system.users where us.name=? and us.encrypted_password=?";
-
+		String sqlGetTasklists = "Select * from tasklist where TL_ID in (select tasklist_fk from user_tasklist where user_fk=?)";
+		String sqlGetTasks = "Select * from task where tl_fk=?";
+		
 		PrintWriter pw = res.getWriter();
 		res.setContentType("text/html;charset=UTF-8");
 		String userId, user, password;
-		userId = "'" + req.getParameter("userId") + "'";
-		user = "'" + req.getParameter("username") + "'";
-		password = "'" + req.getParameter("password") + "'";
+		userId = req.getParameter("userid");
+		user = req.getParameter("username");
+		password = req.getParameter("password");
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con = DriverManager.getConnection( "jdbc:oracle:thin:@localhost:1521:XE", "SYSTEM", "0000"); // darf // alles!
-			PreparedStatement stmt = con.prepareStatement(sqlAuth);
+			Connection con = DriverManager.getConnection(Util.CON, Util.USER, Util.PW); // darf // alles!
+			PreparedStatement stmt = con.prepareStatement(Util.SQLAUTH);
 			stmt.setString(1, user);
 			stmt.setString(2, password);
 			ResultSet rs = stmt.executeQuery();
 
 			rs.next();
 			String user_name = rs.getString("NAME");
-			String user_pwd = rs.getString("ENCRYPTED_PASSWORD");
+			String user_pwd = rs.getString("PASSWORD");
 
 			if (user_name != null && user_name != "" && user_pwd != null && user_pwd != "") {
 
@@ -66,7 +68,7 @@ public final class GetTasklist extends HttpServlet {
 					ArrayList<Task> tasks = new ArrayList<Task>();
 					TaskList tl = new TaskList();
 					tl.setId(rst.getLong("TL_ID"));
-					tl.setName(rst.getString("TASKLISTNAME"));
+					tl.setName(rst.getString("TL_NAME"));
 					tl.setOwnerId(rst.getLong("FK_OWNER"));
 					
 					pstmt.setString(1, tl.getId().toString());
@@ -74,16 +76,22 @@ public final class GetTasklist extends HttpServlet {
 					
 					while (resTasks.next()) {
 						Task t = new Task();
-						t.setTask_id(resTasks.getLong("T_ID"));
+						t.setTask_id(resTasks.getLong("TASK_ID"));
 						t.setName(resTasks.getString("NAME"));
 						t.setChecked(resTasks.getInt("CHECKED"));
-						t.setTasklist(resTasks.getLong("FK_TASKLIST"));
+						t.setTasklist(resTasks.getLong("TL_FK"));
 						tasks.add(t);
-					}					
+					}
+					tl.setTasks(tasks);
+//					pw.print(tl);
 					tasklists.add(tl);
 				}
-
-				pw.println(new Gson().toJson(tasklists));
+				String out = new Gson().toJson(tasklists);
+				pw.println(out);
+				
+				//TaskList taskList = new Gson().fromJson(out, TaskList.class);
+				
+				
 				pw.close();
 				rs.close();
 				rst.close();

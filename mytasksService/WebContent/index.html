@@ -1,8 +1,10 @@
+<p>LOGIN<br></p>
 <form action="login" method="post">
 <table>
 <tr>
 <td>
   <font face="verdana" size="2">
+ 
      Enter Username :<input type="text" name="username">                    
    
      Enter Password :<input type="text" name="password">                 
@@ -14,6 +16,8 @@
   </tr>
   </table>
 </form>
+
+<p>REGISTER<br></p>
 <form action="register" method="post">
 <table>
 <tr>
@@ -32,7 +36,9 @@
   </tr>
   </table>
 </form>
-<form action="create" method="post">
+
+<p>CREATE TASK<br></p>
+<form action="createTask" method="post">
 <table>
 <tr>
 <td>
@@ -46,7 +52,88 @@
   <td>
      Enter Taskname :<input type="text" name="taskname">                 
                           
-     Enter Checked :<input type="text" name="checked">   
+     Enter Checked :<input type="text" name="checked">
+     
+     Enter TasklistID :<input type="text" name="tasklistId">   
+                   
+  </td>
+  
+  <td>
+   <input type="submit" value="Display">
+  </td>
+  
+  </tr>
+  </table>
+</form>
+
+<p>UPDATE TASK<br></p>
+<form action="updateTask" method="post">
+<table>
+<tr>
+<td>
+   
+     Enter Username :<input type="text" name="username">                    
+   
+     Enter Password :<input type="text" name="password">
+     
+  
+  </td>  
+  <td>
+     Enter Taskname :<input type="text" name="taskname">                 
+                          
+     Enter Checked :<input type="text" name="taskcheckbox">
+     
+     Enter task ID :<input type="text" name="taskid">   
+                   
+  </td>
+  
+  <td>
+   <input type="submit" value="Display">
+  </td>
+  
+  </tr>
+  </table>
+</form>
+
+<p>DELETE TASK<br></p>
+<form action="deleteTask" method="post">
+<table>
+<tr>
+<td>
+   
+     Enter Username :<input type="text" name="username">                    
+   
+     Enter Password :<input type="text" name="password">
+     
+  
+  </td>  
+  <td>
+     Enter TaskID :<input type="text" name="taskid">                  
+                   
+  </td>
+  
+  <td>
+   <input type="submit" value="Display">
+  </td>
+  
+  </tr>
+  </table>
+</form>
+
+<p>GETPARTICIIPANTS<br></p>
+<form action="getParticipants" method="post">
+<table>
+<tr>
+<td>
+   
+     Enter Username :<input type="text" name="username">                    
+   
+     Enter Password :<input type="text" name="password">
+     
+  
+  </td>  
+  <td>
+     Enter Tasklistid :<input type="text" name="tasklistid">                  
                    
   </td>
   
@@ -57,3 +144,106 @@
   </tr>
   </table>
 </form>  
+
+<p>GETTASKLIST<br></p>
+<form action="getTasklist" method="post">
+<table>
+<tr>
+<td>
+   
+     Enter Username :<input type="text" name="username">                    
+   
+     Enter Password :<input type="text" name="password">
+     
+  
+  </td>  
+  <td>
+     Enter Userid :<input type="text" name="userid">                  
+                   
+  </td>
+  
+  <td>
+   <input type="submit" value="Display">
+  </td>
+  
+  </tr>
+  </table>
+</form> 
+
+<p>CREATE TASKLIST<br></p>
+<form action="createTasklist" method="post">
+<table>
+<tr>
+<td>
+   
+     Enter Username :<input type="text" name="username">                    
+   
+     Enter Password :<input type="text" name="password">
+     
+  
+  </td>  
+  <td>
+     Enter Tasklistname :<input type="text" name="tasklistname">                 
+       
+     Enter ownerid :<input type="text" name="ownerid">   
+                   
+  </td>
+  
+  <td>
+   <input type="submit" value="Display">
+  </td>
+  
+  </tr>
+  </table>
+</form>
+
+<p>UPDATE TASKLIST<br></p>
+<form action="updateTasklist" method="post">
+<table>
+<tr>
+<td>
+   
+     Enter Username :<input type="text" name="username">                    
+   
+     Enter Password :<input type="text" name="password">
+     
+  
+  </td>  
+  <td>
+     Enter Tasklistname :<input type="text" name="tasklistname">                 
+     Enter archived :<input type="text" name="archived"> 
+     Enter tasklistid :<input type="text" name="tasklistid"> 
+                   
+  </td>
+  
+  <td>
+   <input type="submit" value="Display">
+  </td>
+  
+  </tr>
+  </table>
+</form>
+<p>DELETE TASKLIST<br></p>
+<form action="deleteTasklist" method="post">
+<table>
+<tr>
+<td>
+   
+     Enter Username :<input type="text" name="username">                    
+   
+     Enter Password :<input type="text" name="password">
+     
+  
+  </td>  
+  <td>
+     Enter Tasklistid :<input type="text" name="tasklistid">                  
+                   
+  </td>
+  
+  <td>
+   <input type="submit" value="Display">
+  </td>
+  
+  </tr>
+  </table>
+</form>
