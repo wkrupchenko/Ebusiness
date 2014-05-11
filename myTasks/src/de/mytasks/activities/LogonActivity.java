@@ -81,7 +81,7 @@ TextView error;
     Thread.sleep(1000);
     /** Inside the new thread we cannot update the main thread
     So updating the main thread outside the new thread */
-    boolean check = resp.contains("authentificated");
+    boolean check = resp.contains("OK");
     	if (check == true) {
     		   		
     	    	   Intent it = new Intent(getApplicationContext(),TasklistActivity.class);
