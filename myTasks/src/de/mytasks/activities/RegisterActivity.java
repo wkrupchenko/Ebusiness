@@ -107,8 +107,7 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	    	    	if (null != resp && !resp.isEmpty()) {
 	    	    		 boolean check = resp.contains("Registered OK");	    	    		  
 	    	    	       if (check == true) {
-	    	    	    	   Toast.makeText(getApplicationContext(), "you've been successfully registered",Toast.LENGTH_SHORT).show();
-	    	    	    	   Thread.sleep(10000);
+	    	    	    	   Toast.makeText(getApplicationContext(), "you've been successfully registered",Toast.LENGTH_LONG).show();
 	    	    	    	   Intent it = new Intent(getApplicationContext(),TasklistActivity.class);
 	    	    	     	 	startActivity(it);
 	    	    	       } 

@@ -92,7 +92,10 @@ TextView error;
     	
     	else {
     		//if (null != errorMsg && !errorMsg.isEmpty()) {
-    	   	       error.setText("Wrong credential! Please try again!");
+    			   Toast.makeText(getApplicationContext(), "Wrong credential! Please try again!",Toast.LENGTH_LONG).show();
+//    	   	       error.setText("Wrong credential! Please try again!");
+//    	   	       Thread.sleep(1000);
+//    	   	       error.setText("");
     	    	 // }
     	} 
             
