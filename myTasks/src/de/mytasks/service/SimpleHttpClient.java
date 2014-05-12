@@ -51,12 +51,13 @@ public class SimpleHttpClient {
      */
     public static String executeHttpPost(String url, ArrayList<NameValuePair> postParameters) throws Exception {
         BufferedReader in = null;
+        HttpResponse response = null;
         try {
             HttpClient client = getHttpClient();
             HttpPost request = new HttpPost(url);
             UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(postParameters);
             request.setEntity(formEntity);
-            HttpResponse response = client.execute(request);
+            response = client.execute(request);
             in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
             StringBuffer sb = new StringBuffer("");
@@ -74,6 +75,7 @@ public class SimpleHttpClient {
             if (in != null) {
                 try {
                     in.close();
+                    response.getEntity().consumeContent();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

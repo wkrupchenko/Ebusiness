@@ -29,9 +29,9 @@ public class Register extends HttpServlet
 		//String tb = req.getParameter("table"); 
 
 		String un,ue,up;
-		un="'" + req.getParameter("username") + "'";
-		up="'" + req.getParameter("password") + "'";
-		ue="'" + req.getParameter("email") + "'";         
+		un=req.getParameter("username");
+		up=req.getParameter("password");
+		ue=req.getParameter("email");         
 
 		try
 		{
