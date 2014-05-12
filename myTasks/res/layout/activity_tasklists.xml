@@ -71,13 +71,13 @@
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/tasklist_button_add_task_text_view" />
 
-    <ExpandableListView
-        android:id="@+id/tasklistOverwiewWindow"
+    <ListView
+        android:id="@+id/tasklistOverviewWindow"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_above="@+id/shareButton"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="15dp" >
-    </ExpandableListView>
+    </ListView>
 
 </RelativeLayout>
