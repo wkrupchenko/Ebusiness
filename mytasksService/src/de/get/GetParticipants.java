@@ -1,4 +1,4 @@
-package src.de.get;
+package de.get;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import src.de.domain.User;
-import src.de.util.Util;
+import de.domain.User;
+import de.util.Util;
 
 /** 
  * Request Parameter: tasklistid + username + password

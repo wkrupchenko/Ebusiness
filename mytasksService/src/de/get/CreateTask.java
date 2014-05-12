@@ -1,4 +1,4 @@
-package src.de.get;
+package de.get;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import src.de.util.Util;
+import de.util.Util;
 
 /**
  * Input: tasklistid, taskname, checked  + (Auth: username , password
