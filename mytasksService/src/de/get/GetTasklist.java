@@ -1,4 +1,4 @@
-package de.get;
+package src.de.get;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import de.domain.Task;
-import de.domain.TaskList;
-import de.util.Util;
+import src.de.domain.Task;
+import src.de.domain.TaskList;
+import src.de.util.Util;
 
 /**
  *  Request Parameter: userid + username + password

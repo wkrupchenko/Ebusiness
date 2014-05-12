@@ -1,4 +1,4 @@
-package de.util;
+package src.de.util;
 
 public class Util {
 
