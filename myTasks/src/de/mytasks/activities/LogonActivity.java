@@ -6,6 +6,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import de.mytasks.R;
+import de.mytasks.service.SessionManager;
 import de.mytasks.service.SimpleHttpClient;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -27,17 +28,25 @@ private String resp;
 private String errorMsg;
 TextView error;
 
+//Session Manager Class
+SessionManager session;
+
  /** Called when the activity is first created. */
  @Override
  public void onCreate(Bundle savedInstanceState) {
   super.onCreate(savedInstanceState);
   setContentView(R.layout.activity_login);
+  
+  //Session Manager
+  session = new SessionManager(getApplicationContext());    
+  
   username = (EditText) findViewById(R.id.loginViewUsernameInput);
   password = (EditText) findViewById(R.id.loginViewPasswordInput);
   login = (Button) findViewById(R.id.loginViewLoginButton);
   register = (Button) findViewById(R.id.loginViewRegisterButton);
   error = (TextView) findViewById(R.id.error);
-     
+  
+  Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
 
   login.setOnClickListener(new View.OnClickListener() {
 
@@ -60,12 +69,6 @@ TextView error;
     	  response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/login", postParameters);
        String res = response.toString();
        resp = res;
-       /*
-       boolean check = resp.contains("authentificated");
-       if (check == true) {
-    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
-     	 	startActivity(it);
-       } */ 
              
 
       } catch (Exception e) {
@@ -83,11 +86,10 @@ TextView error;
     So updating the main thread outside the new thread */
     boolean check = resp.contains("OK");
     	if (check == true) {
-    		   		
-    	    	   Intent it = new Intent(getApplicationContext(),TasklistActivity.class);
+    				session.createLoginSession(username.getText().toString());
+    	    	    Intent it = new Intent(getApplicationContext(),TasklistActivity.class);
     	     	 	startActivity(it);
-    	     
-    		//error.setText(resp);
+    	     	 	finish();
     	}
     	
     	else {
