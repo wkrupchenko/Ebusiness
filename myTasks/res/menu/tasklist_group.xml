@@ -6,4 +6,8 @@
     <item
     	android:id="@+id/tasklists_update"
         android:title="Update" />
+    
+    <item
+    	android:id="@+id/logout"
+        android:title="Logout" />
 </menu>

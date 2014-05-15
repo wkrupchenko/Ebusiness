@@ -10,8 +10,10 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,9 +27,15 @@ import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 import de.mytasks.R;
 import de.mytasks.database.DatabaseHelper;
 import de.mytasks.domain.Tasklist;
+import de.mytasks.domain.User;
+import de.mytasks.service.GetCurrentUserInformation;
+import de.mytasks.service.SessionManager;
 import de.mytasks.service.SimpleHttpClient;
 
 public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
+	
+	// Session Manager Class
+    SessionManager session;
 
 	private EditText taskListName;
 	private Button creatNewTask;
@@ -45,6 +53,10 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tasklists);
+		
+		// Session class instance
+        session = new SessionManager(getApplicationContext());
+		
 		creatNewTask = (Button) findViewById(R.id.addTaskButton);
 		settings = (Button) findViewById(R.id.shareButton);
 		update = (Button) findViewById(R.id.updateButton);
@@ -60,9 +72,102 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 
 		tasklistOverviewWindow.setAdapter(adapter);
 		list.add("Test");
+		
+		/**
+         * Call this function whenever you want to check user login
+         * This will redirect user to LoginActivity is he is not
+         * logged in
+         * */
+        session.checkLogin();
+         
+        // get user data from session
+        List<String> user = session.getUserDetails();
+         
+        // name an 1. Position in der Liste
+        String name = user.get(0);
+        
+     // For Testing we display in the EditText the user data
+        taskListName.setText(name);
 	
 	}
-	
+
+	View.OnClickListener myhandler1 = new View.OnClickListener() {
+	    public void onClick(View v) {
+	    	
+	    	new Thread(new Runnable(){
+	    		
+		    	@Override
+		    	public void run() {
+		    		// Get User Information via GetCurrentUserInformation Class
+		    		// which gives the user the following Information:
+		    		// name, email and ID
+		    		// Maybe this should be done out of the thread...
+//		    		User user = new User();
+//		    		GetCurrentUserInformation ui = new GetCurrentUserInformation();
+//		    		user = ui.getUserInformation();
+		    		
+		    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+		    		postParameters.add(new BasicNameValuePair("username","pipi"));
+//		    		postParameters.add(new BasicNameValuePair("username",user.getName()));
+		    		postParameters.add(new BasicNameValuePair("password","qqq"));
+		    	    postParameters.add(new BasicNameValuePair("userid","14"));
+		    	    
+		    	    String response = null;
+		    	      try {
+//		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksRegister/show", postParameters);
+//		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksService/register", postParameters);
+//		    	       response = SimpleHttpClient.executeHttpPost("http://iwi-w-eb03:8080/mytasksService/register", postParameters);
+		    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/getTasklist", postParameters);
+		    	       String res = response.toString();
+		    	       Log.v(TAG, response.toString());
+		    	       Log.v(TAG, res.toString());
+		    	       resp = res;
+		    	}
+		    	      catch (Exception e) {
+		    	          e.printStackTrace();
+		    	          Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+		    	      }
+		    	} 
+	    	}).start();
+	    	
+	    	try {
+
+	    	    /** wait a second to get response from server */
+	    	    Thread.sleep(1000);
+	    	    
+	    	    Log.v(TAG, resp.toString());
+	    	    
+	    	    Gson gson = new Gson();
+	    	    
+	    	    JSONArray jsonArray = new JSONArray(resp);
+	    	    
+	    	    
+	    	    for (int i = 0; i < jsonArray.length(); i++) {
+	    	        JSONObject jsonObject = jsonArray.getJSONObject(i);
+	    	        Tasklist tasklist = new Tasklist();
+	    	        String TasklistId = jsonObject.getString("id");
+	    	        String TasklistName = jsonObject.getString("name");
+	    	        String TasklistOwner = jsonObject.getString("ownerId");
+	    	        tasklist.setId(Long.valueOf(TasklistId).longValue());
+	    	        tasklist.setName(TasklistName);
+	    	        tasklist.setOwnerId(Long.valueOf(TasklistOwner).longValue());
+	    	        allTasklists.add(tasklist);
+	    	        Log.i(Tasklist.class.getName(), jsonObject.getString("name"));
+	    	      }
+	    	    
+	    	    for(Tasklist t : allTasklists){
+	    	    	list.add(t.getName());
+	    	    }
+	    	    
+	    	    
+	    	    tasklistOverviewWindow.setAdapter(adapter);
+	    	    } 
+	    	catch (Exception e) {
+	    	    	e.printStackTrace();
+	    	 }
+	    }
+	  };
+
 	View.OnClickListener myhandler2 = new View.OnClickListener() {
 	    public void onClick(View v) {
 	    	
@@ -118,116 +223,33 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    }
 	  };
 	  
-	  View.OnClickListener myhandler1 = new View.OnClickListener() {
-		    public void onClick(View v) {
-		    	
-		    	new Thread(new Runnable(){
-		    		
-			    	@Override
-			    	public void run() {
-			    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-			    		postParameters.add(new BasicNameValuePair("username","pipi"));
-			    		postParameters.add(new BasicNameValuePair("password","qqq"));
-			    	    postParameters.add(new BasicNameValuePair("userid","14"));
-			    	    
-			    	    String response = null;
-			    	      try {
-//			    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksRegister/show", postParameters);
-//			    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksService/register", postParameters);
-//			    	       response = SimpleHttpClient.executeHttpPost("http://iwi-w-eb03:8080/mytasksService/register", postParameters);
-			    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/getTasklist", postParameters);
-			    	       String res = response.toString();
-			    	       Log.v(TAG, response.toString());
-			    	       Log.v(TAG, res.toString());
-			    	       resp = res;
-			    	}
-			    	      catch (Exception e) {
-			    	          e.printStackTrace();
-			    	          Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
-			    	      }
-			    	} 
-		    	}).start();
-		    	
-		    	try {
+	  
 
-		    	    /** wait a second to get response from server */
-		    	    Thread.sleep(1000);
-		    	    
-		    	    Log.v(TAG, resp.toString());
-		    	    
-		    	    Gson gson = new Gson();
-		    	    
-		    	    JSONArray jsonArray = new JSONArray(resp);
-		    	    
-		    	    
-		    	    for (int i = 0; i < jsonArray.length(); i++) {
-		    	        JSONObject jsonObject = jsonArray.getJSONObject(i);
-		    	        Tasklist tasklist = new Tasklist();
-		    	        String TasklistId = jsonObject.getString("id");
-		    	        String TasklistName = jsonObject.getString("name");
-		    	        String TasklistOwner = jsonObject.getString("ownerId");
-		    	        tasklist.setId(Long.valueOf(TasklistId).longValue());
-		    	        tasklist.setName(TasklistName);
-		    	        tasklist.setOwnerId(Long.valueOf(TasklistOwner).longValue());
-		    	        allTasklists.add(tasklist);
-		    	        Log.i(Tasklist.class.getName(), jsonObject.getString("name"));
-		    	      }
-		    	    
-		    	    for(Tasklist t : allTasklists){
-		    	    	list.add(t.getName());
-		    	    }
-		    	    
-		    	    
-		    	    tasklistOverviewWindow.setAdapter(adapter);
-		    	    
-		    	    
-//		    	    JSONObject responseObj = null;
-//					Log.v(TAG, "JSON Object NULL");
-//		    	    /** Inside the new thread we cannot update the main thread
-//		    	    So updating the main thread outside the new thread */
-//		    	   
-//		    	    		
-//					// parse and display JSON response
-//    	    		// create JSON object from JSON string
-//					responseObj = new JSONObject(resp);
-//					Log.v(TAG, "JSON Object Not NULL");
-//					
-//					boolean success = responseObj.getBoolean("success");
-//					String s = new Boolean(success).toString();
-//					Log.v(TAG, s);
-//					if (success) {
-//						
-//						String tasklistInfo = responseObj
-//								.getString("TasklistInfo");
-//						Log.v(TAG, tasklistInfo);
-//					
-//						// create java object from the JSON object
-//						Tasklist tasklist = gson.fromJson(tasklistInfo,
-//								Tasklist.class);
-//						Log.v(TAG, tasklist.toString());
-//						
-//						String name;
-//						name = tasklist.getName();
-//						list.add(name);
-//					}
-//		    	    	
-//		    	    	else {
-//		    	    		Log.v(TAG, "leider nicht geklappt");
-//							list.add("leider nicht geklappt");
-//		    	    	} 
-		    	    } 
-		    	catch (Exception e) {
-		    	    	e.printStackTrace();
-		    	 }
-		    }
-		  };
-
-
+	
+	public void logout(){
+		// Clear the session data
+        // This will clear all session data and 
+        // redirect user to LoginActivity
+        session.logoutUser();
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.tasklist_group, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.logout:
+	            logout();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 	@Override
