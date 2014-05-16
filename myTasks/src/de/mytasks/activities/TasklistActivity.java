@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,7 +42,6 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	private Button creatNewTask;
 	private Button settings;
 	private Button update;
-	private DatabaseHelper databaseHelper;
 	private ListView tasklistOverviewWindow;
 	private String resp;
 	private ArrayList<String> list = new ArrayList<String>();
@@ -64,14 +64,14 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		tasklistOverviewWindow = (ListView) findViewById(R.id.tasklistOverviewWindow);
 		update.setOnClickListener(myhandler1);
 		creatNewTask.setOnClickListener(myhandler2);
+		tasklistOverviewWindow.setOnItemClickListener(listHandler);
 		
-//		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-//				android.R.layout.simple_list_item_1, list);
 		adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, list);
 
 		tasklistOverviewWindow.setAdapter(adapter);
-		list.add("Test");
+		
+		update.callOnClick();
 		
 		/**
          * Call this function whenever you want to check user login
@@ -81,13 +81,13 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
         session.checkLogin();
          
         // get user data from session
-        List<String> user = session.getUserDetails();
+//        List<String> user = session.getUserDetails();
          
         // name an 1. Position in der Liste
-        String name = user.get(0);
+//        String name = user.get(0);
         
      // For Testing we display in the EditText the user data
-        taskListName.setText(name);
+//        taskListName.setText(name);
 	
 	}
 
@@ -114,9 +114,6 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		    	    
 		    	    String response = null;
 		    	      try {
-//		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksRegister/show", postParameters);
-//		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksService/register", postParameters);
-//		    	       response = SimpleHttpClient.executeHttpPost("http://iwi-w-eb03:8080/mytasksService/register", postParameters);
 		    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/getTasklist", postParameters);
 		    	       String res = response.toString();
 		    	       Log.v(TAG, response.toString());
@@ -143,7 +140,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    	    
 	    	    
 	    	    for (int i = 0; i < jsonArray.length(); i++) {
-	    	        JSONObject jsonObject = jsonArray.getJSONObject(i);
+	    	        JSONObject jsonObject = jsonArray.getJSONObject(i);	  
 	    	        Tasklist tasklist = new Tasklist();
 	    	        String TasklistId = jsonObject.getString("id");
 	    	        String TasklistName = jsonObject.getString("name");
@@ -151,15 +148,12 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    	        tasklist.setId(Long.valueOf(TasklistId).longValue());
 	    	        tasklist.setName(TasklistName);
 	    	        tasklist.setOwnerId(Long.valueOf(TasklistOwner).longValue());
-	    	        allTasklists.add(tasklist);
+	    	        if(allTasklists.contains(tasklist) == false){
+		    	        allTasklists.add(tasklist);
+		    	        list.add(tasklist.getName());
+	    	        }
 	    	        Log.i(Tasklist.class.getName(), jsonObject.getString("name"));
-	    	      }
-	    	    
-	    	    for(Tasklist t : allTasklists){
-	    	    	list.add(t.getName());
-	    	    }
-	    	    
-	    	    
+	    	      }  
 	    	    tasklistOverviewWindow.setAdapter(adapter);
 	    	    } 
 	    	catch (Exception e) {
@@ -183,9 +177,6 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		    	    
 		    	    String response = null;
 		    	      try {
-//		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksRegister/show", postParameters);
-//		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksService/register", postParameters);
-//		    	       response = SimpleHttpClient.executeHttpPost("http://iwi-w-eb03:8080/mytasksService/register", postParameters);
 		    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/createTasklist", postParameters);
 		    	       String res = response.toString();
 		    	       resp = res;
@@ -223,8 +214,17 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    }
 	  };
 	  
-	  
 
+	  ListView.OnItemClickListener listHandler = new ListView.OnItemClickListener(){
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
+			intent.putExtra("Test", "Taskliste: "+ tasklistOverviewWindow.getAdapter().getItem(arg2).toString());
+			startActivity(intent);	
+		}
+	  };
 	
 	public void logout(){
 		// Clear the session data
@@ -247,6 +247,9 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	        case R.id.logout:
 	            logout();
 	            return true;
+	        case R.id.tasklists_update:
+	        	update.callOnClick();
+	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -255,13 +258,5 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-
-		/*
-		 * You'll need this in your class to release the helper when done.
-		 */
-		if (databaseHelper != null) {
-			databaseHelper.close();
-			databaseHelper = null;
-		}
 	}
 }
