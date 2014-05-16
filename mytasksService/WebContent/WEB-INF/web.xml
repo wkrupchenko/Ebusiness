@@ -16,6 +16,10 @@
     <servlet-class>de.get.CreateTask</servlet-class>
   </servlet>
    <servlet>
+    <servlet-name>GetTasks</servlet-name>
+    <servlet-class>de.get.GetTasks</servlet-class>
+  </servlet>
+   <servlet>
     <servlet-name>UpdateTask</servlet-name>
     <servlet-class>de.get.UpdateTask</servlet-class>
   </servlet>
@@ -54,6 +58,10 @@
   <servlet-mapping>
     <servlet-name>CreateTask</servlet-name>
     <url-pattern>/createTask</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetTasks</servlet-name>
+    <url-pattern>/getTasks</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Register</servlet-name>
