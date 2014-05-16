@@ -84,8 +84,8 @@ SessionManager session;
     Thread.sleep(1000);
     /** Inside the new thread we cannot update the main thread
     So updating the main thread outside the new thread */
-    boolean check = resp.contains("OK");
-    	if (check == true) {
+    boolean check = resp.contains("Error");
+    	if (check != true) {
     				session.createLoginSession(username.getText().toString());
     	    	    Intent it = new Intent(getApplicationContext(),TasklistActivity.class);
     	     	 	startActivity(it);
