@@ -12,32 +12,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
+import de.domain.User;
 import de.util.Util;
  
+/**
+ * Requestparameter: username, password
+ * Response: User object with ID, name and email (Gson)
+ *
+ */
 public class Login extends HttpServlet  
 {
-    /**
-	 * 
-	 */
-		
-	 
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException
     {
-		
-		
 		PrintWriter pw=res.getWriter();
         res.setContentType("text/html;charset=UTF-8");        
         String user, password;
         user =     req.getParameter("username");
         password = req.getParameter("password");
          
-        try {
-//          String url = "jdbc:oracle:thin:@//iwi-w-vm-dbo.hs-karlsruhe.de:1521/oracledbwi.hs-karlsruhe.de"; 
-//          String user = "eBS14Db01"; 
-//          String passwd = "eBs14Db";
-//          Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","SYSTEM","0000");  
+        try { 
         	Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection con = DriverManager.getConnection(Util.CON, Util.USER, Util.PW); // darf // alles!
 
@@ -47,8 +44,13 @@ public class Login extends HttpServlet
 			ResultSet rs = stmt.executeQuery();
 //			pw.print(user+password);
         	
-			pw.print(rs.next()? "OK" : "ERR"); //wrong credentials! try again" : "authentificated"
-			
+			String out = "Error";
+			while(rs.next()){
+				User u = new User(rs.getLong("U_ID"), rs.getString("NAME"), rs.getString("EMAIL"));
+				out = new Gson().toJson(u);
+			}
+			pw.print(out); //wrong credentials! try again" : "authentificated"
+				
 			pw.close();
 			rs.close();
 			stmt.close();

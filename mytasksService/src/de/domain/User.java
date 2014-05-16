@@ -12,6 +12,12 @@ public class User {
 		this.email = email;
 		this.password = password;
 	}
+	public User(Long id, String name, String email) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.id = id;
+	}
 	
 	public User() {
 		// TODO Auto-generated constructor stub
