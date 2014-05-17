@@ -53,6 +53,11 @@
 	<string name="share_list_activity_tasklist_name_text_view">blocker für Tasklistnamen</string>
 	<string name ="share_list_button_edit_text">edit</string>
 	
+	<!-- Context Menu -->
+	<string name="str_context_menu_edit">Edit</string>
+    <string name="str_context_menu_share">Share</string>
+    <string name="str_context_menu_delete">Delete</string>
+	
 
 	
 
