@@ -52,14 +52,7 @@ public class TaskActivity extends Activity {
 	private static final String TAG = "TaskActivity";
 	private ArrayList<Task> allTasks = new ArrayList<Task>();
 	private ArrayAdapter<Task> adapter;
-	
-	
-//	EditText title;
-//	EditText description;
-//	EditText geotag;
-//	ImageView picture;
-//	ImageButton ib;
-//	Bitmap bmp;
+	private Long tasklistId;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -70,19 +63,14 @@ public class TaskActivity extends Activity {
 		taskName = (EditText) findViewById(R.id.newTasklistNameTitle);
 		creatNewTask = (Button) findViewById(R.id.addTaskButton);
 		tasksOverviewWindow = (ListView) findViewById(R.id.listView1);
-//		task = (TextView) findViewById(R.id.textView2);
 		tasksCheckBox = (CheckBox) findViewById(R.id.checkBox1);
-		
-//		title = (EditText) findViewById(R.id.edit_task_title);
-//		description = (EditText) findViewById(R.id.edit_task_description);
-//		picture = (ImageView) findViewById(R.id.task_picture);
-//		ib = (ImageButton) findViewById(R.id.imageButton1);
-//
-//		ib.setOnClickListener(viewClickListener);
+
 		
 		Intent i = getIntent();
-		String taskName = i.getStringExtra("Test");
-		tasklistTitle.setText(taskName);
+		String tasklistName = i.getStringExtra("Name");
+		tasklistId = i.getLongExtra("ID", 0L);
+		Log.v(TAG, tasklistId.toString());
+		tasklistTitle.setText(tasklistName);
 		
 		creatNewTask.setOnClickListener(myhandler1);
 				
@@ -105,7 +93,7 @@ public class TaskActivity extends Activity {
 		    		postParameters.add(new BasicNameValuePair("username","pipi"));
 		    		postParameters.add(new BasicNameValuePair("password","qqq"));
 		    		postParameters.add(new BasicNameValuePair("taskname",taskName.getText().toString()));
-		    	    postParameters.add(new BasicNameValuePair("tasklistid","200006"));
+		    	    postParameters.add(new BasicNameValuePair("tasklistid",tasklistId.toString()));
 		    	    
 		    	    String response = null;
 		    	      try {
@@ -158,8 +146,7 @@ public class TaskActivity extends Activity {
     		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
     		postParameters.add(new BasicNameValuePair("username","pipi"));
     		postParameters.add(new BasicNameValuePair("password","qqq"));
-    		postParameters.add(new BasicNameValuePair("taskname",taskName.getText().toString()));
-    	    postParameters.add(new BasicNameValuePair("tasklistid","200006"));
+    	    postParameters.add(new BasicNameValuePair("tasklistid",tasklistId.toString()));
     	    
     	    String response = null;
     	      try {
@@ -199,14 +186,12 @@ public class TaskActivity extends Activity {
 	        task.setName(TaskName);
 	        task.setChecked(TaskChecked);
 	        task.setTasklist(Long.valueOf(TaskTasklistId).longValue());
-	        allTasks.add(task);
+	        if(allTasks.contains(task) == false){
+	        	allTasks.add(task);
+	        }
+	        
 	        Log.i(Task.class.getName(), jsonObject.getString("name"));
-	      }
-	    
-	    for(Task t : allTasks){
-	    	adapter.add(t);
-	    }
-	    
+	      }	    
 	 } 
 	catch (Exception e) {
 	    	e.printStackTrace();
@@ -264,9 +249,6 @@ public class TaskActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-//		Toast.makeText(getBaseContext(),
-//				"Hey digga, don't forget to save your task!!",
-//				Toast.LENGTH_LONG).show();
 		finish();
 		return;
 	}

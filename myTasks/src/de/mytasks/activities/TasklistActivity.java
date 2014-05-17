@@ -12,13 +12,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,6 +33,7 @@ import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 
 import de.mytasks.R;
 import de.mytasks.database.DatabaseHelper;
+import de.mytasks.domain.Task;
 import de.mytasks.domain.Tasklist;
 import de.mytasks.domain.User;
 import de.mytasks.service.GetCurrentUserInformation;
@@ -42,12 +49,14 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	private Button creatNewTask;
 	private Button settings;
 	private Button update;
+	private MenuItem delete;
 	private ListView tasklistOverviewWindow;
 	private String resp;
-	private ArrayList<String> list = new ArrayList<String>();
+//	private ArrayList<String> list = new ArrayList<String>();
 	private static final String TAG = "TasklistActivity";
 	private List<Tasklist> allTasklists = new ArrayList<Tasklist>();
-	private ArrayAdapter<String> adapter;
+	private ArrayAdapter<Tasklist> adapter;
+	private Tasklist selectedItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +69,21 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		creatNewTask = (Button) findViewById(R.id.addTaskButton);
 		settings = (Button) findViewById(R.id.shareButton);
 		update = (Button) findViewById(R.id.updateButton);
+		delete = (MenuItem) findViewById(R.id.context_menu_delete);
 		taskListName = (EditText) findViewById(R.id.newTasklistNameTitle);
 		tasklistOverviewWindow = (ListView) findViewById(R.id.tasklistOverviewWindow);
 		update.setOnClickListener(myhandler1);
 		creatNewTask.setOnClickListener(myhandler2);
 		tasklistOverviewWindow.setOnItemClickListener(listHandler);
+		tasklistOverviewWindow.setOnItemLongClickListener(deleteHandler);
+//		delete.setOnMenuItemClickListener(menuItemClickListener);
+		tasklistOverviewWindow.setLongClickable(true);
 		
-		adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, list);
+		adapter = new ArrayAdapter<Tasklist>(this,
+				android.R.layout.simple_list_item_1, allTasklists);
 
 		tasklistOverviewWindow.setAdapter(adapter);
+		registerForContextMenu(tasklistOverviewWindow);
 		
 		update.callOnClick();
 		
@@ -150,7 +164,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    	        tasklist.setOwnerId(Long.valueOf(TasklistOwner).longValue());
 	    	        if(allTasklists.contains(tasklist) == false){
 		    	        allTasklists.add(tasklist);
-		    	        list.add(tasklist.getName());
+//		    	        list.add(tasklist.getName());
 	    	        }
 	    	        Log.i(Tasklist.class.getName(), jsonObject.getString("name"));
 	    	      }  
@@ -213,19 +227,87 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    	 }
 	    }
 	  };
-	  
 
-	  ListView.OnItemClickListener listHandler = new ListView.OnItemClickListener(){
+	ListView.OnItemClickListener listHandler = new ListView.OnItemClickListener(){
 
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
+			selectedItem = (Tasklist) tasklistOverviewWindow.getItemAtPosition(arg2);
+			Log.v(TAG, selectedItem.getId().toString());
 			Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
-			intent.putExtra("Test", "Taskliste: "+ tasklistOverviewWindow.getAdapter().getItem(arg2).toString());
+//			intent.putExtra("Name", "Taskliste: "+ tasklistOverviewWindow.getAdapter().getItem(arg2).toString());
+			intent.putExtra("Name", "Taskliste: "+ selectedItem.getName());
+			intent.putExtra("ID", selectedItem.getId());
 			startActivity(intent);	
 		}
 	  };
-	
+	  
+	  
+	ListView.OnItemLongClickListener deleteHandler = new ListView.OnItemLongClickListener(){
+		  
+		  @Override
+	      public boolean onItemLongClick(AdapterView<?> arg0, View view, int position, long row_id) {
+			selectedItem = (Tasklist) tasklistOverviewWindow.getItemAtPosition(position);
+			Log.v(TAG, selectedItem.getId().toString());
+			return false;
+	        }
+	  };
+	  
+	public void deleteTasklist(final Tasklist tl){
+		new Thread(new Runnable(){
+
+			@Override
+			public void run() {
+				ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+	    		postParameters.add(new BasicNameValuePair("username","pipi"));
+	    		postParameters.add(new BasicNameValuePair("password","qqq"));
+	    	    postParameters.add(new BasicNameValuePair("tasklistid",tl.getId().toString()));
+//	    	    postParameters.add(new BasicNameValuePair("tasklistid","200004"));
+
+	    	    
+	    	    String response = null;
+	    	      try {
+	    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/deleteTasklist", postParameters);
+	    	       String res = response.toString();
+	    	       Log.v(TAG, response.toString());
+	    	       Log.v(TAG, res.toString());
+	    	       resp = res;
+	    	}
+	    	      catch (Exception e) {
+	    	          e.printStackTrace();
+	    	          Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+	    	      }
+				
+			}
+			
+		}).start();
+		
+		try {
+
+    	    /** wait a second to get response from server */
+    	    Thread.sleep(1000);
+    	    /** Inside the new thread we cannot update the main thread
+    	    So updating the main thread outside the new thread */
+    	    	if (null != resp && !resp.isEmpty()) {
+    	    		 boolean check = resp.contains("OK");	    	    		  
+    	    	       if (check == true) {
+    	    	    	   Toast.makeText(getApplicationContext(), "Tasklist deleted",Toast.LENGTH_LONG).show();
+    	    	    	   Intent it = new Intent(getApplicationContext(),TasklistActivity.class);
+    	    	    	   startActivity(it);
+    	    	       } 
+    	    	}
+    	    	
+    	    	else {
+    	    			Toast.makeText(getApplicationContext(), "something went wrong, check your connection",Toast.LENGTH_SHORT).show();
+    	    	} 
+    	            
+    	   
+    	    } catch (Exception e) {
+    	    	e.printStackTrace();
+    	 }
+	}
+	  
 	public void logout(){
 		// Clear the session data
         // This will clear all session data and 
@@ -254,6 +336,37 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("TEST");
+        getMenuInflater().inflate(R.menu.actions , menu);
+        
+    }
+	
+	@Override
+    public boolean onContextItemSelected(MenuItem item) {
+ 
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+ 
+        switch(item.getItemId()){
+            case R.id.context_menu_edit:
+                Toast.makeText(this, "Edit...", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.context_menu_delete:
+            	deleteTasklist(selectedItem);
+            	Toast.makeText(this, "Delete...", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.context_menu_share:
+                Toast.makeText(this, "Share...", Toast.LENGTH_SHORT).show();
+                break;
+ 
+        }
+        return true;
+    }
+	
+	
 
 	@Override
 	protected void onDestroy() {
