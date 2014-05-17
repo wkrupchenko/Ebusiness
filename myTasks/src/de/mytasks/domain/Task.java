@@ -128,14 +128,14 @@ public class Task {
 			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "Task [id=" + id + ", name=" + name + ", checked=" + checked
-				+ ", creation=" + creation + ", updated=" + updated
-				+ ", updatedBy=" + updatedBy + "]";
-	}
 //	@Override
 //	public String toString() {
-//		return name;
+//		return "Task [id=" + id + ", name=" + name + ", checked=" + checked
+//				+ ", creation=" + creation + ", updated=" + updated
+//				+ ", updatedBy=" + updatedBy + "]";
 //	}
+	@Override
+	public String toString() {
+		return name;
+	}
 }

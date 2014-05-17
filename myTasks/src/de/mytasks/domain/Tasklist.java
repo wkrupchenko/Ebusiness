@@ -144,14 +144,19 @@ public class Tasklist {
 	}
 	
 	
+//	@Override
+//	public String toString() {
+//		return "TaskList [id=" + id + ", name=" + name + ", ownerId=" + ownerId
+//				+ ", tasks=" + tasks + ", archived=" + archived + ", creation="
+//				+ creation + ", updated=" + updated + ", updatedBy="
+//				+ updatedBy + "]";
+//	}
+
 	@Override
 	public String toString() {
-		return "TaskList [id=" + id + ", name=" + name + ", ownerId=" + ownerId
-				+ ", tasks=" + tasks + ", archived=" + archived + ", creation="
-				+ creation + ", updated=" + updated + ", updatedBy="
-				+ updatedBy + "]";
+		return name;
 	}
-
+	
 	public Long getOwnerId() {
 		return ownerId;
 	}
