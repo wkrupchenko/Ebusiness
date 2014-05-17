@@ -188,6 +188,7 @@ public class TaskActivity extends Activity {
 	        task.setTasklist(Long.valueOf(TaskTasklistId).longValue());
 	        if(allTasks.contains(task) == false){
 	        	allTasks.add(task);
+//	        	adapter.add(task);
 	        }
 	        
 	        Log.i(Task.class.getName(), jsonObject.getString("name"));
