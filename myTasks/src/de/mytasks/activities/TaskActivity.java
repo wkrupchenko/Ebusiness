@@ -25,9 +25,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -53,6 +55,7 @@ public class TaskActivity extends Activity {
 	private ArrayList<Task> allTasks = new ArrayList<Task>();
 	private ArrayAdapter<Task> adapter;
 	private Long tasklistId;
+	private Task selectedItem;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -63,9 +66,10 @@ public class TaskActivity extends Activity {
 		taskName = (EditText) findViewById(R.id.newTasklistNameTitle);
 		creatNewTask = (Button) findViewById(R.id.addTaskButton);
 		tasksOverviewWindow = (ListView) findViewById(R.id.listView1);
-		tasksCheckBox = (CheckBox) findViewById(R.id.checkBox1);
-
+		tasksCheckBox = (CheckBox) findViewById(R.id.check);
 		
+		tasksOverviewWindow.setOnItemClickListener(listHandler);
+
 		Intent i = getIntent();
 		String tasklistName = i.getStringExtra("Name");
 		tasklistId = i.getLongExtra("ID", 0L);
@@ -74,9 +78,14 @@ public class TaskActivity extends Activity {
 		
 		creatNewTask.setOnClickListener(myhandler1);
 				
+//		adapter = new ArrayAdapter<Task>(this,
+//		        android.R.layout.simple_list_item_1, allTasks);
+		
 		adapter = new ArrayAdapter<Task>(this,
-		        android.R.layout.simple_list_item_1, allTasks);
+		        android.R.layout.simple_list_item_multiple_choice, allTasks);
+		
 		tasksOverviewWindow.setAdapter(adapter);
+		tasksOverviewWindow.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		
 		getTasks();
 	}
@@ -190,6 +199,11 @@ public class TaskActivity extends Activity {
 	        	allTasks.add(task);
 //	        	adapter.add(task);
 	        }
+	        for (int a = 0; a < allTasks.size(); a++) {
+	        	if(allTasks.get(a).getChecked()==1){
+        			tasksOverviewWindow.setItemChecked(a, true);
+	        	}
+	        }
 	        
 	        Log.i(Task.class.getName(), jsonObject.getString("name"));
 	      }	    
@@ -218,16 +232,122 @@ public class TaskActivity extends Activity {
 		Intent i = new Intent(getApplicationContext(), ListViewActivity.class);
 		startActivity(i);
 	}
-
-	OnClickListener viewClickListener = new OnClickListener() {
-
+	
+	ListView.OnItemClickListener listHandler = new ListView.OnItemClickListener(){
+		
 		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			showPopupMenu(v);
-		}
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			
+			
+			selectedItem = (Task) tasksOverviewWindow.getItemAtPosition(arg2);
+			
+			SparseBooleanArray checked=tasksOverviewWindow.getCheckedItemPositions();
+			if(checked.get(arg2)){
+				Toast.makeText(getApplicationContext(), "Selected", Toast.LENGTH_SHORT).show();
+				final Long value = (long) 1;
+				new Thread(new Runnable(){
+		    		
+			    	@Override
+			    	public void run() {
+			    		
+			    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+			    		postParameters.add(new BasicNameValuePair("username","pipi"));
+			    		postParameters.add(new BasicNameValuePair("password","qqq"));
+			    		postParameters.add(new BasicNameValuePair("taskname",selectedItem.getName()));
+			    		postParameters.add(new BasicNameValuePair("taskcheckbox",value.toString()));
+			    	    postParameters.add(new BasicNameValuePair("taskid",selectedItem.getTask_id().toString()));
+			    	    
+			    	    String response = null;
+			    	      try {
+			    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/updateTask", postParameters);
+			    	       String res = response.toString();
+			    	       Log.v(TAG, response.toString());
+			    	       Log.v(TAG, res.toString());
+			    	       resp = res;
+			    	}
+			    	      catch (Exception e) {
+			    	          e.printStackTrace();
+			    	          Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+			    	      }
+			    	} 
+		    	}).start();
+		    	
+		    	try {
 
-	};
+		    	    /** wait a second to get response from server */
+		    	    Thread.sleep(1000);
+		    	    /** Inside the new thread we cannot update the main thread
+		    	    So updating the main thread outside the new thread */
+		    	    	if (null != resp && !resp.isEmpty()) {
+		    	    		 boolean check = resp.contains("Task updated");	    	    		  
+		    	    	       if (check == true) {
+		    	    	    	   Toast.makeText(getApplicationContext(), "Task updated",Toast.LENGTH_LONG).show();
+		    	    	       } 
+		    	    	}
+		    	    	
+		    	    	else {
+		    	    			Toast.makeText(getApplicationContext(), "Failure",Toast.LENGTH_SHORT).show();
+		    	    	} 
+		    	            
+		    	   
+		    	    } catch (Exception e) {
+		    	    	
+		    	 }
+			}else {
+	            Toast.makeText(getApplicationContext(), "Not selected", Toast.LENGTH_SHORT).show();
+	            final Long value = (long) 0;
+				new Thread(new Runnable(){
+		    		
+			    	@Override
+			    	public void run() {
+			    		
+			    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+			    		postParameters.add(new BasicNameValuePair("username","pipi"));
+			    		postParameters.add(new BasicNameValuePair("password","qqq"));
+			    		postParameters.add(new BasicNameValuePair("taskname",selectedItem.getName()));
+			    		postParameters.add(new BasicNameValuePair("taskcheckbox",value.toString()));
+			    	    postParameters.add(new BasicNameValuePair("taskid",selectedItem.getTask_id().toString()));
+			    	    
+			    	    String response = null;
+			    	      try {
+			    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/updateTask", postParameters);
+			    	       String res = response.toString();
+			    	       Log.v(TAG, response.toString());
+			    	       Log.v(TAG, res.toString());
+			    	       resp = res;
+			    	}
+			    	      catch (Exception e) {
+			    	          e.printStackTrace();
+			    	          Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+			    	      }
+			    	} 
+		    	}).start();
+		    	
+		    	try {
+
+		    	    /** wait a second to get response from server */
+		    	    Thread.sleep(1000);
+		    	    /** Inside the new thread we cannot update the main thread
+		    	    So updating the main thread outside the new thread */
+		    	    	if (null != resp && !resp.isEmpty()) {
+		    	    		 boolean check = resp.contains("Task updated");	    	    		  
+		    	    	       if (check == true) {
+		    	    	    	   Toast.makeText(getApplicationContext(), "Task updated",Toast.LENGTH_LONG).show();
+		    	    	       } 
+		    	    	}
+		    	    	
+		    	    	else {
+		    	    			Toast.makeText(getApplicationContext(), "Failure",Toast.LENGTH_SHORT).show();
+		    	    	} 
+		    	            
+		    	   
+		    	    } catch (Exception e) {
+		    	    	
+		    	 }
+	        }
+		}
+	  };
 
 	private void showPopupMenu(View v) {
 		PopupMenu popupMenu = new PopupMenu(TaskActivity.this, v);
