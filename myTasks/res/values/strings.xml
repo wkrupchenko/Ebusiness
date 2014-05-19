@@ -23,7 +23,7 @@
 
 
 	
-	<!-- Taskist -->
+	<!-- Taskistview -->
 	<string name="tasklist_no_tasks_text_view">no tasks yet</string>
 	<string name="tasklist_button_add_task_text_view">+</string>
 	<string name="tasklist_buton_settings_text_view">settings</string>
@@ -32,11 +32,12 @@
 	<string name="tasklist_last_update_date_view">xx/xx/xxx</string>
 	<string name="tasklist_last_update_time_view">--:--</string>
 	
-	<!-- Create Task -->
+	<!-- Tasklistview -->
 	<string name="create_tasklist_name_text_view">task list name</string>
 	<string name="create_tasklist_button_back_text_view">back</string>
 	<string name="create_tasklist_button_share_text_view">share</string>
 	<string name="create_tasklist_button_add_task_text_view">add task</string>
+	<string name="create_tasklist_button_archive_text_view">archive</string>
 	
 	<!-- Settings -->
 	<string name="settings_tasklist_name_text_view">tasklist name</string>

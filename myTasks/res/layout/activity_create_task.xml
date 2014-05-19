@@ -21,6 +21,13 @@
             android:text="@string/create_tasklist_button_back_text_view" />
 
         <Button
+            android:id="@+id/createTaskListArchiveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/create_tasklist_button_archive_text_view" />
+
+        <Button
             android:id="@+id/createTaskListShareButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
