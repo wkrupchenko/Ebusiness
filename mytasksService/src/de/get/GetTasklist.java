@@ -35,24 +35,13 @@ public final class GetTasklist extends HttpServlet {
 		
 		PrintWriter pw = res.getWriter();
 		res.setContentType("text/html;charset=UTF-8");
-		String userId, user, password;
+		String userId;
 		userId = req.getParameter("userid");
-		user = req.getParameter("username");
-		password = req.getParameter("password");
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection con = DriverManager.getConnection(Util.CON, Util.USER, Util.PW); // darf // alles!
-			PreparedStatement stmt = con.prepareStatement(Util.SQLAUTH);
-			stmt.setString(1, user);
-			stmt.setString(2, password);
-			ResultSet rs = stmt.executeQuery();
-
-			rs.next();
-			String user_name = rs.getString("NAME");
-			String user_pwd = rs.getString("PASSWORD");
-
-			if (user_name != null && user_name != "" && user_pwd != null && user_pwd != "") {
+			
 
 				PreparedStatement stat = con.prepareStatement(sqlGetTasklists);
 				stat.setString(1, userId);
@@ -91,11 +80,12 @@ public final class GetTasklist extends HttpServlet {
 				
 				
 				pw.close();
-				rs.close();
+
 				rst.close();
 				con.close();
-			} else { throw new Exception("Unauthorized!");}
+
 		} catch (Exception e) {
+			pw.print("Error");
 			e.printStackTrace();
 		}
 	}

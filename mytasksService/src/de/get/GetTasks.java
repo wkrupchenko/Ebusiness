@@ -33,24 +33,13 @@ public final class GetTasks extends HttpServlet {
 				
 		PrintWriter pw = res.getWriter();
 		res.setContentType("text/html;charset=UTF-8");
-		String tasklistid, user, password;
+		String tasklistid;
 		tasklistid = req.getParameter("tasklistid");
-		user = req.getParameter("username");
-		password = req.getParameter("password");
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection con = DriverManager.getConnection(Util.CON, Util.USER, Util.PW); // darf // alles!
-			PreparedStatement stmt = con.prepareStatement(Util.SQLAUTH);
-			stmt.setString(1, user);
-			stmt.setString(2, password);
-			ResultSet rs = stmt.executeQuery();
-
-			rs.next();
-			String user_name = rs.getString("NAME");
-			String user_pwd = rs.getString("PASSWORD");
-
-			if (user_name != null && user_name != "" && user_pwd != null && user_pwd != "") {
+			
 
 				PreparedStatement stat = con.prepareStatement(sqlGetTasks);
 				stat.setString(1, tasklistid);
@@ -70,10 +59,10 @@ public final class GetTasks extends HttpServlet {
 				pw.println(tasks.isEmpty()? "Error": new Gson().toJson(tasks));
 				
 				pw.close();
-				rs.close();
 				con.close();
-			} else { throw new Exception("Unauthorized!");}
+
 		} catch (Exception e) {
+			pw.print("Error");
 			e.printStackTrace();
 		}
 	}
