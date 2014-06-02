@@ -51,6 +51,14 @@
     <servlet-name>ShareTasklist</servlet-name>
     <servlet-class>de.get.ShareTasklist</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>RemoveGeodata</servlet-name>
+    <servlet-class>de.get.RemoveGeodata</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AddGeodata</servlet-name>
+    <servlet-class>de.get.AddGeodata</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/login</url-pattern>
@@ -99,5 +107,12 @@
     <servlet-name>ShareTasklist</servlet-name>
     <url-pattern>/shareTasklist</url-pattern>
   </servlet-mapping>
-   
+  <servlet-mapping>
+    <servlet-name>RemoveGeodata</servlet-name>
+    <url-pattern>/removeGeodata</url-pattern>
+  </servlet-mapping> 
+  <servlet-mapping>
+    <servlet-name>AddGeodata</servlet-name>
+    <url-pattern>/addGeodata</url-pattern>
+  </servlet-mapping>  
 </web-app>
