@@ -18,7 +18,7 @@ public class RateActivity extends Activity {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.activity_rate);
 
 		
 		session = new SessionManager(getApplicationContext());
