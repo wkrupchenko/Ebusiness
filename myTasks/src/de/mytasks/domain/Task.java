@@ -21,7 +21,25 @@ public class Task {
 	private Date creation;		// CREATED_ON
 	private Date updated;		// UPDATED_ON
 	private String updatedBy;	// UPDATED_BY
+	private Double latitude;
+	private Double longitude;
 	
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
 	public int getChecked() {
 		return checked;
 	}
@@ -128,12 +146,6 @@ public class Task {
 			return false;
 		return true;
 	}
-//	@Override
-//	public String toString() {
-//		return "Task [id=" + id + ", name=" + name + ", checked=" + checked
-//				+ ", creation=" + creation + ", updated=" + updated
-//				+ ", updatedBy=" + updatedBy + "]";
-//	}
 	@Override
 	public String toString() {
 		return name;

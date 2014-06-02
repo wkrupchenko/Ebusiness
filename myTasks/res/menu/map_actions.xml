@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/context_menu_add_map_info"
+        android:title="@string/str_context_menu_add_map_info"
+        />
+ 
+    <item
+        android:id="@+id/context_menu_show_map_info"
+        android:title="@string/str_context_menu_show_map_info"
+    />
+ 
+    <item
+        android:id="@+id/context_menu_delete_map_info"
+        android:title="@string/str_context_menu_delete_map_info"
+    />
+</menu>
