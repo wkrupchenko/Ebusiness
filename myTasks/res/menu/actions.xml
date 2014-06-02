@@ -14,4 +14,9 @@
         android:id="@+id/context_menu_delete"
         android:title="@string/str_context_menu_delete"
     />
+    
+    <item
+        android:id="@+id/context_menu_rate"
+        android:title="@string/str_context_menu_rate"
+    />
 </menu>
