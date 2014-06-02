@@ -364,6 +364,8 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
             case R.id.context_menu_rate:
                 Toast.makeText(this, "Rate...", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), RateActivity.class);
+                intent.putExtra("USER_ID", "14");
+    			intent.putExtra("TASKLIST_ID", selectedItem.getId());
     			startActivity(intent);	
                 break;
  

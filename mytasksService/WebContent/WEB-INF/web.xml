@@ -59,6 +59,10 @@
     <servlet-name>AddGeodata</servlet-name>
     <servlet-class>de.get.AddGeodata</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>Rate</servlet-name>
+    <servlet-class>de.get.Rate</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/login</url-pattern>
@@ -114,5 +118,9 @@
   <servlet-mapping>
     <servlet-name>AddGeodata</servlet-name>
     <url-pattern>/addGeodata</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Rate</servlet-name>
+    <url-pattern>/rate</url-pattern>
   </servlet-mapping>  
 </web-app>
