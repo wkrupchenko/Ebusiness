@@ -17,12 +17,6 @@
 	<string name="register_button_back_text_view">Back</string>
 	<string name="register_button_register_text_view">Register</string>
 	
-	
-	
-	<string name="action_settings">Settings</string>
-
-
-	
 	<!-- Taskistview -->
 	<string name="tasklist_no_tasks_text_view">no tasks yet</string>
 	<string name="tasklist_button_add_task_text_view">+</string>
@@ -64,11 +58,14 @@
 	<string name="str_context_menu_add_map_info">Add/Change Map Info</string>
     <string name="str_context_menu_show_map_info">Show Map Info</string>
     <string name="str_context_menu_delete_map_info">Delete Map Info</string>
-    
     <string name="hint">Hinweis</string>
 	<string name="find">Find/Add</string>
+    	
+	<!-- allgemein -->
+	<string name="action_settings">Settings</string>
 	
-
-	
+		
+	<!-- Rating -->
+	<string name="rate_view_rate_button_texts">rate!</string>
 
 </resources>
