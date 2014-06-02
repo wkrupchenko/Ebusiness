@@ -53,6 +53,8 @@ public final class GetTasks extends HttpServlet {
 						t.setName(resTasks.getString("NAME"));
 						t.setChecked(resTasks.getInt("CHECKED"));
 						t.setTasklist(resTasks.getLong("TL_FK"));
+						t.setLatitude(resTasks.getDouble("LATITUDE"));
+						t.setLongitude(resTasks.getDouble("LONGITUDE"));
 						tasks.add(t);					
 				}
 				
