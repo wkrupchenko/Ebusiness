@@ -20,6 +20,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 
 import de.domain.User;
 import de.util.Util;
@@ -49,14 +50,15 @@ public class GetCurrentRating extends HttpServlet {
 				stat.setString(1, taskListId);
 				ResultSet rst = stat.executeQuery();
 	
-				ArrayList<Object> list = new ArrayList<Object>();
 				if (rst.next()) {
-					while(rst.next())	{
-					String jsonLine ="{data: {translations: [{translatedText:" +rst+"}]}}";
+					Float currentRating = rst.getFloat(1);
+					String jsonLine ="{data: {rating: [{ratingAverage:" +currentRating+"}]}}";
 					
-					Gson gson = new GsonBuilder().create();
-			           Data data = gson.fromJson(jsonLine, Data.class);					}
-					pw.println(new Gson().toJson(data));
+					Gson gson = new Gson();
+					JsonElement element = gson.fromJson (jsonLine, JsonElement.class);
+					JsonObject jsonObj = element.getAsJsonObject();
+					
+					pw.println(jsonObj);
 				} else
 					pw.print("Error");
 			

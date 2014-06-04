@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import de.mytasks.R;
 import de.mytasks.domain.Tasklist;
 import de.mytasks.service.SessionManager;
@@ -22,6 +28,7 @@ import android.widget.Toast;
 
 public class RateActivity extends Activity {
 	private RatingBar ratingBar;
+	private RatingBar currentRating;
 	private Button rate;
 	private static final String TAG = "RateActivity";
 	private String userId;
@@ -39,13 +46,16 @@ public class RateActivity extends Activity {
 
 		rate = (Button) findViewById(R.id.ratingViewRateButton);
 		ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+		currentRating = (RatingBar) findViewById(R.id.currentRatingBar);
 		
 		Intent i = getIntent();
 		userId = i.getStringExtra("USER_ID");
 		tasklistId = i.getLongExtra("TASKLIST_ID", 0L);
 		
 		rate.setOnClickListener(myhandler1);
+		getContentResolver();
 		}
+	
 	View.OnClickListener myhandler1 = new View.OnClickListener() {
 	    public void onClick(View v) {
 	    	rateTasklist();
@@ -112,5 +122,55 @@ public class RateActivity extends Activity {
     	    	e.printStackTrace();
     	 }
 	}
+	
+	public void getCurrentRating(){
+		Log.v(TAG, String.valueOf(tasklistId));
+		
+		new Thread(new Runnable(){
 
+			@Override
+			public void run() {
+				ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+	     	    postParameters.add(new BasicNameValuePair("tasklistid",String.valueOf(tasklistId)));
+	    	    
+	    	    String response = null;
+	    	      try {
+	    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/getRating", postParameters);
+	    	       String res = response.toString();
+	    	       Log.v(TAG, response.toString());
+	    	       resp = res;
+	    	}
+	    	      catch (Exception e) {
+	    	          e.printStackTrace();
+	    	          Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+	    	      }
+				
+			}
+			
+		}).start();
+		
+		try {
+
+    	    /** wait a second to get response from server */
+    	    Thread.sleep(1000);
+    	    /** Inside the new thread we cannot update the main thread
+    	    So updating the main thread outside the new thread */
+    	    
+    	    Gson gson = new Gson();
+    	    JsonElement jelement = new JsonParser().parse(resp);
+    	    JsonObject  jobject = jelement.getAsJsonObject();
+    	    jobject = jobject.getAsJsonObject("data");
+    	    JsonArray jarray = jobject.getAsJsonArray("translations");
+    	    jobject = jarray.get(0).getAsJsonObject();
+    	    String rating = jobject.get("translatedText").toString();
+    	    
+    	    currentRating.setRating(Float.valueOf(rating));
+    	            
+    	    String jsonLine = "{data: {translations: [{translatedText: }]}}";
+    	   
+    	    } catch (Exception e) {
+    	    	e.printStackTrace();
+    	 }
+
+	}
 }
