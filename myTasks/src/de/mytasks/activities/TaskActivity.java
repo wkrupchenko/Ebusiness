@@ -65,7 +65,7 @@ public class TaskActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tasks);
-		tasklistTitle = (TextView) findViewById(R.id.textView1);
+		tasklistTitle = (TextView) findViewById(R.id.ratingViewCurrentRatingTextView);
 		taskName = (EditText) findViewById(R.id.newTasklistNameTitle);
 		creatNewTask = (Button) findViewById(R.id.addTaskButton);
 		tasksOverviewWindow = (ListView) findViewById(R.id.listView1);
