@@ -53,7 +53,7 @@ public class RateActivity extends Activity {
 		tasklistId = i.getLongExtra("TASKLIST_ID", 0L);
 		
 		rate.setOnClickListener(myhandler1);
-		getContentResolver();
+		getCurrentRating();
 		}
 	
 	View.OnClickListener myhandler1 = new View.OnClickListener() {
@@ -108,8 +108,10 @@ public class RateActivity extends Activity {
     	    		 boolean check = resp.contains("Rated");	    	    		  
     	    	       if (check == true) {
     	    	    	   Toast.makeText(getApplicationContext(), "successfully rated",Toast.LENGTH_LONG).show();
-    	    	    	   Intent it = new Intent(getApplicationContext(),TasklistActivity.class);
-    	    	    	   startActivity(it);
+//    	    	    	   Intent it = new Intent(getApplicationContext(),RateActivity.class);
+//    	    	    	   startActivity(it);
+    	    	    	   finish();
+    	    	    	   startActivity(getIntent());
     	    	       } 
     	    	}
     	    	
@@ -135,7 +137,7 @@ public class RateActivity extends Activity {
 	    	    
 	    	    String response = null;
 	    	      try {
-	    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/getRating", postParameters);
+	    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/getCurrentRating", postParameters);
 	    	       String res = response.toString();
 	    	       Log.v(TAG, response.toString());
 	    	       resp = res;
@@ -160,9 +162,9 @@ public class RateActivity extends Activity {
     	    JsonElement jelement = new JsonParser().parse(resp);
     	    JsonObject  jobject = jelement.getAsJsonObject();
     	    jobject = jobject.getAsJsonObject("data");
-    	    JsonArray jarray = jobject.getAsJsonArray("translations");
+    	    JsonArray jarray = jobject.getAsJsonArray("rating");
     	    jobject = jarray.get(0).getAsJsonObject();
-    	    String rating = jobject.get("translatedText").toString();
+    	    String rating = jobject.get("ratingAverage").toString();
     	    
     	    currentRating.setRating(Float.valueOf(rating));
     	            
