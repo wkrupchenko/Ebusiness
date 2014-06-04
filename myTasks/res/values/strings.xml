@@ -67,5 +67,6 @@
 		
 	<!-- Rating -->
 	<string name="rate_view_rate_button_texts">rate!</string>
+	<string name="rate_view_rate_current_rating_text">current rating</string>
 
 </resources>
