@@ -53,8 +53,9 @@ public class RateActivity extends Activity {
 	};
 	
 	public void rateTasklist(){
-		final int numStars = ratingBar.getNumStars();
+		final Float numStars = ratingBar.getRating();
 		final String stars = String.valueOf(numStars);
+		final String stars2 = stars.replace('.', ',');
 		Log.v(TAG, stars);
 		Log.v(TAG, userId);
 		Log.v(TAG, String.valueOf(tasklistId));
@@ -64,7 +65,7 @@ public class RateActivity extends Activity {
 			@Override
 			public void run() {
 				ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-				postParameters.add(new BasicNameValuePair("rate", stars));
+				postParameters.add(new BasicNameValuePair("rate", stars2));
 				postParameters.add(new BasicNameValuePair("userid",userId));
 	     	    postParameters.add(new BasicNameValuePair("tasklistid",String.valueOf(tasklistId)));
 	    	    
