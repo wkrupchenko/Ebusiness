@@ -119,7 +119,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 //		    		User user = new User();
 //		    		GetCurrentUserInformation ui = new GetCurrentUserInformation();
 //		    		user = ui.getUserInformation();
-		    		
+		    		 		    		
 		    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
 		    		postParameters.add(new BasicNameValuePair("username","pipi"));
 //		    		postParameters.add(new BasicNameValuePair("username",user.getName()));
@@ -312,7 +312,9 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		// Clear the session data
         // This will clear all session data and 
         // redirect user to LoginActivity
-        session.logoutUser();
+		 
+		session.logoutUser(); 
+			            
 	}
 	
 	@Override
@@ -327,7 +329,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    // Handle item selection
 	    switch (item.getItemId()) {
 	        case R.id.logout:
-	            logout();
+	            logout();	            
 	            return true;
 	        case R.id.tasklists_update:
 	        	update.callOnClick();

@@ -48,7 +48,8 @@ public class LogonActivity extends Activity {
 
 		// Session Manager
 		session = new SessionManager(getApplicationContext());
-
+	 
+		
 		username = (EditText) findViewById(R.id.loginViewUsernameInput);
 		password = (EditText) findViewById(R.id.loginViewPasswordInput);
 		login = (Button) findViewById(R.id.loginViewLoginButton);
@@ -79,12 +80,7 @@ public class LogonActivity extends Activity {
 
 						String response = null;
 						try {
-							// response =
-							// SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksLogin/show",
-							// postParameters);
-							// response =
-							// SimpleHttpClient.executeHttpPost("http://iwi-w-eb03:8080/mytasksService/login",
-							// postParameters);
+							 
 							response = SimpleHttpClient
 									.executeHttpPost(
 											"http://www.iwi.hs-karlsruhe.de/eb03/login",
@@ -108,26 +104,18 @@ public class LogonActivity extends Activity {
 					 * updating the main thread outside the new thread
 					 */
 
-					JSONObject jsonObject = new JSONObject(resp);
-//					user = new User();
-//					String userId = jsonObject.getString("id");
-//					String userMail = jsonObject.getString("email");
-//					String userName = jsonObject.getString("name");
-//					user.setId(Long.valueOf(userId).longValue());
-//					user.setEmail(userMail);
-//					user.setName(userName);
-					Log.v(User.class.getName(), jsonObject.getString("id"));
-					Log.v(User.class.getName(), jsonObject.getString("email"));
-					Log.v(User.class.getName(), jsonObject.getString("name"));
-//					Log.v(TAG, user.toString());
-
 					boolean check = resp.contains("Error");
 					if (check != true) {
-//						session.createLoginSession(username.getText().toString());
-//						session.createLoginSession(user.getId(),
-//								user.getName(), user.getEmail());
+						
+						JSONObject jsonObject = new JSONObject(resp);
+						 
+						Log.v(User.class.getName(), jsonObject.getString("id"));
+						Log.v(User.class.getName(), jsonObject.getString("email"));
+						Log.v(User.class.getName(), jsonObject.getString("name"));
+ 
 						session.createLoginSession(Long.valueOf(jsonObject.getString("id")),
 								jsonObject.getString("name"), jsonObject.getString("email"));
+												
 						Intent it = new Intent(getApplicationContext(),
 								TasklistActivity.class);
 						startActivity(it);
