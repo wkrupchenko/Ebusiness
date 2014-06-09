@@ -75,6 +75,10 @@
      	 android:name="de.mytasks.activities.RateActivity"
      	 android:label="@string/app_name">          
  		</activity>
+ 		<activity
+     	 android:name="de.mytasks.activities.ParticipantsActivity"
+     	 android:label="@string/app_name">          
+ 		</activity>
         
         <!-- Goolge API Key -->
         <meta-data

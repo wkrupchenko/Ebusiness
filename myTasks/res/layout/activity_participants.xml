@@ -1,45 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/grey" >
+    
     <TextView
-        android:id="@+id/shredListTaskListName"
-        android:layout_width="match_parent"
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:text="@string/settings_tasklist_name_text_view" />
+        android:layout_marginBottom="2dp"
+        android:text="Large Text"
+        android:drawableLeft="@drawable/ic_action_person"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/partisipantsBackButton"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="100dp"
+    <TextView
+        android:id="@+id/userMail"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:onClick="back"
-        android:text="@string/share_activity_button_back_text" />
+        android:layout_below="@+id/userName"
+        android:layout_marginBottom="2dp"
+        android:text="small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <Button
-        android:id="@+id/partisipantsEditButton"
-        android:layout_width="100dp"
+    <RatingBar
+        android:id="@+id/participantsRatingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/partisipantsBackButton"
-        android:layout_marginRight="34dp"
-        android:text="@string/share_list_button_edit_text" />
+        android:layout_below="@+id/userName"
+        android:gravity="right"
+        android:numStars="5" />
 
-    <ExpandableListView
-        android:id="@+id/participantsList"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/shredListTaskListName"
-        android:layout_marginTop="46dp" >
-    </ExpandableListView>
-
-</RelativeLayout>
+</RelativeLayout> 

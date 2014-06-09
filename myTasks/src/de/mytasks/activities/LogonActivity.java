@@ -30,7 +30,7 @@ public class LogonActivity extends Activity {
 	private EditText username = null;
 	private EditText password = null;
 	private Button login;
-	private Button register;
+	private TextView register;
 	private String resp;
 	private String errorMsg;
 	private static final String TAG = "LogonActivity";
@@ -48,12 +48,11 @@ public class LogonActivity extends Activity {
 
 		// Session Manager
 		session = new SessionManager(getApplicationContext());
-	 
-		
+
 		username = (EditText) findViewById(R.id.loginViewUsernameInput);
 		password = (EditText) findViewById(R.id.loginViewPasswordInput);
 		login = (Button) findViewById(R.id.loginViewLoginButton);
-		register = (Button) findViewById(R.id.loginViewRegisterButton);
+		register = (TextView) findViewById(R.id.loginViewRegisterButton);
 		error = (TextView) findViewById(R.id.error);
 
 		// Toast.makeText(getApplicationContext(), "User Login Status: " +

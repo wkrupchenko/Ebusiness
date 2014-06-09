@@ -7,7 +7,7 @@
 	<string name="login_user_text_view">Username</string>
 	<string name="login_password_text_view">Password</string>
 	<string name="login_button_login_text_view">Login</string>
-	<string name="login_button_register_text_view">Register</string>
+	<string name="login_button_register_text_view">Sign up here</string>
 	
 	<!-- Registerfenster -->
 	<string name="register_mail_text_view">EMail</string>
@@ -67,6 +67,6 @@
 		
 	<!-- Rating -->
 	<string name="rate_view_rate_button_texts">rate!</string>
-	<string name="rate_view_rate_current_rating_text">current rating</string>
+	<string name="rate_view_rate_current_rating_text">current average rating</string>
 
 </resources>

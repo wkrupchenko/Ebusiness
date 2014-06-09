@@ -2,19 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/grey" >
 
-    <TextView
-        android:id="@+id/ratingViewCurrentRatingTextView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_height="48dp" 
+        android:background="@color/beige">
+
+        <TextView
+            android:id="@+id/ratingViewCurrentRatingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+       		android:layout_centerHorizontal="true"
+        	android:gravity="center_vertical"
+        	android:textSize="32sp"
+            android:textColor="@color/white" />
+        
+        <!--  divider 
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/ratingViewCurrentRatingTextView"
+        android:background="@color/white" />
+-->
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_marginTop="4dp" >
 
         <Button
             android:id="@+id/addTaskButton"
@@ -23,7 +44,10 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center_vertical|center_horizontal"
-            android:text="@string/tasklist_button_add_task_text_view" />
+            android:background="@drawable/round_shape_button"
+        	android:text="@string/tasklist_button_add_task_text_view"
+        	android:textColor="@color/white"
+        	android:layout_marginRight="4dp" />
 
         <EditText
             android:id="@+id/newTasklistNameTitle"
@@ -33,6 +57,7 @@
             android:layout_alignBottom="@+id/addTaskButton"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/addTaskButton"
+            android:hint="Enter a new Task"
             android:ems="10" />
 
     </RelativeLayout>
