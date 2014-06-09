@@ -33,8 +33,6 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	private Button back;
 	private Button register;
 	private String resp;
-	private String errorMsg;
-//	private DatabaseHelper databaseHelper;
 		
 	@Override
 	   protected void onCreate(Bundle savedInstanceState) {
@@ -46,28 +44,53 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	      username = (EditText) findViewById(R.id.registerViewUserNameInput);
 	      back = (Button)findViewById(R.id.registerViewBackButton);
 	      register = (Button)findViewById(R.id.registerViewRegisterButton);
-	      back.setOnClickListener(myhandler1);
-	      register.setOnClickListener(myhandler2);
+	      back.setOnClickListener(backHandler);
+	      register.setOnClickListener(registerHandler);
 	}
 	
-	View.OnClickListener myhandler1 = new View.OnClickListener() {
+	View.OnClickListener backHandler = new View.OnClickListener() {
 	    public void onClick(View v) {
 	      back(v);
 	    }
 	  };
-	  
-	  View.OnClickListener test = new View.OnClickListener() {
-		    public void onClick(View v) {
-		    	Intent it = new Intent(getApplicationContext(),ListViewActivity.class);
-			 	startActivity(it);
-		    }
-		  };
 	  	  	  
-	View.OnClickListener myhandler2 = new View.OnClickListener() {
+	View.OnClickListener registerHandler = new View.OnClickListener() {
 	    public void onClick(View v) {
-	      // it was the 2nd button
 	    	
-	    	new Thread(new Runnable(){
+	    	final String userameInput=username.getText().toString();
+	        final String passwordInput=password.getText().toString();
+	        final String passwordRepeatInput=passwordrepeat.getText().toString();
+    	    final String emailText = email.getText().toString().trim();
+  	      	final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+  	      	
+  	      	if(!passwordInput.equals(passwordRepeatInput))
+  	      	{
+  	      		password.requestFocus();
+  	      		password.setError("ENTERED PASSWORDS NOT EQUAL");
+  	      	}
+  	      	else if(userameInput.length()==0)
+  	      	{
+	  	    	username.requestFocus();
+	  	    	username.setError("FIELD CANNOT BE EMPTY");
+  	      	}
+  	      	else if (!emailText.matches(emailPattern))
+		    {
+  	      		email.requestFocus();
+  	      		email.setError("INVALID EMAIL");
+		    }
+  	      	else if(!userameInput.matches("[a-zA-Z ]+"))
+  	      	{
+               username.requestFocus();
+               username.setError("ENTER ONLY ALPHABETICAL CHARACTER");
+  	      	}
+  	      	else if(passwordInput.length()==0)
+  	      	{
+               password.requestFocus();
+               password.setError("FIELD CANNOT BE EMPTY");
+  	      	}
+  	      	else
+  	      	{
+	    		new Thread(new Runnable(){
 	    		
 		    	@Override
 		    	public void run() {
@@ -76,27 +99,23 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 		    		postParameters.add(new BasicNameValuePair("email",email.getText().toString()));
 		    	    postParameters.add(new BasicNameValuePair("password",password.getText().toString()));
 		    	    
+		    	    
 		    	    String response = null;
 		    	      try {
-//		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksRegister/show", postParameters);
 //		    	       response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksService/register", postParameters);
-//		    	       response = SimpleHttpClient.executeHttpPost("http://iwi-w-eb03:8080/mytasksService/register", postParameters);
 		    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/register", postParameters);
 		    	       String res = response.toString();
 		    	       resp = res;
 		    	}
+		    	      
 		    	      catch (Exception e) {
 		    	          e.printStackTrace();
-		    	          errorMsg = e.getMessage();
 		    	         }
-		    	} 
+		    	    }
+		    	
 	    	}).start();
-	    	
-//	    	registerOnApp(email.getText().toString(), password.getText().toString(), username.getText().toString());
-//	    	email.setText("");
-//	    	password.setText("");
-//	    	passwordrepeat.setText("");
-//	    	username.setText("");
+	    		
+  	      	}
 	    	
 	    	try {
 
@@ -111,19 +130,16 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 	    	    	    	   Intent it = new Intent(getApplicationContext(),TasklistActivity.class);
 	    	    	     	 	startActivity(it);
 	    	    	       } 
-	    	    		//error.setText(resp);
 	    	    	}
-	    	    	
+	    	    
 	    	    	else {
-//	    	    		if (null != errorMsg && !errorMsg.isEmpty()) {
-//	    	    	   	       error.setText(errorMsg);
-	    	    			Toast.makeText(getApplicationContext(), "something went wrong, please try again",Toast.LENGTH_SHORT).show();
-//	    	    	    	  }
+	    	    			Toast.makeText(getApplicationContext(), "Please try again!",Toast.LENGTH_SHORT).show();
 	    	    	} 
 	    	            
 	    	   
 	    	    } catch (Exception e) {
-//	    	     error.setText(e.getMessage());
+	    	    	e.printStackTrace();
+	    	    	System.out.print(e.getMessage());
 	    	    }
 	    }
 	  };
@@ -131,34 +147,4 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
 		  Intent intent = new Intent(RegisterActivity.this, LogonActivity.class);
 	      startActivity(intent);
 	   }
-	
-	@Override
-	   public boolean onCreateOptionsMenu(Menu menu) {
-	      // Inflate the menu; this adds items to the action bar if it is present.
-	      getMenuInflater().inflate(R.menu.main, menu);
-	      return true;
-	   }
-	
-//	private void registerOnApp(String email, String password, String username){
-//		
-//		User newUser = new User(email, password, username);
-//	
-//		// get our dao
-//		RuntimeExceptionDao<User, Integer> userDao = getHelper().getUserRuntimeExceptionDao();
-//		userDao.create(newUser);
-//		Toast.makeText(getApplicationContext(), "succesfully registered",Toast.LENGTH_SHORT).show();
-//	}
-	
-//	@Override
-//	protected void onDestroy() {
-//		super.onDestroy();
-//
-//		/*
-//		 * You'll need this in your class to release the helper when done.
-//		 */
-//		if (databaseHelper != null) {
-//			databaseHelper.close();
-//			databaseHelper = null;
-//		}
-//	}
 }
