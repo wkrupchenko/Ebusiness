@@ -6,6 +6,7 @@
     android:background="@color/grey" >
 
     <RelativeLayout
+        android:id="@+id/RelativeLayoutTop"
         android:layout_width="match_parent"
         android:layout_height="48dp" 
         android:background="@color/beige">
@@ -54,9 +55,10 @@
             android:id="@+id/newTasklistNameTitle"
             android:layout_width="56dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:layout_alignBaseline="@+id/addTaskButton"
             android:layout_alignBottom="@+id/addTaskButton"
-            android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/addTaskButton"
             android:hint="Enter a new Task"
             android:ems="10" />

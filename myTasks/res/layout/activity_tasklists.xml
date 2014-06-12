@@ -42,15 +42,16 @@
             android:id="@+id/newTasklistNameTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/addTaskButton"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/addTaskButton"
+            android:layout_alignBaseline="@+id/addTasklistButton"
+            android:layout_alignBottom="@+id/addTasklistButton"
+            android:layout_toLeftOf="@+id/addTasklistButton"
             android:ems="10"
             android:hint="Enter a new Tasklist" />
 
         <Button
-            android:id="@+id/addTaskButton"
+            android:id="@+id/addTasklistButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -60,8 +61,6 @@
             android:background="@drawable/round_shape_button"
             android:text="@string/tasklist_button_add_task_text_view"
             android:textColor="@color/white" />
-        
-        <!-- android:background="@drawable/round_shape_button" -->
 
     </RelativeLayout>
 
