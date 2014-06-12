@@ -30,8 +30,10 @@ public class RateActivity extends Activity {
 	private RatingBar ratingBar;
 	private RatingBar currentRating;
 	private Button rate;
+	private TextView header;
 	private static final String TAG = "RateActivity";
 	private String userId;
+	private String headerText;
 	private Long tasklistId;
 	private String resp;
 	
@@ -47,10 +49,14 @@ public class RateActivity extends Activity {
 		rate = (Button) findViewById(R.id.ratingViewRateButton);
 		ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 		currentRating = (RatingBar) findViewById(R.id.currentRatingBar);
+		header = (TextView) findViewById(R.id.header);
 		
 		Intent i = getIntent();
 		userId = i.getStringExtra("USER_ID");
 		tasklistId = i.getLongExtra("TASKLIST_ID", 0L);
+		headerText = i.getStringExtra("TASKLIST_NAME");
+		
+		header.setText(headerText);
 		
 		rate.setOnClickListener(myhandler1);
 		getCurrentRating();

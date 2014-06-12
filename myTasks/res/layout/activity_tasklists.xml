@@ -6,11 +6,35 @@
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/RelativeLayoutTop"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_height="48dp" 
+        android:background="@color/beige" >
+
+        <TextView
+            android:id="@+id/ViewDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Your Tasklists"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/RelativeLayoutTop"
         android:layout_marginTop="4dp"
         android:orientation="vertical" >
 
@@ -54,7 +78,7 @@
         <ListView
             android:id="@+id/tasklistOverviewWindow"
             android:layout_width="match_parent"
-            android:layout_height="325dp"
+            android:layout_height="300dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="15dp"

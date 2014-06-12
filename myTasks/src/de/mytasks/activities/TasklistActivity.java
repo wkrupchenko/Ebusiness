@@ -237,7 +237,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 			Log.v(TAG, selectedItem.getId().toString());
 			Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
 //			intent.putExtra("Name", "Taskliste: "+ tasklistOverviewWindow.getAdapter().getItem(arg2).toString());
-			intent.putExtra("Name", "Taskliste: "+ selectedItem.getName());
+			intent.putExtra("Name", "Tasks from: "+ selectedItem.getName());
 			intent.putExtra("ID", selectedItem.getId());
 			startActivity(intent);	
 		}
@@ -361,17 +361,16 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
             	Toast.makeText(this, "Delete...", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.context_menu_share:
-//                Toast.makeText(this, "Share...", Toast.LENGTH_SHORT).show();
                 Intent intent2 = new Intent(getApplicationContext(), ParticipantsActivity.class);
-                intent2.putExtra("TASKLIST_NAME", selectedItem.getName());
+                intent2.putExtra("TASKLIST_NAME", "Share Tasklist: " + selectedItem.getName());
                 intent2.putExtra("TASKLIST_ID", selectedItem.getId());
                 startActivity(intent2);
                 break;
             case R.id.context_menu_rate:
-                Toast.makeText(this, "Rate...", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), RateActivity.class);
                 intent.putExtra("USER_ID", "14");
     			intent.putExtra("TASKLIST_ID", selectedItem.getId());
+    			intent.putExtra("TASKLIST_NAME", "Rate Tasklist: " + selectedItem.getName());
     			startActivity(intent);	
                 break;
  

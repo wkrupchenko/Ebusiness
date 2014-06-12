@@ -14,11 +14,12 @@
             android:id="@+id/ratingViewCurrentRatingTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentTop="true"
-       		android:layout_centerHorizontal="true"
-        	android:gravity="center_vertical"
-        	android:textSize="32sp"
-            android:textColor="@color/white" />
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
         
         <!--  divider 
 
