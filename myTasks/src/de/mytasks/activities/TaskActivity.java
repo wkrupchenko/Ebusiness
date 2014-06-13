@@ -136,9 +136,8 @@ public class TaskActivity extends Activity {
 	    	    	if (null != resp && !resp.isEmpty()) {
 	    	    		 boolean check = resp.contains("Created");	    	    		  
 	    	    	       if (check == true) {
-	    	    	    	   Toast.makeText(getApplicationContext(), "New Tasklist successfully created",Toast.LENGTH_LONG).show();
-	    	    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
-	    	    	    	   startActivity(it);
+	    	    	    	   Toast.makeText(getApplicationContext(), "New Task successfully created",Toast.LENGTH_LONG).show();
+	    	    	    	   updateTaskActivityView();
 	    	    	       } 
 	    	    	}
 	    	    	
@@ -424,6 +423,11 @@ public class TaskActivity extends Activity {
 				 }
 
 			}
+	
+	private void updateTaskActivityView(){
+		finish();
+    	startActivity(getIntent());
+	}
 	
 	private void showPopupMenu(View v) {
 		PopupMenu popupMenu = new PopupMenu(TaskActivity.this, v);

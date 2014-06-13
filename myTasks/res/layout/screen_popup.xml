@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/popup_element"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:background="#444444"
+android:orientation="vertical"
+android:padding="10sp" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/txtView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:text="You can change the Name:"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/newNameEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtView"
+            android:ems="10" />
+
+    </RelativeLayout>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp" >
+
+    <Button
+        android:id="@+id/btn_commit_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:background="@drawable/round_shape_button"
+        android:text="Change"
+        android:textColor="@color/white"
+        android:layout_marginRight="4dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btn_close_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/round_shape_button"
+        android:gravity="center"
+        android:text="Close"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
+
+</LinearLayout>

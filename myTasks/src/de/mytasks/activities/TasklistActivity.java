@@ -1,23 +1,37 @@
 package de.mytasks.activities;
 
+import java.lang.reflect.Array;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.Html;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -26,6 +40,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -35,6 +50,7 @@ import de.mytasks.R;
 import de.mytasks.database.DatabaseHelper;
 import de.mytasks.domain.Task;
 import de.mytasks.domain.Tasklist;
+import de.mytasks.domain.TasklistComparator;
 import de.mytasks.domain.User;
 import de.mytasks.service.GetCurrentUserInformation;
 import de.mytasks.service.SessionManager;
@@ -57,6 +73,8 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	private List<Tasklist> allTasklists = new ArrayList<Tasklist>();
 	private ArrayAdapter<Tasklist> adapter;
 	private Tasklist selectedItem;
+	private PopupWindow popupWindow;
+	private EditText newTasklistName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +84,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		// Session class instance
         session = new SessionManager(getApplicationContext());
 		
-		creatNewTask = (Button) findViewById(R.id.addTaskButton);
+		creatNewTask = (Button) findViewById(R.id.addTasklistButton);
 		settings = (Button) findViewById(R.id.shareButton);
 		update = (Button) findViewById(R.id.updateButton);
 		delete = (MenuItem) findViewById(R.id.context_menu_delete);
@@ -102,8 +120,8 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
         
      // For Testing we display in the EditText the user data
 //        taskListName.setText(name);
-	
-	}
+        
+}
 
 	View.OnClickListener myhandler1 = new View.OnClickListener() {
 	    public void onClick(View v) {
@@ -112,6 +130,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    		
 		    	@Override
 		    	public void run() {
+		    		Looper.prepare();
 		    		// Get User Information via GetCurrentUserInformation Class
 		    		// which gives the user the following Information:
 		    		// name, email and ID
@@ -168,7 +187,9 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    	        }
 	    	        Log.i(Tasklist.class.getName(), jsonObject.getString("name"));
 	    	      }  
-	    	    tasklistOverviewWindow.setAdapter(adapter);
+	    	    Comparator<Tasklist> comp = new TasklistComparator();
+	    	    Collections.sort(allTasklists, comp);
+//	    	    tasklistOverviewWindow.setAdapter(adapter);
 	    	    } 
 	    	catch (Exception e) {
 	    	    	e.printStackTrace();
@@ -183,6 +204,8 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    		
 		    	@Override
 		    	public void run() {
+		    		Log.v(TAG, "Thread started");
+		    		Looper.prepare();
 		    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
 		    		postParameters.add(new BasicNameValuePair("username","pipi"));
 		    		postParameters.add(new BasicNameValuePair("password","qqq"));
@@ -193,6 +216,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		    	      try {
 		    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/createTasklist", postParameters);
 		    	       String res = response.toString();
+		    	       Log.v(TAG, response.toString());
 		    	       resp = res;
 		    	}
 		    	      catch (Exception e) {
@@ -203,7 +227,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    	}).start();
 	    	
 	    	try {
-
+	    		Log.v(TAG, "Try Block");
 	    	    /** wait a second to get response from server */
 	    	    Thread.sleep(1000);
 	    	    /** Inside the new thread we cannot update the main thread
@@ -317,6 +341,85 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 			            
 	}
 	
+	public void editTasklistName(){
+		popupWindow = new PopupWindow();
+		try {
+			// We need to get the instance of the LayoutInflater
+			LayoutInflater inflater = (LayoutInflater) TasklistActivity.this
+			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View layout = inflater.inflate(R.layout.screen_popup,
+			(ViewGroup) findViewById(R.id.popup_element));
+			popupWindow = new PopupWindow(layout, 700, 500, true);
+			popupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+			Button btnClosePopup = (Button) layout.findViewById(R.id.btn_close_popup);
+			Button btnChangePopup = (Button) layout.findViewById(R.id.btn_commit_popup);
+			newTasklistName = (EditText) layout.findViewById(R.id.newNameEditText);
+			btnClosePopup.setOnClickListener(cancel_button_click_listener);
+			btnChangePopup.setOnClickListener(change_name_button_click_listener);
+
+			} catch (Exception e) {
+			e.printStackTrace();
+			}
+	}
+	private OnClickListener change_name_button_click_listener = new OnClickListener() {
+		public void onClick(View v) {
+			new Thread(new Runnable(){
+	    		
+		    	@Override
+		    	public void run() {
+		    		Looper.prepare();
+		    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+		    		postParameters.add(new BasicNameValuePair("username","pipi"));
+		    		postParameters.add(new BasicNameValuePair("password","qqq"));
+		    		postParameters.add(new BasicNameValuePair("tasklistname",newTasklistName.getText().toString()));
+		    		postParameters.add(new BasicNameValuePair("archived","0"));
+		    	    postParameters.add(new BasicNameValuePair("tasklistid",selectedItem.getId().toString()));
+		    	    
+		    	    String response = null;
+		    	      try {
+		    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/updateTasklist", postParameters);
+		    	       String res = response.toString();
+		    	       Log.v(TAG, response.toString());
+		    	       resp = res;
+		    	}
+		    	      catch (Exception e) {
+		    	          e.printStackTrace();
+		    	          Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+		    	      }
+		    	} 
+	    	}).start();
+	    	
+	    	try {
+	    	    /** wait a second to get response from server */
+	    	    Thread.sleep(1000);
+	    	    /** Inside the new thread we cannot update the main thread
+	    	    So updating the main thread outside the new thread */
+	    	    	if (null != resp && !resp.isEmpty()) {
+	    	    		 boolean check = resp.contains("Tasklist updated");	    	    		  
+	    	    	       if (check == true) {
+	    	    	    	   Toast.makeText(getApplicationContext(), "Tasklist successfully renamed",Toast.LENGTH_LONG).show();
+	    		    	    	popupWindow.dismiss();
+	    		    	    	finish();
+	    		    	    	startActivity(getIntent());
+	    	    	       } 
+	    	    	}
+	    	    	
+	    	    	else {
+	    	    			Toast.makeText(getApplicationContext(), "something went wrong, check your connection",Toast.LENGTH_SHORT).show();
+	    	    	}  
+	    	    } catch (Exception e) {
+	    	    	
+	    	 }
+		}
+	};
+	
+	private OnClickListener cancel_button_click_listener = new OnClickListener() {
+		public void onClick(View v) {
+			popupWindow.dismiss();
+		}
+	};
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -354,7 +457,8 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
  
         switch(item.getItemId()){
             case R.id.context_menu_edit:
-                Toast.makeText(this, "Edit...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Edit...", Toast.LENGTH_SHORT).show();
+                editTasklistName();
                 break;
             case R.id.context_menu_delete:
             	deleteTasklist(selectedItem);
