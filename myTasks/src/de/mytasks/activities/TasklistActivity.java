@@ -51,8 +51,7 @@ import de.mytasks.database.DatabaseHelper;
 import de.mytasks.domain.Task;
 import de.mytasks.domain.Tasklist;
 import de.mytasks.domain.TasklistComparator;
-import de.mytasks.domain.User;
-import de.mytasks.service.GetCurrentUserInformation;
+import de.mytasks.domain.User; 
 import de.mytasks.service.SessionManager;
 import de.mytasks.service.SimpleHttpClient;
 
@@ -67,8 +66,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	private Button update;
 	private MenuItem delete;
 	private ListView tasklistOverviewWindow;
-	private String resp;
-//	private ArrayList<String> list = new ArrayList<String>();
+	private String resp; 
 	private static final String TAG = "TasklistActivity";
 	private List<Tasklist> allTasklists = new ArrayList<Tasklist>();
 	private ArrayAdapter<Tasklist> adapter;
@@ -83,9 +81,18 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		
 		// Session class instance
         session = new SessionManager(getApplicationContext());
-		
-		creatNewTask = (Button) findViewById(R.id.addTasklistButton);
-		settings = (Button) findViewById(R.id.shareButton);
+        
+        if (!session.isLoggedIn()) {
+			// user is not logged in redirect him to Login Activity
+			Intent i = new Intent(getApplicationContext(), LogonActivity.class);
+			
+			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						 
+			startActivity(i);
+			finish();
+		}
+                		
+		creatNewTask = (Button) findViewById(R.id.addTasklistButton);		 
 		update = (Button) findViewById(R.id.updateButton);
 		delete = (MenuItem) findViewById(R.id.context_menu_delete);
 		taskListName = (EditText) findViewById(R.id.newTasklistNameTitle);
@@ -110,16 +117,6 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
          * This will redirect user to LoginActivity is he is not
          * logged in
          * */
-        session.checkLogin();
-         
-        // get user data from session
-//        List<String> user = session.getUserDetails();
-         
-        // name an 1. Position in der Liste
-//        String name = user.get(0);
-        
-     // For Testing we display in the EditText the user data
-//        taskListName.setText(name);
         
 }
 
@@ -130,20 +127,18 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    		
 		    	@Override
 		    	public void run() {
-		    		Looper.prepare();
-		    		// Get User Information via GetCurrentUserInformation Class
-		    		// which gives the user the following Information:
-		    		// name, email and ID
-		    		// Maybe this should be done out of the thread...
-//		    		User user = new User();
-//		    		GetCurrentUserInformation ui = new GetCurrentUserInformation();
-//		    		user = ui.getUserInformation();
+		    		// Get User Information		    		 
+		    		
+		    		User user = new User();
+		    		List<String> userd = session.getUserDetails();
+		    		user.setName(userd.get(0));
+		    		user.setPassword(userd.get(1));
+		    		user.setId(userd.get(2));		    		 
 		    		 		    		
 		    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-		    		postParameters.add(new BasicNameValuePair("username","pipi"));
-//		    		postParameters.add(new BasicNameValuePair("username",user.getName()));
-		    		postParameters.add(new BasicNameValuePair("password","qqq"));
-		    	    postParameters.add(new BasicNameValuePair("userid","14"));
+		    		postParameters.add(new BasicNameValuePair("username",user.getName())); 
+		    		postParameters.add(new BasicNameValuePair("password",user.getPassword()));
+		    	    postParameters.add(new BasicNameValuePair("userid",user.getId()));
 		    	    
 		    	    String response = null;
 		    	      try {
@@ -188,8 +183,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    	        Log.i(Tasklist.class.getName(), jsonObject.getString("name"));
 	    	      }  
 	    	    Comparator<Tasklist> comp = new TasklistComparator();
-	    	    Collections.sort(allTasklists, comp);
-//	    	    tasklistOverviewWindow.setAdapter(adapter);
+	    	    Collections.sort(allTasklists, comp); 
 	    	    } 
 	    	catch (Exception e) {
 	    	    	e.printStackTrace();
@@ -204,19 +198,22 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    		
 		    	@Override
 		    	public void run() {
-		    		Log.v(TAG, "Thread started");
-		    		Looper.prepare();
+		    		//Looper.prepare();
+		    		User user = new User();
+		    		List<String> userd = session.getUserDetails();
+		    		user.setName(userd.get(0));
+		    		user.setPassword(userd.get(1));
+		    		user.setId(userd.get(2));
 		    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-		    		postParameters.add(new BasicNameValuePair("username","pipi"));
-		    		postParameters.add(new BasicNameValuePair("password","qqq"));
+		    		postParameters.add(new BasicNameValuePair("username",user.getName())); 
+		    		postParameters.add(new BasicNameValuePair("password",user.getPassword()));		    		 		    	    
 		    		postParameters.add(new BasicNameValuePair("tasklistname",taskListName.getText().toString()));
-		    	    postParameters.add(new BasicNameValuePair("ownerid","14"));
+		    	    postParameters.add(new BasicNameValuePair("ownerid",user.getId()));
 		    	    
 		    	    String response = null;
 		    	      try {
 		    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/createTasklist", postParameters);
-		    	       String res = response.toString();
-		    	       Log.v(TAG, response.toString());
+		    	       String res = response.toString();		    	      
 		    	       resp = res;
 		    	}
 		    	      catch (Exception e) {
@@ -226,8 +223,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		    	} 
 	    	}).start();
 	    	
-	    	try {
-	    		Log.v(TAG, "Try Block");
+	    	try { 
 	    	    /** wait a second to get response from server */
 	    	    Thread.sleep(1000);
 	    	    /** Inside the new thread we cannot update the main thread
@@ -259,8 +255,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 				long arg3) {
 			selectedItem = (Tasklist) tasklistOverviewWindow.getItemAtPosition(arg2);
 			Log.v(TAG, selectedItem.getId().toString());
-			Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
-//			intent.putExtra("Name", "Taskliste: "+ tasklistOverviewWindow.getAdapter().getItem(arg2).toString());
+			Intent intent = new Intent(getApplicationContext(), TaskActivity.class); 
 			intent.putExtra("Name", "Tasks from: "+ selectedItem.getName());
 			intent.putExtra("ID", selectedItem.getId());
 			startActivity(intent);	
@@ -284,12 +279,17 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 			@Override
 			public void run() {
 				ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-	    		postParameters.add(new BasicNameValuePair("username","pipi"));
-	    		postParameters.add(new BasicNameValuePair("password","qqq"));
+				
+				User user = new User();
+	    		List<String> userd = session.getUserDetails();
+	    		user.setName(userd.get(0));
+	    		user.setPassword(userd.get(1));
+	    		user.setId(userd.get(2));	    		
+	    		 
+	    		postParameters.add(new BasicNameValuePair("username",user.getName())); 
+	    		postParameters.add(new BasicNameValuePair("password",user.getPassword()));				 	    		 
 	    	    postParameters.add(new BasicNameValuePair("tasklistid",tl.getId().toString()));
-//	    	    postParameters.add(new BasicNameValuePair("tasklistid","200004"));
-
-	    	    
+ 	    	    
 	    	    String response = null;
 	    	      try {
 	    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/deleteTasklist", postParameters);
@@ -338,7 +338,15 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
         // redirect user to LoginActivity
 		 
 		session.logoutUser(); 
-			            
+		
+		Intent i = new Intent(getApplicationContext(), LogonActivity.class);		
+		
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	 
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	 
+		getApplicationContext().startActivity(i);
+		finish();			            
 	}
 	
 	public void editTasklistName(){
@@ -456,8 +464,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
  
         switch(item.getItemId()){
-            case R.id.context_menu_edit:
-//                Toast.makeText(this, "Edit...", Toast.LENGTH_SHORT).show();
+            case R.id.context_menu_edit: 
                 editTasklistName();
                 break;
             case R.id.context_menu_delete:

@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import de.mytasks.activities.LoginActivity;
 import de.mytasks.activities.LogonActivity;
-
+import de.mytasks.activities.TasklistActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,8 +33,8 @@ public class SessionManager {
 	// User name (make variable public to access from outside)
 	public static final String KEY_NAME = "username";
 
-	// Email address (make variable public to access from outside)
-	public static final String KEY_EMAIL = "email";
+	 
+	public static final String KEY_PASS = "pass";
 
 	// User Id (make variable public to access from outside)
 	public static final String KEY_ID = "userId";
@@ -51,7 +50,7 @@ public class SessionManager {
 	 * Create login session
 	 * */
 	// public void createLoginSession(String name, String email){
-	public void createLoginSession(Long id, String name, String email) {
+	public void createLoginSession(String id, String name, String password) {
 		// Storing login value as TRUE
 		editor.putBoolean(IS_LOGIN, true);
 		
@@ -59,13 +58,17 @@ public class SessionManager {
 		editor.putString(KEY_NAME, name);
 
 		// Storing email in pref
-		editor.putString(KEY_EMAIL, email);
+		editor.putString(KEY_PASS, password);
 
 		// Storing id in pref
-		editor.putLong(KEY_ID, id);
+		editor.putString(KEY_ID, id);
 
 		// commit changes
 		editor.commit();
+		
+		System.out.println(pref.getString(KEY_NAME, null));
+		System.out.println(pref.getString(KEY_PASS, null));
+		System.out.println(pref.getString(KEY_ID, null));
 	}
 
 	/**
@@ -80,7 +83,7 @@ public class SessionManager {
 		user.add(pref.getString(KEY_NAME, null));
 
 		// user email id
-		user.add(pref.getString(KEY_EMAIL, null));
+		user.add(pref.getString(KEY_PASS, null));
 
 		// user id
 		user.add(pref.getString(KEY_ID, null));
@@ -98,16 +101,20 @@ public class SessionManager {
 		if (!this.isLoggedIn()) {
 			// user is not logged in redirect him to Login Activity
 			Intent i = new Intent(_context, LogonActivity.class);
+			
+			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						
 			// Closing all the Activities
-			i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+			//Intent.FLAG_ACTIVITY_NEW_TASK |
+			//i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
 			// Add new Flag to start new Activity
-			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
 			// Staring Login Activity
 			_context.startActivity(i);
 		}
-
+		
 	}
 
 	/**
@@ -118,16 +125,21 @@ public class SessionManager {
 		editor.clear();
 		editor.commit();
 		
-		// After logout redirect user to Loing Activity
+		/*
+		 
 		Intent i = new Intent(_context, LogonActivity.class);
-		// Closing all the Activities
+		 
+		
+		
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-		// Add new Flag to start new Activity
+	 
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-		// Staring Login Activity
+	 
 		_context.startActivity(i);
+		
+		*/
 	}
 
 	/**

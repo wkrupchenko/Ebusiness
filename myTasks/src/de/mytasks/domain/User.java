@@ -17,7 +17,7 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	private Long id;			// U_ID
+	private String id;			// U_ID
 	private String name;		// NAME
 	private String email;		// EMAIL
 	private String password;	// PASSWORD
@@ -26,10 +26,10 @@ public class User {
 	private List<Tasklist> taskLists;
 	
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getName() {

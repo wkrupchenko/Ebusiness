@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -109,6 +110,34 @@ public class SimpleHttpClient {
 
             String result = sb.toString();
             return result;
+        }
+        finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    
+    public static boolean executePing(String url) throws Exception {
+        BufferedReader in = null;
+        try {
+        	
+        	
+        	HttpGet httpRequest = new HttpGet(url);
+        	HttpEntity httpEntity = null;
+        	HttpClient httpclient = new DefaultHttpClient();
+        	HttpResponse response = httpclient.execute(httpRequest);
+        	int code = response.getStatusLine().getStatusCode();
+        	            
+            if (code == 200) {
+            	return true;
+            }
+                         
+            return false;
         }
         finally {
             if (in != null) {

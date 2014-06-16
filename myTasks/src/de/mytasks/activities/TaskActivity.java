@@ -15,8 +15,9 @@ import de.mytasks.R;
 import de.mytasks.database.DatabaseHelper;
 import de.mytasks.domain.Task;
 import de.mytasks.domain.Tasklist;
+import de.mytasks.domain.User;
+import de.mytasks.service.SessionManager;
 import de.mytasks.service.SimpleHttpClient;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -59,12 +60,16 @@ public class TaskActivity extends Activity {
 	private ArrayAdapter<Task> adapter;
 	private Long tasklistId;
 	private Task selectedItem;
+	
+	SessionManager session; 
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tasks);
+		
+		session = new SessionManager(getApplicationContext());		
 		tasklistTitle = (TextView) findViewById(R.id.ratingViewCurrentRatingTextView);
 		taskName = (EditText) findViewById(R.id.newTasklistNameTitle);
 		creatNewTask = (Button) findViewById(R.id.addTaskButton);
@@ -105,9 +110,15 @@ public class TaskActivity extends Activity {
 		    	@Override
 		    	public void run() {
 		    		
+		    		User user = new User();
+		    		List<String> userd = session.getUserDetails();
+		    		user.setName(userd.get(0));
+		    		user.setPassword(userd.get(1));
+		    		user.setId(userd.get(2));
+		    		
 		    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-		    		postParameters.add(new BasicNameValuePair("username","pipi"));
-		    		postParameters.add(new BasicNameValuePair("password","qqq"));
+		    		postParameters.add(new BasicNameValuePair("username",user.getName())); 
+		    		postParameters.add(new BasicNameValuePair("password",user.getPassword()));
 		    		postParameters.add(new BasicNameValuePair("taskname",taskName.getText().toString()));
 		    	    postParameters.add(new BasicNameValuePair("tasklistid",tasklistId.toString()));
 		    	    
@@ -136,8 +147,9 @@ public class TaskActivity extends Activity {
 	    	    	if (null != resp && !resp.isEmpty()) {
 	    	    		 boolean check = resp.contains("Created");	    	    		  
 	    	    	       if (check == true) {
-	    	    	    	   Toast.makeText(getApplicationContext(), "New Task successfully created",Toast.LENGTH_LONG).show();
-	    	    	    	   updateTaskActivityView();
+	    	    	    	   Toast.makeText(getApplicationContext(), "New Tasklist successfully created",Toast.LENGTH_LONG).show();
+	    	    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
+	    	    	    	   startActivity(it);
 	    	    	       } 
 	    	    	}
 	    	    	
@@ -157,11 +169,16 @@ public class TaskActivity extends Activity {
 		
     	@Override
     	public void run() {
-
+    		
+    		User user = new User();
+    		List<String> userd = session.getUserDetails();
+    		user.setName(userd.get(0));
+    		user.setPassword(userd.get(1));
+    		user.setId(userd.get(2));
     		
     		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-    		postParameters.add(new BasicNameValuePair("username","pipi"));
-    		postParameters.add(new BasicNameValuePair("password","qqq"));
+    		postParameters.add(new BasicNameValuePair("username",user.getName())); 
+    		postParameters.add(new BasicNameValuePair("password",user.getPassword())); 
     	    postParameters.add(new BasicNameValuePair("tasklistid",tasklistId.toString()));
     	    
     	    String response = null;
@@ -239,11 +256,6 @@ public class TaskActivity extends Activity {
 		}
 
 	}
-
-	public void showListview(View view) {
-		Intent i = new Intent(getApplicationContext(), ListViewActivity.class);
-		startActivity(i);
-	}
 	
 	ListView.OnItemClickListener listHandler = new ListView.OnItemClickListener(){
 		
@@ -263,9 +275,15 @@ public class TaskActivity extends Activity {
 			    	@Override
 			    	public void run() {
 			    		
+			    		User user = new User();
+			    		List<String> userd = session.getUserDetails();
+			    		user.setName(userd.get(0));
+			    		user.setPassword(userd.get(1));
+			    		user.setId(userd.get(2));
+			    		
 			    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-			    		postParameters.add(new BasicNameValuePair("username","pipi"));
-			    		postParameters.add(new BasicNameValuePair("password","qqq"));
+			    		postParameters.add(new BasicNameValuePair("username",user.getName())); 
+			    		postParameters.add(new BasicNameValuePair("password",user.getPassword()));			    		    		
 			    		postParameters.add(new BasicNameValuePair("taskname",selectedItem.getName()));
 			    		postParameters.add(new BasicNameValuePair("taskcheckbox",value.toString()));
 			    	    postParameters.add(new BasicNameValuePair("taskid",selectedItem.getTask_id().toString()));
@@ -315,9 +333,15 @@ public class TaskActivity extends Activity {
 			    	@Override
 			    	public void run() {
 			    		
+			    		User user = new User();
+			    		List<String> userd = session.getUserDetails();
+			    		user.setName(userd.get(0));
+			    		user.setPassword(userd.get(1));
+			    		user.setId(userd.get(2));
+			    		
 			    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-			    		postParameters.add(new BasicNameValuePair("username","pipi"));
-			    		postParameters.add(new BasicNameValuePair("password","qqq"));
+			    		postParameters.add(new BasicNameValuePair("username",user.getName())); 
+			    		postParameters.add(new BasicNameValuePair("password",user.getPassword()));			    		 
 			    		postParameters.add(new BasicNameValuePair("taskname",selectedItem.getName()));
 			    		postParameters.add(new BasicNameValuePair("taskcheckbox",value.toString()));
 			    	    postParameters.add(new BasicNameValuePair("taskid",selectedItem.getTask_id().toString()));
