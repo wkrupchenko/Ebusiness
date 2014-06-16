@@ -38,10 +38,22 @@
         android:id="@+id/shareViewShareButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/emailToShareTextView"
-        android:layout_alignRight="@+id/emailToShareTextView"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/emailToShareTextView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
         android:text="@string/share_activity_button_share_text" />
+
+    <Button
+        android:id="@+id/shareViewBackButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/shareViewShareButton"
+        android:layout_alignBottom="@+id/shareViewShareButton"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="18dp"
+        android:text="@string/share_activity_button_back_text"
+        android:onClick="back"/>
 
 </RelativeLayout>

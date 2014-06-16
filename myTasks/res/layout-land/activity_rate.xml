@@ -2,16 +2,38 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/grey" >
 
-    <Button
-        android:id="@+id/ratingViewRateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ratingBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="@string/rate_view_rate_button_texts" />
+    <RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="48dp"
+	    android:background="@color/beige">
+ 
+	    <!-- title -->
+	 
+	    <TextView
+	        android:id="@+id/header"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true"
+	        android:gravity="center"
+	        android:textColor="@color/white"
+	        android:textSize="22sp" />
+	    
+	     <!--  divider 
+	
+	    <View
+	        android:layout_width="match_parent"
+	        android:layout_height="1dp"
+	        android:layout_alignParentBottom="true"
+	        android:layout_below="@+id/header"
+	        android:background="@color/white" />
+ -->
+	</RelativeLayout>
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -19,9 +41,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="60dp"
         android:numStars="5"
         android:stepSize="1" />
+
+    <Button
+        android:id="@+id/ratingViewRateButton"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/ratingBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_shape_button"
+        android:drawableLeft="@drawable/ic_action_important"
+        android:text="@string/rate_view_rate_button_texts"
+        android:textColor="@color/white"/>
 
     <RatingBar
         android:id="@+id/currentRatingBar"
@@ -29,9 +63,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/ratingBar"
         android:layout_below="@+id/ratingViewRateButton"
-        android:layout_marginTop="25dp" 
-        android:numStars = "5"
-        android:stepSize = ".1"/>
+        android:layout_marginTop="30dp"
+        android:numStars="5"
+        android:stepSize=".1" />
 
     <TextView
         android:id="@+id/ratingViewCurrentRatingTextView"
@@ -39,7 +73,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/currentRatingBar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="11dp"
         android:text="@string/rate_view_rate_current_rating_text" />
 
 </RelativeLayout>

@@ -2,84 +2,98 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/shareButton"
+    <RelativeLayout
+        android:id="@+id/RelativeLayoutTop"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_height="48dp" 
+        android:background="@color/beige" >
+
+        <TextView
+            android:id="@+id/ViewDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Your Tasklists"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/RelativeLayoutTop"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/newTasklistNameTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignBaseline="@+id/addTasklistButton"
+            android:layout_alignBottom="@+id/addTasklistButton"
+            android:layout_toLeftOf="@+id/addTasklistButton"
+            android:ems="10"
+            android:hint="Enter a new Tasklist" />
+
+        <Button
+            android:id="@+id/addTasklistButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:background="@drawable/round_shape_button"
+            android:text="@string/tasklist_button_add_task_text_view"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="14dp"
-        android:text="@string/tasklist_buton_settings_text_view" />
-
-    <Button
-        android:id="@+id/updateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/shareButton"
-        android:layout_alignBottom="@+id/shareButton"
-        android:layout_centerHorizontal="true"
-        android:text="@string/tasklist_button_update_text_view" />
-
-    <TextView
-        android:id="@+id/lastUpdateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/updateButton"
-        android:layout_toRightOf="@+id/addTaskButton"
-        android:text="@string/tasklist_last_update_text_view"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/lastUpdateTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/updateButton"
-        android:layout_toRightOf="@+id/addTaskButton"
-        android:text="@string/tasklist_last_update_time_view"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/lastUpdateDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/lastUpdateTime"
-        android:layout_alignLeft="@+id/lastUpdateTime"
-        android:text="@string/tasklist_last_update_date_view"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <EditText
-        android:id="@+id/newTasklistNameTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:layout_toLeftOf="@+id/addTaskButton"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
-    <Button
-        android:id="@+id/addTaskButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/newTasklistNameTitle"
-        android:layout_alignBottom="@+id/newTasklistNameTitle"
         android:layout_alignParentRight="true"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="@string/tasklist_button_add_task_text_view" />
+        android:layout_below="@+id/RelativeLayout1"
+        android:orientation="vertical" >
 
-    <ListView
-        android:id="@+id/tasklistOverviewWindow"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_above="@+id/shareButton"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/addTaskButton"
-        android:layout_marginBottom="15dp" >
+        <ListView
+            android:id="@+id/tasklistOverviewWindow"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="15dp"
+            android:drawableLeft="@drawable/ic_action_view_as_list" >
+        </ListView>
 
-    </ListView>
+        <Button
+            android:id="@+id/updateButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tasklistOverviewWindow"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/round_shape_button"
+            android:drawableLeft="@drawable/ic_action_refresh"
+            android:text="@string/tasklist_button_update_text_view"
+            android:textColor="@color/white" />
+    </RelativeLayout>
 
 </RelativeLayout>
