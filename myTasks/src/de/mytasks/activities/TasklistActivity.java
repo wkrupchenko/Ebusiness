@@ -453,7 +453,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.setHeaderTitle("TEST");
+        menu.setHeaderTitle("OPTIONS");
         getMenuInflater().inflate(R.menu.actions , menu);
         
     }
