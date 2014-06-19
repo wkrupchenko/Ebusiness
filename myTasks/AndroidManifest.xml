@@ -76,6 +76,10 @@
      	 android:label="@string/app_name">          
  		</activity>
  		<activity
+     	 android:name="de.mytasks.activities.ShareActivity"
+     	 android:label="@string/app_name">          
+ 		</activity>
+ 		<activity
      	 android:name="de.mytasks.activities.ParticipantsActivity"
      	 android:label="@string/app_name">          
  		</activity>

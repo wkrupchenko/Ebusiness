@@ -18,18 +18,22 @@ import de.mytasks.R;
 import de.mytasks.database.DatabaseHelper;
 import de.mytasks.domain.Task;
 import de.mytasks.domain.Tasklist;
+import de.mytasks.domain.User;
 import de.mytasks.service.SimpleHttpClient;
-
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,6 +41,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import java.util.List;
 
@@ -53,6 +58,7 @@ public class ParticipantsActivity extends ListActivity {
 	private String resp;
 	private String tasklistName;
 	private Long tasklistId;
+	private Button shareTasklistButton;
 	private static final String TAG = "ParticipantsActivity";
 	private ParticipantListAdapter adapter;
 	private TextView headerText;
@@ -78,13 +84,12 @@ public class ParticipantsActivity extends ListActivity {
 		ViewGroup header = (ViewGroup)inflater.inflate(R.layout.group_header_participants, lv, false);
 		headerText = (TextView) header.findViewById(R.id.header);
 		headerText.setText(tasklistName);
-		lv.addHeaderView(header);
-//		lv.addHeaderView(header, null, false);
-
-		
+		//lv.addHeaderView(header);
+//		lv.addHeaderView(header, null, false);		 
+				
 		getParticipants();
 	}
-
+		 
 	public void getParticipants() {
 		new Thread(new Runnable() {
 
@@ -136,18 +141,6 @@ public class ParticipantsActivity extends ListActivity {
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	// back button
-	public void back(View view) {
-		Intent intent = new Intent(this, SettingsActivity.class);
-		startActivity(intent);
-	}
+		 
 
 }
