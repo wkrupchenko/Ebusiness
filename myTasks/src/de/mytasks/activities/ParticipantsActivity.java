@@ -112,7 +112,8 @@ public class ParticipantsActivity extends ListActivity {
 		    	
 		    	if(emails.contains(shareEmail.getText().toString()))
 	  	      	{
-		    		Toast.makeText(getApplicationContext(), "User already subscribed",Toast.LENGTH_SHORT).show();
+		    		shareEmail.requestFocus();
+		    		shareEmail.setError("User already subscribed");
 	  	      	}
 	  	      	else
 	  	      	{
