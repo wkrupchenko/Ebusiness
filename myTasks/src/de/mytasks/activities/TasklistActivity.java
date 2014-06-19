@@ -255,7 +255,8 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 				long arg3) {
 			selectedItem = (Tasklist) tasklistOverviewWindow.getItemAtPosition(arg2);
 			Log.v(TAG, selectedItem.getId().toString());
-			Intent intent = new Intent(getApplicationContext(), TaskActivity.class); 
+			Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			intent.putExtra("Name", "Tasks from: "+ selectedItem.getName());
 			intent.putExtra("ID", selectedItem.getId());
 			startActivity(intent);	

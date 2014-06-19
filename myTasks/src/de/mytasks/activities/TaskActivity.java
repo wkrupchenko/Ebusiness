@@ -648,6 +648,7 @@ public class TaskActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		Intent i = new Intent(getApplicationContext(), TasklistActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 	}
 
