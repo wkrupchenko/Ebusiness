@@ -37,31 +37,34 @@
 </RelativeLayout>
 
 <EditText
-    android:id="@+id/editText1"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_above="@+id/shareTasklistButton"
-    android:layout_centerHorizontal="true"
-    android:layout_marginBottom="44dp"
-    android:ems="10"
-    android:inputType="textEmailAddress" />
-
-<TextView
-    android:id="@+id/shareEmailText"
+    android:id="@+id/shareTasklitEmailInsertField"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_above="@+id/shareTasklistButton"
-    android:layout_centerHorizontal="true"
-    android:layout_marginBottom="20dp"
-    android:text="@string/register_mail_text_view" />
+    android:layout_above="@+id/shareEmailText"
+    android:layout_alignParentLeft="true"
+    android:layout_toLeftOf="@+id/shareTasklistButton"
+    android:ems="0"
+    android:inputType="textEmailAddress" />
 
 <Button
     android:id="@+id/shareTasklistButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_alignBaseline="@+id/shareTasklitEmailInsertField"
+    android:layout_alignBottom="@+id/shareTasklitEmailInsertField"
+    android:layout_alignParentRight="true"
+    android:background="@drawable/round_shape_button"
+    android:text="@string/create_tasklist_button_share_text_view"
+    android:textColor="@color/white" />
+
+<TextView
+    android:id="@+id/shareEmailText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginBottom="28dp"
-    android:text="@string/create_tasklist_button_share_text_view" />
+    android:layout_alignRight="@+id/shareTasklitEmailInsertField"
+    android:layout_marginBottom="26dp"
+    android:layout_marginRight="103dp"
+    android:text="@string/register_mail_text_view" />
 
 </RelativeLayout>
