@@ -224,9 +224,11 @@ public class TaskActivity extends Activity {
 	    	    		 boolean check = resp.contains("Created");	    	    		  
 	    	    	       if (check == true) {
 	    	    	    	   Toast.makeText(getApplicationContext(), "New Tasklist successfully created",Toast.LENGTH_LONG).show();
-	    	    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
+//	    	    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
 	    	    	     	   //it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	    	    	     	   startActivity(it);
+//	    	    	     	   startActivity(it);
+	    	    	    	   finish();
+	    	    	     	   startActivity(getIntent());
 	    	    	       } 
 	    	    	}
 	    	    	
@@ -554,9 +556,10 @@ public class TaskActivity extends Activity {
 		    	    	if (null != resp && !resp.isEmpty()) {
 		    	    		 boolean check = resp.contains("OK");	    	    		  
 		    	    	       if (check == true) {
-		    	    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
+//		    	    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
 		    	    	     	   //it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		    	    	     	   startActivity(it);
+		    	    	    	   finish();
+		    	    	     	   startActivity(getIntent());
 		    	    	    	   Toast.makeText(getApplicationContext(), "Task deleted",Toast.LENGTH_LONG).show();
 		    	    	       } 
 		    	    	}
