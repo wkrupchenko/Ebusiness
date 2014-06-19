@@ -51,19 +51,17 @@ public final class GetParticipants extends HttpServlet {
 				ResultSet rst = stat.executeQuery();
 
 				ArrayList<Object> list = new ArrayList<Object>();
-				if (rst.next()) {
-					while(rst.next()){
+				while(rst.next()){
 					User u = new User();
 					u.setId(rst.getLong("U_ID"));
 					u.setName(rst.getString("NAME"));
 					u.setEmail(rst.getString("EMAIL"));
 
 					list.add(u);
-					}
 					pw.println(new Gson().toJson(list));
-				}else{
-					pw.print("Error");
-				}
+					}
+					
+				 
 			
 				pw.close();
 				
