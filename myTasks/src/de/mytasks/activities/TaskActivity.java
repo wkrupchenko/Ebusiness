@@ -560,7 +560,7 @@ public class TaskActivity extends Activity {
 		    	    	     	   //it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);		    	    	    	   
 		    	    	     	   startActivity(it);
 		    	    	     	   finish();
-		    	    	    	   Toast.makeText(getApplicationContext(), "Task deleted",Toast.LENGTH_LONG).show();
+		    	    	    	   //Toast.makeText(getApplicationContext(), "Task deleted",Toast.LENGTH_LONG).show();
 		    	    	       } 
 		    	    	}
 		    	    	
