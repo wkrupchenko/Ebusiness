@@ -550,16 +550,16 @@ public class TaskActivity extends Activity {
 				try {
 
 					/** wait a second to get response from server */
-		    	    Thread.sleep(1000);
+		    	    Thread.sleep(2000);
 		    	    /** Inside the new thread we cannot update the main thread
 		    	    So updating the main thread outside the new thread */
 		    	    	if (null != resp && !resp.isEmpty()) {
 		    	    		 boolean check = resp.contains("OK");	    	    		  
 		    	    	       if (check == true) {
-//		    	    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
-		    	    	     	   //it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		    	    	    	   finish();
-		    	    	     	   startActivity(getIntent());
+		    	    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
+		    	    	     	   //it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);		    	    	    	   
+		    	    	     	   startActivity(it);
+		    	    	     	   finish();
 		    	    	    	   Toast.makeText(getApplicationContext(), "Task deleted",Toast.LENGTH_LONG).show();
 		    	    	       } 
 		    	    	}
