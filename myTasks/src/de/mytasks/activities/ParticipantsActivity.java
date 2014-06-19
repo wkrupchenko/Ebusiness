@@ -110,6 +110,12 @@ public class ParticipantsActivity extends ListActivity {
 	 View.OnClickListener myhandler1 = new View.OnClickListener() {
 		    public void onClick(View v) {
 		    	
+		    	if(emails.contains(shareEmail.getText().toString()))
+	  	      	{
+		    		Toast.makeText(getApplicationContext(), "User already subscribed",Toast.LENGTH_SHORT).show();
+	  	      	}
+	  	      	else
+	  	      	{
 		    	new Thread(new Runnable(){
 		    		
 			    	@Override
@@ -143,6 +149,7 @@ public class ParticipantsActivity extends ListActivity {
 			    	      }
 			    	} 
 		    	}).start();
+	  	      	}
 		    	
 		    	try {
 
