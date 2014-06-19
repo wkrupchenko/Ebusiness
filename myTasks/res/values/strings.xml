@@ -32,6 +32,7 @@
 	<string name="create_tasklist_button_share_text_view">share</string>
 	<string name="create_tasklist_button_add_task_text_view">add task</string>
 	<string name="create_tasklist_button_archive_text_view">archive</string>
+	<string name="txtViewPopupRename">Insert a new name:</string>
 	
 	<!-- Settings -->
 	<string name="settings_tasklist_name_text_view">tasklist name</string>
@@ -49,7 +50,7 @@
 	<string name ="share_list_button_edit_text">edit</string>
 	
 	<!-- Context Menu -->
-	<string name="str_context_menu_edit">Edit</string>
+	<string name="str_context_menu_edit">Rename</string>
     <string name="str_context_menu_share">Share</string>
     <string name="str_context_menu_delete">Delete</string>
     <string name="str_context_menu_rate">Rate</string>
