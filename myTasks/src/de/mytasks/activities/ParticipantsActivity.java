@@ -99,7 +99,7 @@ public class ParticipantsActivity extends ListActivity {
 		
 		ViewGroup footer = (ViewGroup)inflater.inflate(R.layout.group_footer_participants, lv, false);
 		shareText = (TextView) footer.findViewById(R.id.shareEmailText);
-		shareEmail = (EditText) footer.findViewById(R.id.ssdfsdfsd);
+		shareEmail = (EditText) footer.findViewById(R.id.shareTasklitEmailInsertField);
 		shareButton = (Button) footer.findViewById(R.id.shareTasklistButton);
 		lv.addFooterView(footer);
 		shareButton.setOnClickListener(myhandler1);
