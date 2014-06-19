@@ -53,8 +53,8 @@
 	<string name="str_context_menu_edit">Rename</string>
     <string name="str_context_menu_share">Share</string>
     <string name="str_context_menu_delete">Delete</string>
-    <string name="str_context_menu_rate">Rate</string>
-     <string name="str_context_add_participants">Add Participants</string>
+    <string name="str_context_menu_rate">Rate</string>    
+    <string name="str_menu_unsubscribe">Unsubscribe</string>
     
     <!-- Context Menu Map-->
 	<string name="str_context_menu_add_map_info">Add/Change Map Info</string>

@@ -235,6 +235,79 @@ public class ParticipantsActivity extends ListActivity {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.unsubscribe_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.unsubscribe:
+	            unsubscribe();	            
+	            return true;	         
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	public void unsubscribe() throws NullPointerException {
+	  	new Thread(new Runnable(){
+			
+	    	@Override
+	    	public void run() {
+	    		
+	    		User user = new User();
+	    		List<String> userd = session.getUserDetails();
+	    		user.setName(userd.get(0));
+	    		user.setPassword(userd.get(1));
+	    		user.setId(userd.get(2));
+
+	    		
+	    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+	    	    postParameters.add(new BasicNameValuePair("user", user.getId()));
+	    	    postParameters.add(new BasicNameValuePair("tasklistid", tasklistId.toString()));
+	    	    
+	    	    String response = null;
+	    	      try {
+	    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/unsubscribeTasklist", postParameters);
+	    	       String res = response.toString();
+	    	       Log.v(TAG, response.toString());
+	    	       resp = res;
+	    	}
+	    	      catch (Exception e) {
+	    	          e.printStackTrace();
+	    	          Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+	    	      }
+	    	} 
+		}).start();
+		
+		try {
+
+			/** wait a second to get response from server */
+    	    Thread.sleep(1000);
+    	    /** Inside the new thread we cannot update the main thread
+    	    So updating the main thread outside the new thread */
+    	    	if (null != resp && !resp.isEmpty()) {
+    	    		 boolean check = resp.contains("Unsubscribed");	    	    		  
+    	    	       if (check == true) {    	    	    	    
+    	    	    	   Toast.makeText(getApplicationContext(), "You have been unsubscribed",Toast.LENGTH_LONG).show();
+    	    	       } 
+    	    	}
+    	    	
+    	    	else {
+    	    			Toast.makeText(getApplicationContext(), "Failure",Toast.LENGTH_SHORT).show();
+    	    	}
+		}
+		catch (Exception e) {
+		    	e.printStackTrace();
+		 }
+
+	}
 		 
 	// back button
 	public void back(View view) {
