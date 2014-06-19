@@ -65,5 +65,10 @@ public class ShowMapActivity extends Activity {
 			// // Zoom in, animating the camera.
 			// map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 		}
+//		@Override
+//		public void onBackPressed() {
+//			Intent i = new Intent(getApplicationContext(), TaskActivity.class);
+//			startActivity(i);
+//		}
 
 }
