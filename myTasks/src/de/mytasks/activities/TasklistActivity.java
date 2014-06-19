@@ -233,6 +233,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    	    	       if (check == true) {
 	    	    	    	   Toast.makeText(getApplicationContext(), "New Tasklist successfully created",Toast.LENGTH_LONG).show();
 	    	    	    	   Intent it = new Intent(getApplicationContext(),TasklistActivity.class);
+	    	    	    	   it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	    	    	    	   startActivity(it);
 	    	    	       } 
 	    	    	}
@@ -319,6 +320,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
     	    	       if (check == true) {
     	    	    	   Toast.makeText(getApplicationContext(), "Tasklist deleted",Toast.LENGTH_LONG).show();
     	    	    	   Intent it = new Intent(getApplicationContext(),TasklistActivity.class);
+    	    	    	   it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     	    	    	   startActivity(it);
     	    	       } 
     	    	}

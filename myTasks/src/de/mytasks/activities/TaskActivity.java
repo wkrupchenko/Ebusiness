@@ -568,8 +568,11 @@ public class TaskActivity extends Activity {
 			}
 	
 	private void updateTaskActivityView(){
+	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
+ 	   it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+ 	   startActivity(it);
 		finish();
-    	startActivity(getIntent());
+    	 
 	}
 	
 	private void showPopupMenu(View v) {
