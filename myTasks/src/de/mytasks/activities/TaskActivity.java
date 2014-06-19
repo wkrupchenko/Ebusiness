@@ -556,9 +556,9 @@ public class TaskActivity extends Activity {
 		    	    	if (null != resp && !resp.isEmpty()) {
 		    	    		 boolean check = resp.contains("OK");	    	    		  
 		    	    	       if (check == true) {
-		    	    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
+		    	    	    	   //Intent it = new Intent(getApplicationContext(),TaskActivity.class);
 		    	    	     	   //it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);		    	    	    	   
-		    	    	     	   startActivity(it);
+		    	    	     	   startActivity(getIntent());
 		    	    	     	   finish();
 		    	    	    	   //Toast.makeText(getApplicationContext(), "Task deleted",Toast.LENGTH_LONG).show();
 		    	    	       } 
