@@ -65,7 +65,8 @@
         android:layout_below="@+id/ratingViewRateButton"
         android:layout_marginTop="71dp"
         android:numStars="5"
-        android:stepSize=".1" />
+        android:stepSize=".1" 
+		android:isIndicator="true"/>
 
     <TextView
         android:id="@+id/ratingViewCurrentRatingTextView"
