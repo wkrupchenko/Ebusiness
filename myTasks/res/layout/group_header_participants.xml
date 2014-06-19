@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/grey" >
+    
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="@color/beige">
@@ -27,4 +34,34 @@
         android:layout_below="@+id/header"
         android:background="@color/white" />
  -->
+</RelativeLayout>
+
+<EditText
+    android:id="@+id/editText1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/shareTasklistButton"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="44dp"
+    android:ems="10"
+    android:inputType="textEmailAddress" />
+
+<TextView
+    android:id="@+id/shareEmailText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/shareTasklistButton"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="20dp"
+    android:text="@string/register_mail_text_view" />
+
+<Button
+    android:id="@+id/shareTasklistButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="28dp"
+    android:text="@string/create_tasklist_button_share_text_view" />
+
 </RelativeLayout>
