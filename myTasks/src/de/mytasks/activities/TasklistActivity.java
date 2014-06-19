@@ -378,8 +378,15 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		    	public void run() {
 		    		Looper.prepare();
 		    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-		    		postParameters.add(new BasicNameValuePair("username","pipi"));
-		    		postParameters.add(new BasicNameValuePair("password","qqq"));
+		    		
+		    		User user = new User();
+		    		List<String> userd = session.getUserDetails();
+		    		user.setName(userd.get(0));
+		    		user.setPassword(userd.get(1));
+		    		user.setId(userd.get(2));
+		    		
+		    		postParameters.add(new BasicNameValuePair("username",user.getName()));
+		    		postParameters.add(new BasicNameValuePair("password",user.getPassword()));
 		    		postParameters.add(new BasicNameValuePair("tasklistname",newTasklistName.getText().toString()));
 		    		postParameters.add(new BasicNameValuePair("archived","0"));
 		    	    postParameters.add(new BasicNameValuePair("tasklistid",selectedItem.getId().toString()));
@@ -478,8 +485,13 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
                 startActivity(intent2);
                 break;
             case R.id.context_menu_rate:
+            	User user = new User();
+	    		List<String> userd = session.getUserDetails();
+	    		user.setName(userd.get(0));
+	    		user.setPassword(userd.get(1));
+	    		user.setId(userd.get(2));
                 Intent intent = new Intent(getApplicationContext(), RateActivity.class);
-                intent.putExtra("USER_ID", "14");
+                intent.putExtra("USER_ID", user.getId());
     			intent.putExtra("TASKLIST_ID", selectedItem.getId());
     			intent.putExtra("TASKLIST_NAME", "Rate Tasklist: " + selectedItem.getName());
     			startActivity(intent);	

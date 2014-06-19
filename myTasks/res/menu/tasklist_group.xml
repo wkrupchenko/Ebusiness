@@ -1,8 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
     <item
     	android:id="@+id/app_settings"
-        android:title="Settings"/>
-    
+        android:title="Settings"/>  
+    -->
+       
     <item
     	android:id="@+id/tasklists_update"
         android:title="Update" />
