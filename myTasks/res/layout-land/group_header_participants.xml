@@ -37,7 +37,7 @@
 </RelativeLayout>
 
 <EditText
-    android:id="@+id/shareTasklitEmailInsertField"
+    android:id="@+id/ssdfsdfsd"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_above="@+id/shareEmailText"
@@ -50,8 +50,8 @@
     android:id="@+id/shareTasklistButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignBaseline="@+id/shareTasklitEmailInsertField"
-    android:layout_alignBottom="@+id/shareTasklitEmailInsertField"
+    android:layout_alignBaseline="@+id/ssdfsdfsd"
+    android:layout_alignBottom="@+id/ssdfsdfsd"
     android:layout_alignParentRight="true"
     android:background="@drawable/round_shape_button"
     android:text="@string/create_tasklist_button_share_text_view"
@@ -62,7 +62,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:layout_alignRight="@+id/shareTasklitEmailInsertField"
+    android:layout_alignRight="@+id/ssdfsdfsd"
     android:layout_marginBottom="14dp"
     android:layout_marginRight="206dp"
     android:text="@string/register_mail_text_view" />

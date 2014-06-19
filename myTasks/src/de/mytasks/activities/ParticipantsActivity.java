@@ -62,6 +62,11 @@ public class ParticipantsActivity extends ListActivity {
 	private static final String TAG = "ParticipantsActivity";
 	private ParticipantListAdapter adapter;
 	private TextView headerText;
+	private Button shareButton;
+	private EditText shareEmail;
+	private TextView shareText;
+	
+	
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -84,9 +89,14 @@ public class ParticipantsActivity extends ListActivity {
 		ViewGroup header = (ViewGroup)inflater.inflate(R.layout.group_header_participants, lv, false);
 		headerText = (TextView) header.findViewById(R.id.header);
 		headerText.setText(tasklistName);
-		//lv.addHeaderView(header);
-//		lv.addHeaderView(header, null, false);		 
-				
+		lv.addHeaderView(header);
+		
+		ViewGroup footer = (ViewGroup)inflater.inflate(R.layout.group_footer_participants, lv, false);
+		shareText = (TextView) footer.findViewById(R.id.shareEmailText);
+		shareEmail = (EditText) footer.findViewById(R.id.ssdfsdfsd);
+		shareButton = (Button) footer.findViewById(R.id.shareTasklistButton);
+		lv.addFooterView(footer);
+		
 		getParticipants();
 	}
 		 
@@ -141,6 +151,5 @@ public class ParticipantsActivity extends ListActivity {
 			e.printStackTrace();
 		}
 	}
-		 
 
 }
