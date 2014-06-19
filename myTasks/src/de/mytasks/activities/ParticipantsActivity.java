@@ -235,31 +235,7 @@ public class ParticipantsActivity extends ListActivity {
 			e.printStackTrace();
 		}
 	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
 		 
-		getMenuInflater().inflate(R.menu.share_menu, menu);
-		return true;
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-	   
-	    switch (item.getItemId()) {
-	        case R.id.context_menu_add:
-	        	Intent i = getIntent();	    		 
-	    		final Long parTasklistId = i.getLongExtra("TASKLIST_ID", 0L);
-	        	Intent intent2 = new Intent(getApplicationContext(), ShareActivity.class);
-	        	intent2.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                intent2.putExtra("TASKLIST_ID", parTasklistId);
-                startActivity(intent2);	            
-	            return true;	       
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
-	}
-
 	// back button
 	public void back(View view) {
 		Intent intent = new Intent(this, SettingsActivity.class);
