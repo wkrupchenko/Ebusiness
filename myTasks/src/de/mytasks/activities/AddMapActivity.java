@@ -443,6 +443,7 @@ public class AddMapActivity extends Activity {
     	    	       if (check == true) {
     	    	    	   Toast.makeText(getApplicationContext(), "Added/Changed Map Information",Toast.LENGTH_LONG).show();
     	    	    	   Intent it = new Intent(getApplicationContext(), ShowMapActivity.class);
+    	    	    	   it.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
     	    	    	   it.putExtra("TaskId", taskId);
     	    	    	   it.putExtra("TaskName", taskName);
     	    	    	   it.putExtra("Latitude", latitude);

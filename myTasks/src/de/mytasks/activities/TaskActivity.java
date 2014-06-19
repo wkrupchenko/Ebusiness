@@ -607,6 +607,7 @@ public class TaskActivity extends Activity {
             case R.id.context_menu_add_map_info:
                 Toast.makeText(this, "Loading Map...", Toast.LENGTH_SHORT).show();
                 Intent it = new Intent(getApplicationContext(), AddMapActivity.class);
+                it.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
     			it.putExtra("TaskId", selectedItem.getTask_id());
     			it.putExtra("TaskName", selectedItem.getName());
     			it.putExtra("Latitude", selectedItem.getLatitude());
@@ -618,6 +619,7 @@ public class TaskActivity extends Activity {
             	Toast.makeText(this, "Loading Map...", Toast.LENGTH_SHORT).show();
             	if(selectedItem.getLatitude() !=0 && selectedItem.getLongitude()!=0){
 		        	Intent it2 = new Intent(getApplicationContext(), ShowMapActivity.class);
+		        	it2.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 					it2.putExtra("TaskId", selectedItem.getTask_id());
 					it2.putExtra("TaskName", selectedItem.getName());
 					it2.putExtra("Latitude", selectedItem.getLatitude());
