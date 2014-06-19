@@ -51,6 +51,7 @@ public class TaskActivity extends Activity {
 	private TextView tasklistTitle;
 	private EditText taskName;
 	private Button creatNewTask;
+	private Button update;
 	private ListView tasksOverviewWindow;
 	private TextView task;
 	private CheckBox tasksCheckBox;
@@ -75,6 +76,7 @@ public class TaskActivity extends Activity {
 		creatNewTask = (Button) findViewById(R.id.addTaskButton);
 		tasksOverviewWindow = (ListView) findViewById(R.id.listView1);
 		tasksCheckBox = (CheckBox) findViewById(R.id.check);
+		update = (Button) findViewById(R.id.updateButton);
 		
 		tasksOverviewWindow.setOnItemClickListener(listHandler);
 		tasksOverviewWindow.setOnItemLongClickListener(deleteHandler);
@@ -89,9 +91,7 @@ public class TaskActivity extends Activity {
 		tasklistTitle.setText(tasklistName);
 		
 		creatNewTask.setOnClickListener(myhandler1);
-				
-//		adapter = new ArrayAdapter<Task>(this,
-//		        android.R.layout.simple_list_item_1, allTasks);
+		update.setOnClickListener(updateHandler);
 		
 		adapter = new ArrayAdapter<Task>(this,
 		        android.R.layout.simple_list_item_multiple_choice, allTasks);
@@ -101,6 +101,82 @@ public class TaskActivity extends Activity {
 		
 		getTasks();
 	}
+	
+	View.OnClickListener updateHandler = new View.OnClickListener() {
+		 public void onClick(View v) {
+		    	
+		    	new Thread(new Runnable(){
+		    		
+			    	@Override
+			    	public void run() {
+			    		
+			    		User user = new User();
+			    		List<String> userd = session.getUserDetails();
+			    		user.setName(userd.get(0));
+			    		user.setPassword(userd.get(1));
+			    		user.setId(userd.get(2));
+			    		
+			    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+			    		postParameters.add(new BasicNameValuePair("username",user.getName())); 
+			    		postParameters.add(new BasicNameValuePair("password",user.getPassword())); 
+			    	    postParameters.add(new BasicNameValuePair("tasklistid",tasklistId.toString()));
+			    	    
+			    	    String response = null;
+			    	      try {
+			    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/getTasks", postParameters);
+			    	       String res = response.toString();
+			    	       Log.v(TAG, response.toString());
+			    	       resp = res;
+			    	}
+			    	      catch (Exception e) {
+			    	          e.printStackTrace();
+			    	          Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+			    	      }
+			    	} 
+				}).start();
+		    	
+		    	try {
+
+		    	    /** wait a second to get response from server */
+		    	    Thread.sleep(1000);
+		    	    
+		    	    Log.v(TAG, resp.toString());
+		    	    
+		    	    JSONArray jsonArray = new JSONArray(resp);
+		    	    
+		    	    
+		    	    for (int i = 0; i < jsonArray.length(); i++) {
+		    	        JSONObject jsonObject = jsonArray.getJSONObject(i);
+		    	        Task task = new Task();
+		    	        String TaskId = jsonObject.getString("id");
+		    	        String TaskName = jsonObject.getString("name");
+		    	        Integer TaskChecked = jsonObject.getInt("checked");
+		    	        String TaskTasklistId = jsonObject.getString("tasklist");
+		    	        Double Latitude = jsonObject.getDouble("latitude");
+		    	        Double Longitude = jsonObject.getDouble("longitude");
+		    	        task.setTask_id(Long.valueOf(TaskId).longValue());
+		    	        task.setName(TaskName);
+		    	        task.setChecked(TaskChecked);
+		    	        task.setTasklist(Long.valueOf(TaskTasklistId).longValue());
+		    	        task.setLatitude(Latitude);
+		    	        task.setLongitude(Longitude);
+		    	        if(allTasks.contains(task) == false){
+		    	        	allTasks.add(task);
+		    	        }
+		    	        for (int a = 0; a < allTasks.size(); a++) {
+		    	        	if(allTasks.get(a).getChecked()==1){
+		            			tasksOverviewWindow.setItemChecked(a, true);
+		    	        	}
+		    	        }
+		    	        
+		    	        Log.i(Task.class.getName(), jsonObject.getString("name"));
+		    	      }	    
+		    	 } 
+		    	catch (Exception e) {
+		    	    	e.printStackTrace();
+		    	 }
+		    }
+	};
 	
 	View.OnClickListener myhandler1 = new View.OnClickListener() {
 	    public void onClick(View v) {
@@ -148,8 +224,7 @@ public class TaskActivity extends Activity {
 	    	    		 boolean check = resp.contains("Created");	    	    		  
 	    	    	       if (check == true) {
 	    	    	    	   Toast.makeText(getApplicationContext(), "New Tasklist successfully created",Toast.LENGTH_LONG).show();
-	    	    	    	   Intent it = new Intent(getApplicationContext(),TaskActivity.class);
-	    	    	    	   startActivity(it);
+	    	    	    	   updateTaskActivityView();
 	    	    	       } 
 	    	    	}
 	    	    	
@@ -521,10 +596,19 @@ public class TaskActivity extends Activity {
         return true;
     }
 	
+//	@Override
+//	public void onBackPressed() {
+//		finish();
+//		return;
+//	}
 	@Override
 	public void onBackPressed() {
-		finish();
-		return;
+		Intent i = new Intent(getApplicationContext(), TasklistActivity.class);
+//		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//		Intent setIntent = new Intent(Intent.ACTION_MAIN);
+//		setIntent.addCategory(Intent.CATEGORY_HOME);
+//		setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(i);
 	}
 
 }
