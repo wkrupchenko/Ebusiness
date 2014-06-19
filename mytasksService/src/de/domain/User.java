@@ -30,13 +30,20 @@ public class User {
 	private Date creation;		// CREATED_ON
 	private Date updated;		// UPDATED_ON
 	private List<TaskList> taskLists;
+	private Float rating;
 	
 	
 	public Long getId() {
 		return id;
 	}
+	public Float getRating() {
+		return rating;
+	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public void setRating(Float rating) {
+		this.rating = rating;
 	}
 	public String getName() {
 		return name;

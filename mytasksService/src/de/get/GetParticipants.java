@@ -33,7 +33,9 @@ public final class GetParticipants extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		String sqlGetParticipants = "Select * from USERS where U_ID in (select USER_FK from USER_TASKLIST where TASKLIST_FK = ?)";
+		//String sqlGetParticipants = "Select * from USERS where U_ID in (select USER_FK from USER_TASKLIST where TASKLIST_FK = ?)";
+		
+		String sqlGetParticipants = "Select a.u_id, a.name, a.email, b.tasklist_fk, b.rate from USERS a join user_tasklist b on u_id = b.user_fk where U_ID in (select USER_FK from USER_TASKLIST where TASKLIST_FK = ?) and tasklist_fk = ?";
 		
 		PrintWriter pw = res.getWriter();
 		res.setContentType("text/html;charset=UTF-8");
@@ -48,6 +50,7 @@ public final class GetParticipants extends HttpServlet {
 
 				PreparedStatement stat = con.prepareStatement(sqlGetParticipants);
 				stat.setString(1, taskListId);
+				stat.setString(2, taskListId);
 				ResultSet rst = stat.executeQuery();
 
 				ArrayList<Object> list = new ArrayList<Object>();
@@ -56,11 +59,12 @@ public final class GetParticipants extends HttpServlet {
 					u.setId(rst.getLong("U_ID"));
 					u.setName(rst.getString("NAME"));
 					u.setEmail(rst.getString("EMAIL"));
+					u.setRating(rst.getFloat("RATE"));
 
-					list.add(u);
-					pw.println(new Gson().toJson(list));
+					list.add(u);					
 					}
-					
+				
+				pw.println(new Gson().toJson(list));	
 				 
 			
 				pw.close();
