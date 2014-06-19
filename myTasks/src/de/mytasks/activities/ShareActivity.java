@@ -51,6 +51,8 @@ public class ShareActivity extends Activity {
 	 private TextView shareText;
 	 private static final String TAG = "ShareActivity";
 	 private String resp;
+	 private String tasklistName;
+	 private Long tasklistId;
 	 
 	 
 	 @Override
@@ -113,26 +115,20 @@ public class ShareActivity extends Activity {
 		    	    Log.v(TAG, resp.toString());
 		    	    
 		    	    boolean check = resp.contains("Shared");
-					if (check != true) {
-						
-						JSONObject jsonObject = new JSONObject(resp);
-						 
-						Log.v(User.class.getName(), jsonObject.getString("id"));
-						Log.v(User.class.getName(), jsonObject.getString("email"));
-						Log.v(User.class.getName(), jsonObject.getString("name"));
- 
-						 
-												
-						Intent it = new Intent(getApplicationContext(),
-								TasklistActivity.class);
-						//it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-						startActivity(it);
-						finish();
+					if (check == true) {
+						Intent i = getIntent();
+						tasklistName = i.getStringExtra("TASKLIST_NAME");
+						tasklistId = i.getLongExtra("TASKLIST_ID", 0L);
+						Intent intent2 = new Intent(getApplicationContext(), ParticipantsActivity.class);
+		                intent2.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+		                intent2.putExtra("TASKLIST_NAME", "Share Tasklist: " + tasklistName);
+		                intent2.putExtra("TASKLIST_ID", tasklistId);
+		                startActivity(intent2);
 					}
 
 					else {
 						Toast.makeText(getApplicationContext(),
-								"Wrong credential! Please try again!",
+								"Something went wrong! Please try again!",
 								Toast.LENGTH_LONG).show();
 					}
 		    	    } 

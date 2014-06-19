@@ -19,6 +19,7 @@ import de.mytasks.database.DatabaseHelper;
 import de.mytasks.domain.Task;
 import de.mytasks.domain.Tasklist;
 import de.mytasks.domain.User;
+import de.mytasks.service.SessionManager;
 import de.mytasks.service.SimpleHttpClient;
 import android.app.Activity;
 import android.app.ListActivity;
@@ -51,6 +52,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ParticipantsActivity extends ListActivity {
+	
+	
+	SessionManager session;
 
 	private List<String> emails;
 	private List<String> names;
@@ -71,6 +75,8 @@ public class ParticipantsActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		
+		session = new SessionManager(getApplicationContext());
 		
 		emails = new ArrayList<String>();
 		names = new ArrayList<String>();
@@ -96,9 +102,79 @@ public class ParticipantsActivity extends ListActivity {
 		shareEmail = (EditText) footer.findViewById(R.id.ssdfsdfsd);
 		shareButton = (Button) footer.findViewById(R.id.shareTasklistButton);
 		lv.addFooterView(footer);
+		shareButton.setOnClickListener(myhandler1);
 		
 		getParticipants();
 	}
+	
+	 View.OnClickListener myhandler1 = new View.OnClickListener() {
+		    public void onClick(View v) {
+		    	
+		    	new Thread(new Runnable(){
+		    		
+			    	@Override
+			    	public void run() {
+			    		Intent i = getIntent();			    		 
+			    		final Long tasklistId = i.getLongExtra("TASKLIST_ID", 0L);    		 
+			    		
+			    		User user = new User();
+			    		List<String> userd = session.getUserDetails();
+			    		user.setName(userd.get(0));
+			    		user.setPassword(userd.get(1));
+			    		user.setId(userd.get(2));		    		 
+			    		 		    		
+			    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+			    		postParameters.add(new BasicNameValuePair("username",user.getName())); 
+			    		postParameters.add(new BasicNameValuePair("password",user.getPassword()));
+			    	    postParameters.add(new BasicNameValuePair("email",shareEmail.getText().toString()));
+			    	    postParameters.add(new BasicNameValuePair("tasklistid",tasklistId.toString()));
+			    	    
+			    	    String response = null;
+			    	      try {
+			    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/shareTasklist", postParameters);
+			    	       String res = response.toString();
+			    	       Log.v(TAG, response.toString());
+			    	       Log.v(TAG, res.toString());
+			    	       resp = res;
+			    	}
+			    	      catch (Exception e) {
+			    	          e.printStackTrace();
+			    	          Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+			    	      }
+			    	} 
+		    	}).start();
+		    	
+		    	try {
+
+		    	    /** wait a second to get response from server */
+		    	    Thread.sleep(1000);
+		    	    
+		    	    Log.v(TAG, resp.toString());
+		    	    
+		    	    boolean check = resp.contains("Shared");
+					if (check == true) {
+						Intent i = getIntent();
+						tasklistName = i.getStringExtra("TASKLIST_NAME");
+						tasklistId = i.getLongExtra("TASKLIST_ID", 0L);
+						Intent intent2 = new Intent(getApplicationContext(), ParticipantsActivity.class);
+		                intent2.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+		                intent2.putExtra("TASKLIST_NAME", "Share Tasklist: " + tasklistName);
+		                intent2.putExtra("TASKLIST_ID", tasklistId);
+		                startActivity(intent2);
+					}
+
+					else {
+						Toast.makeText(getApplicationContext(),
+								"Something went wrong! Please try again!",
+								Toast.LENGTH_LONG).show();
+					}
+		    	    } 
+		    	catch (Exception e) {
+		    	    	e.printStackTrace();
+		    	 }
+		    }
+		  };
+	
 		 
 	public void getParticipants() {
 		new Thread(new Runnable() {
@@ -150,6 +226,36 @@ public class ParticipantsActivity extends ListActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		 
+		getMenuInflater().inflate(R.menu.share_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	   
+	    switch (item.getItemId()) {
+	        case R.id.context_menu_add:
+	        	Intent i = getIntent();	    		 
+	    		final Long parTasklistId = i.getLongExtra("TASKLIST_ID", 0L);
+	        	Intent intent2 = new Intent(getApplicationContext(), ShareActivity.class);
+	        	intent2.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent2.putExtra("TASKLIST_ID", parTasklistId);
+                startActivity(intent2);	            
+	            return true;	       
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+
+	// back button
+	public void back(View view) {
+		Intent intent = new Intent(this, SettingsActivity.class);
+		startActivity(intent);
 	}
 
 }

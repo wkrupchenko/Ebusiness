@@ -480,6 +480,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
                 break;
             case R.id.context_menu_share:
                 Intent intent2 = new Intent(getApplicationContext(), ParticipantsActivity.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent2.putExtra("TASKLIST_NAME", "Share Tasklist: " + selectedItem.getName());
                 intent2.putExtra("TASKLIST_ID", selectedItem.getId());
                 startActivity(intent2);
