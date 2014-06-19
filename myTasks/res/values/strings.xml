@@ -60,6 +60,7 @@
 	<string name="str_context_menu_add_map_info">Add/Change Map Info</string>
     <string name="str_context_menu_show_map_info">Show Map Info</string>
     <string name="str_context_menu_delete_map_info">Delete Map Info</string>
+    <string name="str_context_menu_delete_task">Delete Task</string>
     <string name="hint">Hinweis</string>
 	<string name="find">Find/Add</string>
     	

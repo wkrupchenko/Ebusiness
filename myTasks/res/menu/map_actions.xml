@@ -14,4 +14,8 @@
         android:id="@+id/context_menu_delete_map_info"
         android:title="@string/str_context_menu_delete_map_info"
     />
+    <item
+        android:id="@+id/context_menu_delete_task"
+        android:title="@string/str_context_menu_delete_task"
+    />
 </menu>

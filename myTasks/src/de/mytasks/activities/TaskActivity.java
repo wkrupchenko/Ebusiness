@@ -258,7 +258,6 @@ public class TaskActivity extends Activity {
     	    
     	    String response = null;
     	      try {
-//    	    	  response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksMainPage/getTasks", postParameters);
     	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/getTasks", postParameters);
     	       String res = response.toString();
     	       Log.v(TAG, response.toString());
@@ -365,7 +364,6 @@ public class TaskActivity extends Activity {
 			    	    
 			    	    String response = null;
 			    	      try {
-//			    	    	  response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksMainPage/updateTask", postParameters);
 			    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/updateTask", postParameters);
 			    	       String res = response.toString();
 			    	       Log.v(TAG, response.toString());
@@ -486,7 +484,6 @@ public class TaskActivity extends Activity {
 			    	    
 			    	    String response = null;
 			    	      try {
-//			    	    	  response = SimpleHttpClient.executeHttpPost("http://10.0.2.2:8080/mytasksMainPage/removeGeodata", postParameters);
 			    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/removeGeodata", postParameters);
 			    	       String res = response.toString();
 			    	       Log.v(TAG, response.toString());
@@ -510,6 +507,53 @@ public class TaskActivity extends Activity {
 		    	    		 boolean check = resp.contains("Geodata deleted");	    	    		  
 		    	    	       if (check == true) {
 		    	    	    	   Toast.makeText(getApplicationContext(), "Map Information succesfully removed",Toast.LENGTH_LONG).show();
+		    	    	       } 
+		    	    	}
+		    	    	
+		    	    	else {
+		    	    			Toast.makeText(getApplicationContext(), "Failure",Toast.LENGTH_SHORT).show();
+		    	    	}
+				}
+				catch (Exception e) {
+				    	e.printStackTrace();
+				 }
+			}
+
+		  public void deleteTask(final Long id) throws NullPointerException {
+			  	new Thread(new Runnable(){
+					
+			    	@Override
+			    	public void run() {
+
+			    		
+			    		ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+			    	    postParameters.add(new BasicNameValuePair("taskid", id.toString()));
+			    	    
+			    	    String response = null;
+			    	      try {
+			    	       response = SimpleHttpClient.executeHttpPost("http://www.iwi.hs-karlsruhe.de/eb03/deleteTask", postParameters);
+			    	       String res = response.toString();
+			    	       Log.v(TAG, response.toString());
+			    	       resp = res;
+			    	}
+			    	      catch (Exception e) {
+			    	          e.printStackTrace();
+			    	          Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+			    	      }
+			    	} 
+				}).start();
+				
+				try {
+
+					/** wait a second to get response from server */
+		    	    Thread.sleep(1000);
+		    	    /** Inside the new thread we cannot update the main thread
+		    	    So updating the main thread outside the new thread */
+		    	    	if (null != resp && !resp.isEmpty()) {
+		    	    		 boolean check = resp.contains("OK");	    	    		  
+		    	    	       if (check == true) {
+		    	    	    	   updateTaskActivityView();
+		    	    	    	   Toast.makeText(getApplicationContext(), "Task deleted",Toast.LENGTH_LONG).show();
 		    	    	       } 
 		    	    	}
 		    	    	
@@ -591,23 +635,17 @@ public class TaskActivity extends Activity {
                 selectedItem.setLongitude(0.0);
 //                getTasks();
                 break;
+            case R.id.context_menu_delete_task:
+                deleteTask(selectedItem.getTask_id());
+                break;
  
         }
         return true;
     }
-	
-//	@Override
-//	public void onBackPressed() {
-//		finish();
-//		return;
-//	}
+
 	@Override
 	public void onBackPressed() {
 		Intent i = new Intent(getApplicationContext(), TasklistActivity.class);
-//		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//		Intent setIntent = new Intent(Intent.ACTION_MAIN);
-//		setIntent.addCategory(Intent.CATEGORY_HOME);
-//		setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(i);
 	}
 
