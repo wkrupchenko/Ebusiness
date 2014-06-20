@@ -312,11 +312,6 @@ public class ParticipantsActivity extends ListActivity {
 		 }
 
 	}
-		 
-	// back button
-	public void back(View view) {
-		Intent intent = new Intent(this, SettingsActivity.class);
-		startActivity(intent);
-	}
+		 	
 
 }

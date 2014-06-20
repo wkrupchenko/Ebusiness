@@ -39,29 +39,39 @@
         android:orientation="vertical"
         android:layout_marginTop="4dp" >
 
-        <Button
-            android:id="@+id/addTaskButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical|center_horizontal"
-            android:background="@drawable/round_shape_button"
-        	android:text="@string/tasklist_button_add_task_text_view"
-        	android:textColor="@color/white"
-        	android:layout_marginRight="4dp" />
-
         <EditText
             android:id="@+id/newTasklistNameTitle"
             android:layout_width="56dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:layout_alignBaseline="@+id/addTaskButton"
             android:layout_alignBottom="@+id/addTaskButton"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/addTaskButton"
-            android:hint="Enter a new Task"
-            android:ems="10" />
+            android:ems="10"
+            android:hint="Enter a new Task" />
+
+        <Button
+            android:id="@+id/updateButton"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/addTaskButton"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/round_shape_button"
+            android:drawableStart="@drawable/ic_action_refresh"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/addTaskButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/updateButton"
+            android:background="@drawable/round_shape_button"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/tasklist_button_add_task_text_view"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 
