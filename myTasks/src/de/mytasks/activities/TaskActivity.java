@@ -139,7 +139,7 @@ public class TaskActivity extends Activity {
 
 		    	    /** wait a second to get response from server */
 		    	    Thread.sleep(1000);
-		    	    
+		    	    adapter.clear();
 		    	    Log.v(TAG, resp.toString());
 		    	    
 		    	    JSONArray jsonArray = new JSONArray(resp);
@@ -279,7 +279,7 @@ public class TaskActivity extends Activity {
 
 	    /** wait a second to get response from server */
 	    Thread.sleep(1000);
-	    
+	    adapter.clear();
 	    Log.v(TAG, resp.toString());
 	    
 	    Gson gson = new Gson();
@@ -627,7 +627,8 @@ public class TaskActivity extends Activity {
             	Toast.makeText(this, "Loading Map...", Toast.LENGTH_SHORT).show();
             	if(selectedItem.getLatitude() !=0 && selectedItem.getLongitude()!=0){
 		        	Intent it2 = new Intent(getApplicationContext(), ShowMapActivity.class);
-		        	it2.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//		        	it2.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+		        	it2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					it2.putExtra("TaskId", selectedItem.getTask_id());
 					it2.putExtra("TaskName", selectedItem.getName());
 					it2.putExtra("Latitude", selectedItem.getLatitude());

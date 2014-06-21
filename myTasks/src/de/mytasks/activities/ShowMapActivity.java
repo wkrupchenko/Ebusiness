@@ -67,8 +67,10 @@ public class ShowMapActivity extends Activity {
 		}
 //		@Override
 //		public void onBackPressed() {
+//			finish();
 //			Intent i = new Intent(getApplicationContext(), TaskActivity.class);
-//			startActivity(i);
+//			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//			startActivity(i);	
 //		}
 
 }

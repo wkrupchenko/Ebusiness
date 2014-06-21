@@ -303,7 +303,9 @@ public class AddMapActivity extends Activity {
 				// Creating a marker
 				MarkerOptions markerOptions = new MarkerOptions();
 //				HashMap<String, String> hmPlace = list.get(i);
+				if(list.size()>0){
 				HashMap<String, String> hmPlace = list.get(i);
+				
 
 				double lat = Double.parseDouble(hmPlace.get("lat"));
 				double lng = Double.parseDouble(hmPlace.get("lng"));
@@ -327,6 +329,10 @@ public class AddMapActivity extends Activity {
 //				latitude = Double.toString(lat);
 //				longitude = Double.toString(lng);
 				Log.v(TAG, "Werte:" + latLng.toString());
+				}
+				else{
+					Toast.makeText(getApplicationContext(), "No Adress Found",Toast.LENGTH_SHORT).show();
+				}
 //				Log.v(TAG, "Longitude-Wert:" + longitude);
 //				Log.v(TAG, taskId.toString());
 //				
@@ -443,7 +449,8 @@ public class AddMapActivity extends Activity {
     	    	       if (check == true) {
     	    	    	   Toast.makeText(getApplicationContext(), "Added/Changed Map Information",Toast.LENGTH_LONG).show();
     	    	    	   Intent it = new Intent(getApplicationContext(), ShowMapActivity.class);
-    	    	    	   it.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//    	    	    	   it.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+    	    	    	   it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     	    	    	   it.putExtra("TaskId", taskId);
     	    	    	   it.putExtra("TaskName", taskName);
     	    	    	   it.putExtra("Latitude", latitude);

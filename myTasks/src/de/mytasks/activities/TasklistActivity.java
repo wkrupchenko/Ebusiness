@@ -159,7 +159,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 
 	    	    /** wait a second to get response from server */
 	    	    Thread.sleep(1000);
-	    	    
+	    	    adapter.clear();
 	    	    Log.v(TAG, resp.toString());
 	    	    
 	    	    Gson gson = new Gson();
@@ -231,6 +231,7 @@ public class TasklistActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	    	    	if (null != resp && !resp.isEmpty()) {
 	    	    		 boolean check = resp.contains("Created");	    	    		  
 	    	    	       if (check == true) {
+	    	    	    	   adapter.notifyDataSetChanged();
 	    	    	    	   Toast.makeText(getApplicationContext(), "New Tasklist successfully created",Toast.LENGTH_LONG).show();
 	    	    	    	   Intent it = new Intent(getApplicationContext(),TasklistActivity.class);
 	    	    	    	   it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
