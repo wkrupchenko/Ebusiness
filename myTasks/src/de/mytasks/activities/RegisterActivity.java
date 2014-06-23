@@ -78,7 +78,7 @@ public class RegisterActivity extends OrmLiteBaseActivity<DatabaseHelper>{
   	      		email.requestFocus();
   	      		email.setError("INVALID EMAIL");
 		    }
-  	      	else if(!userameInput.matches("[a-zA-Z ]+"))
+  	      	else if(!userameInput.matches("[a-zA-Z0-9 ]+"))
   	      	{
                username.requestFocus();
                username.setError("ENTER ONLY ALPHABETICAL CHARACTER");

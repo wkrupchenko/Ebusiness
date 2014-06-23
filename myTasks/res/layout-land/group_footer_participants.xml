@@ -33,9 +33,8 @@
     	android:id="@+id/shareEmailText"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
-    	android:layout_alignRight="@+id/shareTasklitEmailInsertField"
-    	android:layout_below="@+id/shareTasklistButton"
-    	android:layout_marginRight="96dp"
+    	android:layout_below="@+id/shareTasklitEmailInsertField"
+    	android:layout_centerHorizontal="true"
     	android:text="@string/register_mail_text_view" />
 
 </RelativeLayout>
